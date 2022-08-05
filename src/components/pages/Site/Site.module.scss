@@ -1,0 +1,42 @@
+.wrapper {
+}
+.index-base {
+  margin: 80px auto 0;
+  max-width: 1000px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 15px;
+}
+.logo {
+  margin-bottom: 20px;
+}
+.title {
+  font-size: 2.625rem;
+  font-weight: 500;
+  color: var(--text-color-title);
+  margin: 7.5px;
+}
+.btn-flat-head {
+  margin: 15px 0 45px;
+}
+.button-group-shares {
+  margin-bottom: 2rem;
+}
+.heade-title {
+  width: 100%;
+  font-size: 1.875rem;
+  font-weight: 500;
+  margin: 0 0 7.5px;
+}
+.content-title {
+  font-size: 1.5rem;
+  color: var(--text-color-title);
+  margin: 0 0 15px;
+  width: 100%;
+}
+.btn-link-footer {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+}

@@ -1,0 +1,19 @@
+.wrapper {
+}
+.content-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.content-header-title {
+  font-size: 1.8rem;
+  color: var(--primary);
+}
+.content-header-description {
+  font-size: 1.5rem;
+  color: var(--text-color-title);
+}
+.content-header-btn-shares {
+  margin-top: 15px;
+  margin-bottom: 10px;
+}

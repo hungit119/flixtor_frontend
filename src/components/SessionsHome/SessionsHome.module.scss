@@ -1,0 +1,42 @@
+.wrapper {
+}
+.header-sessions {
+  display: flex;
+  justify-content: space-between;
+}
+.header-sessions-left {
+  display: inline-flex;
+}
+.title {
+  margin-right: 30px;
+  font-size: 2.7rem;
+  font-weight: 300;
+  color: var(--primary);
+}
+.tabs {
+}
+.tab-item {
+  display: inline-block;
+  background-color: #dee2e6;
+  color: #495057;
+  font-size: 1.35rem;
+  border-radius: 3px;
+  padding: 0 10px;
+  margin: 0 2px;
+  line-height: 29.7px;
+  &:hover {
+    color: #495057;
+  }
+}
+.active {
+  background-color: var(--primary);
+  color: #fff;
+  &:hover {
+    color: #fff;
+  }
+}
+.header-sessions-right {
+  font-size: 1.5rem;
+  color: var(--primary);
+  line-height: 22.5px;
+}

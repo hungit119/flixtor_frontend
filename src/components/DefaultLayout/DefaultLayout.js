@@ -10,7 +10,7 @@ const DefaultLayout = ({ children }) => {
   return (
     <div className={cx("wrapper")}>
       {header}
-      <div className={cx("container-fluid")}>{children}</div>
+      <div>{children}</div>
       {footer}
     </div>
   );

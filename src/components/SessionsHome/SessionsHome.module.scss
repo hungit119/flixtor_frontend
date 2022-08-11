@@ -3,15 +3,26 @@
 .header-sessions {
   display: flex;
   justify-content: space-between;
+  padding: 0 7.5px;
 }
 .header-sessions-left {
   display: inline-flex;
 }
 .title {
+  position: relative;
   margin-right: 30px;
   font-size: 2.7rem;
   font-weight: 300;
   color: var(--primary);
+  &::after {
+    content: "";
+    position: absolute;
+    width: 80%;
+    height: 1px;
+    bottom: -5px;
+    left: 0;
+    background-color: #bbc3ca;
+  }
 }
 .tabs {
 }
@@ -39,4 +50,10 @@
   font-size: 1.5rem;
   color: var(--primary);
   line-height: 22.5px;
+  a {
+    color: var(--primary);
+  }
+  &:hover {
+    color: #0f6674;
+  }
 }

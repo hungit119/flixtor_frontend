@@ -10,6 +10,7 @@ import {
   faSignOut,
   faSortDown,
   faUserCircle,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./Header.module.scss";
@@ -17,6 +18,7 @@ import TippyHeadLess from "../../TippyHeadLess";
 import MenuUserInfor from "../../MenuUserInfor/MenuUserInfor";
 import TippyWrapper from "../../TippyWrapper";
 import MenuItem from "../../MenuItem";
+import Auth from "../../Auth";
 const cx = classNames.bind(styles);
 
 const menuItemsGenre = [
@@ -47,7 +49,7 @@ const menuItemsGenre = [
   "Western",
 ];
 const menuItemCountry = [
-  "  Argentina",
+  "Argentina",
   "Australia",
   "Austria",
   "Belgium",
@@ -84,15 +86,42 @@ const menuItemCountry = [
   "United States",
 ];
 const Header = () => {
-  const [login, setLogin] = useState(true);
+  const [modalShow, setmodalShow] = useState(false);
+  const [login, setLogin] = useState(false);
   const [resultSearch, setResultSearch] = useState([]);
+  const [auth, setAuth] = useState("login");
   let href = window.location.href;
   let inputSearchHeaderRef = useRef(null);
   const handleSearchClick = () => {
     inputSearchHeaderRef.current.focus();
   };
+  const hide = () => setmodalShow(false);
+  const show = () => {
+    setAuth("login");
+    setmodalShow(true);
+  };
+  const handleSetAuthType = (type) => {
+    setAuth(type);
+  };
+
   return (
     <>
+      {modalShow ? (
+        <div>
+          <div className={cx("modal-content")}>
+            <Auth type={auth} handleSetAuthType={handleSetAuthType} />
+            <span className={cx("modal-cancel-wrapper")} onClick={hide}>
+              <FontAwesomeIcon
+                className={cx("modal-cancel-icon")}
+                icon={faXmark}
+              />
+            </span>
+          </div>
+          <div className={cx("modal-login-cus")} onClick={hide}></div>
+        </div>
+      ) : (
+        <></>
+      )}
       <div className={cx("wrapper")}>
         <div className={cx("flefix")}>
           <Col
@@ -115,7 +144,7 @@ const Header = () => {
               <Col lg={href.match("home") ? 6 : 8} className={cx("nav-menu")}>
                 <Row className={cx("nav-menu-list")}>
                   <Col className={cx("nav-menu-item")}>
-                    <Link to={"/home"}>HOME</Link>
+                    <Link to={"/home/movies"}>HOME</Link>
                   </Col>
                   <Col className={cx("nav-menu-item")}>
                     <TippyWrapper
@@ -186,7 +215,7 @@ const Header = () => {
                     </button>
                   </TippyHeadLess>
                 ) : (
-                  <>
+                  <div className={cx("user-info-container")} onClick={show}>
                     <span>
                       <FontAwesomeIcon
                         className={cx("user-icon")}
@@ -194,7 +223,7 @@ const Header = () => {
                       />
                     </span>
                     <span className={cx("user-login")}>Login/Register</span>
-                  </>
+                  </div>
                 )}
               </Col>
             </Row>

@@ -1,5 +1,6 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import DefaultLayout from "./components/DefaultLayout";
+import Detail from "./components/Detail";
 import SessionsLayout from "./components/Layouts/SessionsLayout";
 import Contact from "./components/pages/Contact/Contact";
 import HomePage from "./components/pages/Home";
@@ -18,7 +19,7 @@ function App() {
           }
         />
         <Route
-          path="/home/*"
+          path="/home/:param"
           element={
             <DefaultLayout>
               <HomePage />
@@ -62,6 +63,22 @@ function App() {
           element={
             <DefaultLayout>
               <Contact />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/movie/:id"
+          element={
+            <DefaultLayout>
+              <Detail type={"Movies"} />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/tv/:id"
+          element={
+            <DefaultLayout>
+              <Detail type={"TV-Series"} />
             </DefaultLayout>
           }
         />

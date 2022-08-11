@@ -45,6 +45,12 @@
 .nav-menu-item {
   text-align: center;
   font-size: 15px;
+  display: block;
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
   &:hover {
     cursor: pointer;
     color: #ffffff;
@@ -96,6 +102,11 @@
   display: flex;
   align-items: center;
   justify-content: end;
+  cursor: pointer;
+}
+.user-info-container {
+  display: flex;
+  align-items: center;
 }
 .user-icon {
   font-size: 30px;
@@ -104,6 +115,60 @@
 }
 .user-login {
   font-size: 15px;
+}
+.modal-login-cus {
+  display: flex; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+  justify-content: center;
+  align-items: center;
+}
+.modal-content {
+  position: fixed;
+  z-index: 2;
+  left: 35%;
+  top: 10%;
+  width: 450px;
+  background-color: white;
+  border-radius: 10px;
+  color: #495057;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 50%);
+  animation-name: scrollDown;
+  animation-duration: 0.2s;
+  animation-timing-function: linear;
+}
+@keyframes scrollDown {
+  from {
+    top: 5%;
+    opacity: 0;
+  }
+  to {
+    top: 10%;
+    opacity: 1;
+  }
+}
+.modal-cancel-wrapper {
+  cursor: pointer;
+  top: 0;
+  right: 5px;
+  position: absolute;
+  width: 41px;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-cancel-icon {
+  width: 11.96px;
+  height: 27.2px;
+  color: #444444;
 }
 // dropdown
 .dropdown-user-info {

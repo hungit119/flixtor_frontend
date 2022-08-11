@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Tippy from "@tippyjs/react/headless";
-const TippyHeadLess = ({ children, menuTippy }) => {
+const TippyHeadLess = ({ children, menuTippy, position = "bottom" }) => {
   const [visible, setVisible] = useState(false);
   const show = () => setVisible(true);
   const hide = () => setVisible(false);
@@ -9,7 +9,7 @@ const TippyHeadLess = ({ children, menuTippy }) => {
       visible={visible}
       interactive
       onClickOutside={hide}
-      placement={"bottom-end"}
+      placement={position}
       render={(attrs) => (
         <div tabIndex={-1} {...attrs}>
           {menuTippy}

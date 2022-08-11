@@ -1,25 +1,380 @@
-import React from "react";
-import className from "classnames/bind";
-import styles from "./Home.module.scss";
-import ButtonGroupShare from "../../ButtonGroupShare";
-import SessionsHome from "../../SessionsHome";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faChartLine,
   faList,
   faPlayCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { Route, Routes } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import className from "classnames/bind";
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import ButtonGroupShare from "../../ButtonGroupShare";
 import ListMovies from "../../ListMovies/ListMovies";
+import SessionsHome from "../../SessionsHome";
+import styles from "./Home.module.scss";
 const cx = className.bind(styles);
 
 const tabs = [
-  { title: "Movies", icon: <FontAwesomeIcon icon={faPlayCircle} /> },
-  { title: "TV-Shows", icon: <FontAwesomeIcon icon={faList} /> },
-  { title: "Trending", icon: <FontAwesomeIcon icon={faChartLine} /> },
+  {
+    title: "Movies",
+    icon: <FontAwesomeIcon icon={faPlayCircle} />,
+    href: "movies",
+  },
+  {
+    title: "TV-Shows",
+    icon: <FontAwesomeIcon icon={faList} />,
+    href: "tv-shows",
+  },
+  {
+    title: "Trending",
+    icon: <FontAwesomeIcon icon={faChartLine} />,
+    href: "trending",
+  },
+];
+const movies = [
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+  {
+    title: "nope",
+    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
+    meta: "2022",
+    time: "130",
+    type: "Movie",
+  },
+];
+const tvseries = [
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+  {
+    title: "The Boys",
+    img: "https://static.bunnycdn.ru/i/cache/images/2/2e/2ed91db3c61a9317d9fc39e843ed4674.jpg",
+    meta: "SS 1",
+    time: "EP 10",
+    type: "TV",
+  },
+];
+const trending = [
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
+  {
+    title: "Minions: The Rise of Gru",
+    img: "https://static.bunnycdn.ru/i/cache/images/f/f3/f30547e9001c0b470b0d2c3f6c5ec265.jpg",
+    meta: "2022",
+    time: "87",
+    type: "Movie",
+  },
 ];
 
 const HomePage = () => {
+  let params = useParams();
   return (
     <div className={cx("wrapper")}>
       <div className={cx("content-header")}>
@@ -39,7 +394,17 @@ const HomePage = () => {
           <ButtonGroupShare />
         </span>
       </div>
-      <SessionsHome tabs={tabs} viewall="true"></SessionsHome>
+      <SessionsHome title={"Recommended"} tabs={tabs}>
+        {params.param.match("movies") && <ListMovies items={movies} />}
+        {params.param.match("tv-shows") && <ListMovies items={tvseries} />}
+        {params.param.match("trending") && <ListMovies items={trending} />}
+      </SessionsHome>
+      <SessionsHome title={"Lastest Movies"} viewall={true} href="movies">
+        <ListMovies items={movies} />
+      </SessionsHome>
+      <SessionsHome title={"Lastest TV Series"} viewall={true} href="tv-series">
+        <ListMovies items={tvseries} />
+      </SessionsHome>
     </div>
   );
 };

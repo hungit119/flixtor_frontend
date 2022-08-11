@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import React from "react";
 import { Button, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import ButtonCus from "../../ButtonCus";
 import ButtonGroupShare from "../../ButtonGroupShare";
 import styles from "./Site.module.scss";
 
@@ -21,27 +22,10 @@ const SitePage = () => {
           />
         </div>
         <h3 className={cx("title")}>FlixTor</h3>
-        <Link to="/home" className={cx("btn-link")}>
-          <style type="text/css">
-            {`
-              .btn-flat {
-                background-color: #17a2b8;
-                color: white;
-              }
-
-              .btn-xxl {
-                padding: 11px 23px;
-                font-size: 1.575rem;
-              }
-              .btn-flat:hover, .btn-flat:focus, .btn-flat:active, .btn-flat.active, .open>.dropdown-toggle.btn-flat {
-                color: #fff;
-                background-color: #138496;
-              }
-            `}
-          </style>
-          <Button variant="flat" size="xxl" className={cx("btn-flat-head")}>
+        <Link to="/home/movies" className={cx("btn-link")}>
+          <ButtonCus style={{ margin: "15px 0 45px" }}>
             View Full Site <FontAwesomeIcon icon={faArrowAltCircleRight} />
-          </Button>
+          </ButtonCus>
         </Link>
         <div className={cx("button-group-shares")}>
           <ButtonGroupShare />
@@ -199,11 +183,11 @@ const SitePage = () => {
           your time as much as possible!
         </div>
         <div className={cx("btn-link-footer")}>
-          <Link to={"/home"}>
-            <Button variant="flat" size="xxl">
+          <Link to={"/home/movies"}>
+            <ButtonCus>
               Go to flixtor.video{" "}
               <FontAwesomeIcon icon={faArrowAltCircleRight} />
-            </Button>
+            </ButtonCus>
           </Link>
         </div>
       </div>

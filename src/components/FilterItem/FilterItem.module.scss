@@ -1,0 +1,26 @@
+.list-filter-item {
+  position: relative;
+}
+.item {
+  align-items: flex-start;
+  background-color: #dee2e6;
+  border-radius: 5px;
+  color: #343a40;
+  display: inline-block;
+  font-size: 1.2825rem;
+  line-height: 19.2375px;
+  padding: 6px 24px;
+  text-align: center;
+  border: none;
+  span {
+    margin: 0 2px;
+  }
+}
+.value {
+  color: #212529;
+  display: inline;
+  font-size: 1.2825rem;
+  font-weight: 100;
+  line-height: 19.2375px;
+  text-align: center;
+}

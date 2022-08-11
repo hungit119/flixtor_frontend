@@ -1,0 +1,25 @@
+.wrapper {
+  max-width: 130px;
+  background-color: #d5dbe1;
+  border-radius: 5px;
+  color: var(--text-color-title);
+  display: inline-block;
+  font-size: 1.4rem;
+  line-height: 21px;
+  margin: 0 5px 3px;
+  padding: 12px;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+.icon {
+  margin-right: 12px;
+}
+.server-label {
+  font-size: 1.19rem;
+}
+.active-server {
+  background-color: var(--primary);
+  color: white;
+}

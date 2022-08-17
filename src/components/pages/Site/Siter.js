@@ -23,7 +23,7 @@ const SitePage = () => {
         </div>
         <h3 className={cx("title")}>FlixTor</h3>
         <Link to="/home/movies" className={cx("btn-link")}>
-          <ButtonCus style={{ margin: "15px 0 45px" }}>
+          <ButtonCus>
             View Full Site <FontAwesomeIcon icon={faArrowAltCircleRight} />
           </ButtonCus>
         </Link>

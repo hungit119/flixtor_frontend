@@ -37,6 +37,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -44,6 +45,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -51,6 +53,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -58,6 +61,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -65,6 +69,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -72,6 +77,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -79,6 +85,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -86,6 +93,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -93,6 +101,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -100,6 +109,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -107,6 +117,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -114,6 +125,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -121,6 +133,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -128,6 +141,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -135,6 +149,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "nope",
@@ -142,6 +157,7 @@ const movies = [
     meta: "2022",
     time: "130",
     type: "Movie",
+    quantity: "HD",
   },
 ];
 const tvseries = [
@@ -151,6 +167,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -158,6 +175,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -165,6 +183,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -172,6 +191,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -179,6 +199,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -186,6 +207,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -193,6 +215,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -200,6 +223,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -207,6 +231,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -214,6 +239,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -221,6 +247,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -228,6 +255,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -235,6 +263,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -242,6 +271,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -249,6 +279,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
   {
     title: "The Boys",
@@ -256,6 +287,7 @@ const tvseries = [
     meta: "SS 1",
     time: "EP 10",
     type: "TV",
+    quantity: "HD",
   },
 ];
 const trending = [
@@ -265,6 +297,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -272,6 +305,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -279,6 +313,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -286,6 +321,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -293,6 +329,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -300,6 +337,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -307,6 +345,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -314,6 +353,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -321,6 +361,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -328,6 +369,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -335,6 +377,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -342,6 +385,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -349,6 +393,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -356,6 +401,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -363,6 +409,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
   {
     title: "Minions: The Rise of Gru",
@@ -370,6 +417,7 @@ const trending = [
     meta: "2022",
     time: "87",
     type: "Movie",
+    quantity: "HD",
   },
 ];
 

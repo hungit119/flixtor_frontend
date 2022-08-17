@@ -1,0 +1,48 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  color: var(--text-color-title);
+  font-size: 1.5rem;
+  line-height: 22.5px;
+  align-items: center;
+}
+.prev {
+}
+.head {
+  margin-left: 20px;
+  cursor: pointer;
+}
+.list-numbers {
+  display: flex;
+  margin: 0 20px;
+  a {
+    color: currentColor;
+  }
+}
+.list-number {
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+  margin: 2px;
+  border-radius: 50%;
+  cursor: pointer;
+  &:hover {
+    background-color: #dddddd;
+    color: #0f6674;
+  }
+}
+.last {
+  margin-right: 20px;
+  cursor: pointer;
+}
+.next {
+}
+.active {
+  background-color: var(--primary);
+  color: white;
+  &:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+}

@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import DefaultLayout from "./components/DefaultLayout";
 import Detail from "./components/Detail";
 import SessionsLayout from "./components/Layouts/SessionsLayout";
+import Admin from "./components/pages/Admin";
 import Contact from "./components/pages/Contact/Contact";
 import HomePage from "./components/pages/Home";
 import SearchDetail from "./components/pages/SearchDetail";
@@ -30,7 +31,7 @@ function App() {
           path="/movies"
           element={
             <DefaultLayout>
-              <SessionsLayout title={"Movies"} />
+              <SessionsLayout title={"Movies"} root={"movies"} />
             </DefaultLayout>
           }
         />
@@ -38,7 +39,7 @@ function App() {
           path="/tv-series"
           element={
             <DefaultLayout>
-              <SessionsLayout title={"TV Series"} />
+              <SessionsLayout title={"TV Series"} root={"tv-series"} />
             </DefaultLayout>
           }
         />
@@ -46,7 +47,7 @@ function App() {
           path="/top-imdb"
           element={
             <DefaultLayout>
-              <SessionsLayout title={"Top IMDB"} />
+              <SessionsLayout title={"Top IMDB"} root={"top-imdb"} />
             </DefaultLayout>
           }
         />
@@ -79,6 +80,14 @@ function App() {
           element={
             <DefaultLayout>
               <Detail type={"TV-Series"} />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={
+            <DefaultLayout headerOnly={true}>
+              <Admin />
             </DefaultLayout>
           }
         />

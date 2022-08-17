@@ -55,7 +55,7 @@ const ToolTipBox = ({ href }) => {
       </div>
       <div className={cx("actions")}>
         <span className={cx("watch")}>
-          <Link to={href}>
+          <Link to={href ? href : "#"}>
             <FontAwesomeIcon icon={faPlay} /> Watch now
           </Link>
         </span>

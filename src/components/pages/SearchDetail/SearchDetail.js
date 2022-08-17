@@ -10,11 +10,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import React, { useEffect, useState } from "react";
-import { Form } from "react-bootstrap";
-import { Navigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import upperCaseFirst from "../../../utils/UpperCaseFirst";
 import ListMovies from "../../ListMovies/ListMovies";
 import MenuDropDownSearch from "../../MenuDropDownSearch";
+import Pagenition from "../../Pagenition";
 import SessionsHome from "../../SessionsHome";
 import TippyHeadLess from "../../TippyHeadLess";
 import styles from "./SearchDetail.module.scss";
@@ -347,11 +347,13 @@ const SearchDetail = () => {
                   <FontAwesomeIcon icon={faFolderOpen} />
                   <span>Genre</span>
                   <span className={cx("value")}>
-                    {optionsGenre.length <= 0
-                      ? "All"
+                    {optionsGenre.length <= 0 && key === "genre"
+                      ? type
                       : optionsGenre.length === 1
                       ? optionsGenre[0]
-                      : `${optionsGenre.length} selected`}
+                      : optionsGenre.length > 1
+                      ? `${optionsGenre.length} selected`
+                      : "All"}
                   </span>
                 </button>
               </TippyHeadLess>
@@ -399,11 +401,13 @@ const SearchDetail = () => {
                   <FontAwesomeIcon icon={faEarth} />
                   <span>Country</span>
                   <span className={cx("value")}>
-                    {optionsCountry.length <= 0
-                      ? "All"
+                    {optionsCountry.length <= 0 && key === "country"
+                      ? type
                       : optionsCountry.length === 1
                       ? optionsCountry[0]
-                      : `${optionsCountry.length} selected`}
+                      : optionsCountry.length > 1
+                      ? `${optionsCountry.length} selected`
+                      : "All"}
                   </span>
                 </button>
               </TippyHeadLess>
@@ -491,6 +495,7 @@ const SearchDetail = () => {
             </li>
           </ul>
           <ListMovies items={movies} />
+          <Pagenition root={`${key}/${type}`} />
         </>
       </SessionsHome>
     </div>

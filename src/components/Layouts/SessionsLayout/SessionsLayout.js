@@ -16,6 +16,8 @@ import {
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
 import upperCaseFirst from "../../../utils/UpperCaseFirst";
+import Pagenition from "../../Pagenition";
+import { useParams, useSearchParams } from "react-router-dom";
 const cx = classNames.bind(styles);
 const movies = [
   {
@@ -241,7 +243,7 @@ const sortMenu = [
   "Release Date",
   "Site Rating",
 ];
-const SessionsLayout = ({ title }) => {
+const SessionsLayout = ({ title, root }) => {
   const [optionsGenre, setOptionsGenre] = useState([]);
   const [optionsType, setOptionsType] = useState([]);
   const [optionsCountry, setOptionsCountry] = useState([]);
@@ -426,7 +428,7 @@ const SessionsLayout = ({ title }) => {
           </ul>
           <ListMovies items={movies} />
         </>
-        <ListMovies items={movies} />
+        <Pagenition root={root} />
       </SessionsHome>
     </div>
   );

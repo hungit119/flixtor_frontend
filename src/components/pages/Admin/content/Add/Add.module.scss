@@ -112,3 +112,15 @@
   height: 60px;
   color: var(--primary);
 }
+.btn-group-custom {
+  display: flex;
+  justify-content: center;
+}
+.btn-custom {
+  font-size: 1.6rem;
+  margin: 28px 5px 0 5px;
+  padding: 5px 20px;
+}
+.required {
+  color: red;
+}

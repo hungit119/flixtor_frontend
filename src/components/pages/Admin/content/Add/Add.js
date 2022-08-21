@@ -74,16 +74,12 @@ const Add = () => {
         quantity_id: `${form.quantity}_id`,
         year_id: `${form.year}_id`,
       };
-      const genres_film = form.genre.split(",");
-      const countries_film = form.countries.split(",");
-      const casts_film = form.cast.split(",");
-      const productions_film = form.productions.split(",");
       const payload = {
         filmData,
-        genres_film,
-        countries_film,
-        casts_film,
-        productions_film,
+        genres_film: form.genre,
+        countries_film: form.countries,
+        casts_film: form.cast,
+        productions_film: form.productions,
       };
       const response = await axios.post(
         "http://localhost:8000/api/film/create",

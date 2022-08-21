@@ -1,0 +1,2 @@
+export const SET_FILMS_LIST_ADMIN = "SET_FILMS_LIST_ADMIN";
+export const SET_FILM_ADMIN = "SET_FILM_ADMIN";

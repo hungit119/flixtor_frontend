@@ -10,6 +10,8 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import Add from "./content/Add";
+import List from "./content/List";
+import Film from "./content/Film/Film";
 const cx = className.bind(styles);
 
 const Admin = () => {
@@ -37,10 +39,10 @@ const Admin = () => {
       </div>
       <div className={cx("content")}>
         <Routes>
-          <Route path="/" element={<h1>Danh sách phim</h1>} />
+          <Route path="/" element={<List />} />
           <Route path="/add" element={<Add />} />
           <Route path="/update" element={<h1>Cập nhật phim</h1>} />
-          <Route path="/delete" element={<h1>Xóa phim</h1>} />
+          <Route path="/film/:id" element={<Film />} />
         </Routes>
       </div>
     </div>

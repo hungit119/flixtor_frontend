@@ -15,7 +15,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid var(--primary);
+  border: 3px solid var(--primary);
+  border-radius: 5px;
 }
 .preview {
   width: 173px;

@@ -1,2 +1,3 @@
 export const SET_FILMS_LIST_ADMIN = "SET_FILMS_LIST_ADMIN";
-export const SET_FILM_ADMIN = "SET_FILM_ADMIN";
+export const SET_FILM = "SET_FILM";
+export const SET_FILMS_MOVIES = "SET_FILMS_MOVIES";

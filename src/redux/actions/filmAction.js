@@ -1,8 +1,8 @@
-import { SET_FILM_ADMIN } from "../const";
+import { SET_FILM } from "../const";
 
-export const setFilmAdmin = (film) => {
+export const setFilm = (film) => {
   return {
-    type: SET_FILM_ADMIN,
+    type: SET_FILM,
     payload: film,
   };
 };

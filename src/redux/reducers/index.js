@@ -1,12 +1,14 @@
-import { filmReducer } from "./filmReducer";
+import { filmAdminReducer } from "./filmAdminReducer";
+import { filmsReducer } from "./filmsReducer";
 import { userReducer } from "./userReducer";
 
 const { combineReducers } = require("redux");
-const { filmsReducer } = require("./filmsReducer");
+const { filmsAdminReducer } = require("./filmsAdminReducer");
 
 const rootReducer = combineReducers({
+  filmsAdmin: filmsAdminReducer,
+  filmAdmin: filmAdminReducer,
   films: filmsReducer,
-  film: filmReducer,
   users: userReducer,
 });
 

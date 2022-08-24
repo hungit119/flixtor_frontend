@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilmAdmin } from "../../../../../redux/actions/filmAction";
+import { setFilm } from "../../../../../redux/actions/filmAction";
 import { Table } from "react-bootstrap";
 import { filmSelector } from "../../../../../redux/selectors";
 const Film = () => {
@@ -14,7 +14,7 @@ const Film = () => {
       `http://localhost:8000/api/film/${params.id}`
     );
     if (response.data.success) {
-      dispatch(setFilmAdmin(response.data.film));
+      dispatch(setFilm(response.data.film));
     }
   };
   useEffect(() => {

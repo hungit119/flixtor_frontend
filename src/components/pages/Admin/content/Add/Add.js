@@ -13,7 +13,7 @@ const cx = className.bind(styles);
 const Add = () => {
   const [form, setForm] = useState({
     title: "",
-    poster: "https://c.tenor.com/xnZaQ3O98dMAAAAC/thinking-processing.gif",
+    poster: "",
     thumnail: "",
     time: "",
     type: "",
@@ -36,8 +36,7 @@ const Add = () => {
     try {
       if (
         form.title === "" ||
-        form.poster ===
-          "https://c.tenor.com/xnZaQ3O98dMAAAAC/thinking-processing.gif" ||
+        form.poster === "" ||
         form.trailerURL === "" ||
         form.thumnail === "" ||
         form.time === "" ||
@@ -488,7 +487,18 @@ const Add = () => {
               <Col lg={6} className={cx("preview-wrapper")}>
                 <div className={cx("preview")}>
                   <TippyWrapper
-                    content={<ToolTipBox />}
+                    content={
+                      <ToolTipBox
+                        item={{
+                          title: form.title,
+                          imdb: form.imdb,
+                          quantity: form.quantity,
+                          description: form.description,
+                          countries: form.countries || "",
+                          genres: form.genres || "",
+                        }}
+                      />
+                    }
                     position={"right"}
                     animation={true}
                   >

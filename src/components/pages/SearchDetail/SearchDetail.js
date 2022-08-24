@@ -14,7 +14,6 @@ import { useParams } from "react-router-dom";
 import upperCaseFirst from "../../../utils/UpperCaseFirst";
 import ListMovies from "../../ListMovies/ListMovies";
 import MenuDropDownSearch from "../../MenuDropDownSearch";
-import Pagenition from "../../Pagenition";
 import SessionsHome from "../../SessionsHome";
 import TippyHeadLess from "../../TippyHeadLess";
 import styles from "./SearchDetail.module.scss";
@@ -176,120 +175,6 @@ const optionsFilter = [
     title: "Sort",
     value: "All",
     grid: 12,
-  },
-];
-const movies = [
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
   },
 ];
 
@@ -494,8 +379,7 @@ const SearchDetail = () => {
               <span>Filter</span>
             </li>
           </ul>
-          <ListMovies items={movies} />
-          <Pagenition root={`${key}/${type}`} />
+          {/* <ListMovies items={movies} /> */}
         </>
       </SessionsHome>
     </div>

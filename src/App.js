@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import DefaultLayout from "./components/DefaultLayout";
-import Detail from "./components/Detail";
+import Detail from "./components/pages/Detail";
 import SessionsLayout from "./components/Layouts/SessionsLayout";
 import Admin from "./components/pages/Admin";
 import Contact from "./components/pages/Contact/Contact";
@@ -31,7 +31,7 @@ function App() {
           path="/movies"
           element={
             <DefaultLayout>
-              <SessionsLayout title={"Movies"} root={"movies"} />
+              <SessionsLayout title={"Movies"} root={"movie"} />
             </DefaultLayout>
           }
         />
@@ -39,7 +39,7 @@ function App() {
           path="/tv-series"
           element={
             <DefaultLayout>
-              <SessionsLayout title={"TV Series"} root={"tv-series"} />
+              <SessionsLayout title={"TV Series"} root={"tv-serie"} />
             </DefaultLayout>
           }
         />

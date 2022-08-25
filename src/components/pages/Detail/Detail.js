@@ -18,21 +18,29 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import styles from "./Detail.module.scss";
-import ButtonGroupShare from "../ButtonGroupShare";
-import ServerButton from "../ServerButton";
-import SessionsHome from "../SessionsHome";
-import ListMovies from "../ListMovies/ListMovies";
+import ButtonGroupShare from "../../ButtonGroupShare";
+import ServerButton from "../../ServerButton";
+import SessionsHome from "../../SessionsHome";
+import ListMovies from "../../ListMovies/ListMovies";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilm } from "../../redux/actions/filmAction";
-import { filmSelector } from "../../redux/selectors";
+import { setFilm } from "../../../redux/actions/filmAction";
+import { filmSelector } from "../../../redux/selectors";
 
 const cx = className.bind(styles);
 
 const Detail = ({ type }) => {
-  const [rating, setrating] = useState(0);
-  const params = useParams();
+  const [rating, setrating] = useState(4);
+  const [more, setMore] = useState(true);
   const dispatch = useDispatch();
   const film = useSelector(filmSelector);
+  const params = useParams();
+
+  const handleLessBtnClick = () => {
+    setMore(!more);
+  };
+  const handleMoreBtnClick = () => {
+    setMore(!more);
+  };
 
   const getFilm = async () => {
     try {
@@ -53,7 +61,17 @@ const Detail = ({ type }) => {
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
-        <span>Home</span> / <span>{film.type}</span> / <span>{film.title}</span>
+        <Link to={"/"}>
+          <span className={cx("header-title")}>Home</span>
+        </Link>{" "}
+        /{" "}
+        <Link to={`/${type.toLowerCase()}`}>
+          <span className={cx("header-title")}>{type}</span>
+        </Link>{" "}
+        /{" "}
+        <Link to={`/${type.toLowerCase()}/${film.film_id}`}>
+          <span className={cx("header-title")}>{film.title}</span>
+        </Link>
       </div>
       <div
         className={cx("watch")}
@@ -178,17 +196,34 @@ const Detail = ({ type }) => {
                     <span className={cx("time-text")}>{film.times} min</span>
                   </div>
                   <div className={cx("description")}>
-                    <span className={cx("description-text", "less")}>
+                    <span
+                      className={cx("description-text", more ? "less" : "")}
+                    >
                       {film.description}
                     </span>
-                    {/* <span className={cx("btn-expand")}>
-                    <FontAwesomeIcon icon={faMinus} />
-                    <span>less</span>
-                  </span> */}
-                    <span className={cx("btn-expand")}>
-                      <FontAwesomeIcon icon={faPlus} />
-                      <span>more</span>
-                    </span>
+                    {more ? (
+                      <span
+                        className={cx("btn-expand")}
+                        onClick={handleMoreBtnClick}
+                      >
+                        <FontAwesomeIcon
+                          className={cx("icon-des")}
+                          icon={faPlus}
+                        />
+                        <span>more</span>
+                      </span>
+                    ) : (
+                      <span
+                        className={cx("btn-less")}
+                        onClick={handleLessBtnClick}
+                      >
+                        <FontAwesomeIcon
+                          className={cx("icon-des")}
+                          icon={faMinus}
+                        />
+                        <span>less</span>
+                      </span>
+                    )}
                   </div>
                   <div className={cx("info")}>
                     <table>
@@ -198,12 +233,17 @@ const Detail = ({ type }) => {
                           <td>
                             {film.countries.includes(",") ? (
                               film.countries.split(",").map((item, index) => (
-                                <Link key={index} to={"#"}>
+                                <Link
+                                  key={index}
+                                  to={`/country/${item.trim()}`}
+                                >
                                   {item},
                                 </Link>
                               ))
                             ) : (
-                              <Link to={"#"}>{film.countries}</Link>
+                              <Link to={`/country/${film.countries.trim()}`}>
+                                {film.countries}
+                              </Link>
                             )}
                           </td>
                         </tr>
@@ -212,12 +252,14 @@ const Detail = ({ type }) => {
                           <td>
                             {film.genres.includes(",") ? (
                               film.genres.split(",").map((item, index) => (
-                                <Link key={index} to={"#"}>
+                                <Link key={index} to={`/genre/${item.trim()}`}>
                                   {item},
                                 </Link>
                               ))
                             ) : (
-                              <Link to={"#"}>{film.genres}</Link>
+                              <Link to={`/genres/${film.genres.trim()}`}>
+                                {film.genres}
+                              </Link>
                             )}
                           </td>
                         </tr>
@@ -234,12 +276,19 @@ const Detail = ({ type }) => {
                           <td>
                             {film.productions.includes(",") ? (
                               film.productions.split(",").map((item, index) => (
-                                <Link key={index} to={"#"}>
+                                <Link
+                                  key={index}
+                                  to={`/production/${item.trim()}`}
+                                >
                                   {item},
                                 </Link>
                               ))
                             ) : (
-                              <Link to={"#"}>{film.productions}</Link>
+                              <Link
+                                to={`/production/${film.productions.trim()}`}
+                              >
+                                {film.productions}
+                              </Link>
                             )}
                           </td>
                         </tr>
@@ -248,12 +297,14 @@ const Detail = ({ type }) => {
                           <td>
                             {film.casts.includes(",") ? (
                               film.casts.split(",").map((item, index) => (
-                                <Link key={index} to={"#"}>
+                                <Link key={index} to={`/cast/${item.trim()}`}>
                                   {item},
                                 </Link>
                               ))
                             ) : (
-                              <Link to={"#"}>{film.casts}</Link>
+                              <Link to={`/cast/${film.casts.trim()}`}>
+                                {film.casts}
+                              </Link>
                             )}
                           </td>
                         </tr>

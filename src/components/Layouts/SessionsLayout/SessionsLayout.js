@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import styles from "./SessionsLayout.module.scss";
 import SessionsHome from "../../SessionsHome";
@@ -17,121 +17,18 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import upperCaseFirst from "../../../utils/UpperCaseFirst";
 import { useParams, useSearchParams } from "react-router-dom";
+import axios from "axios";
+import {
+  setFilmsMovies,
+  setFilmsType,
+} from "../../../redux/actions/filmsAction";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  filmsMoviesSelector,
+  filmsSelector,
+  filmsTypeSelector,
+} from "../../../redux/selectors";
 const cx = classNames.bind(styles);
-const movies = [
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-  {
-    title: "nope",
-    img: "https://static.bunnycdn.ru/i/cache/images/e/e6/e6a3414ee60ea718eef48d3aeee2f71c.jpg",
-    meta: "2022",
-    time: "130",
-    type: "Movie",
-  },
-];
 const genreMenu = [
   "Action",
   "Adventure",
@@ -249,6 +146,10 @@ const SessionsLayout = ({ title, root }) => {
   const [optionsYear, setOptionsYear] = useState([]);
   const [optionsQuantity, setOptionsQuantity] = useState([]);
   const [optionsSort, setOptionsSort] = useState("Default");
+
+  const dispatch = useDispatch();
+  const filmsType = useSelector(filmsTypeSelector);
+
   const handleSubmitFilter = (e) => {
     const options = {
       genre: optionsGenre,
@@ -260,6 +161,21 @@ const SessionsLayout = ({ title, root }) => {
     };
     console.log(options);
   };
+  const getFilms = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/films/type/${root.toLowerCase()}`
+      );
+      if (response.data.success) {
+        dispatch(setFilmsType(response.data.filmsType));
+      }
+    } catch (errors) {
+      console.log(errors.message);
+    }
+  };
+  useEffect(() => {
+    getFilms();
+  }, [root]);
   return (
     <div className={cx("wrapper")}>
       <SessionsHome title={title}>
@@ -425,7 +341,7 @@ const SessionsLayout = ({ title, root }) => {
               <span>Filter</span>
             </li>
           </ul>
-          <ListMovies items={movies} />
+          <ListMovies items={filmsType} />
         </>
       </SessionsHome>
     </div>

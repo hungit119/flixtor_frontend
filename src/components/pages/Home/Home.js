@@ -13,8 +13,8 @@ import ButtonGroupShare from "../../ButtonGroupShare";
 import ListMovies from "../../ListMovies/ListMovies";
 import SessionsHome from "../../SessionsHome";
 import styles from "./Home.module.scss";
-import { setFilmsMovies } from "../../../redux/actions/filmsAction";
-import { filmsMoviesSelector } from "../../../redux/selectors";
+import { setFilmsType } from "../../../redux/actions/filmsAction";
+import { filmsTypeSelector } from "../../../redux/selectors";
 const cx = className.bind(styles);
 
 const tabs = [
@@ -38,14 +38,14 @@ const tabs = [
 const HomePage = () => {
   const dispatch = useDispatch();
   let params = useParams();
-  const filmsMovies = useSelector(filmsMoviesSelector);
+  const filmsType = useSelector(filmsTypeSelector);
   const getFilmsMovies = async () => {
     try {
       const response = await axios.get(
         "http://localhost:8000/api/films/type/movie"
       );
       if (response.data.success) {
-        dispatch(setFilmsMovies(response.data.filmsMovies));
+        dispatch(setFilmsType(response.data.filmsType));
       }
     } catch (errors) {
       console.log(errors.message);
@@ -76,7 +76,7 @@ const HomePage = () => {
         </span>
       </div>
       <SessionsHome title={"Recommended"} tabs={tabs}>
-        {params.param.match("movies") && <ListMovies items={filmsMovies} />}
+        {params.param.match("movies") && <ListMovies items={filmsType} />}
         {/* {params.param.match("tv-shows") && <ListMovies items={tvseries} />}
         {params.param.match("trending") && <ListMovies items={trending} />} */}
       </SessionsHome>

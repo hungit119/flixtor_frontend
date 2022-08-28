@@ -61,10 +61,10 @@ const List = () => {
               {currentPage.map((page, index) => (
                 <tr key={index} className={cx("film")}>
                   <td>{page.stt}</td>
-                  <td>{page.film_id}</td>
+                  <td>{page.id}</td>
                   <td>{page.title}</td>
                   <td className={cx("text-center")}>
-                    <Link to={`/admin/film/${page.film_id}`}>
+                    <Link to={`/admin/film/${page.id}`}>
                       <Button size="lg" variant="danger">
                         Detail
                       </Button>

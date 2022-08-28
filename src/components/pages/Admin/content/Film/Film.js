@@ -26,7 +26,7 @@ const Film = () => {
         <tbody>
           <tr>
             <th>ID</th>
-            <td>{film.film_id}</td>
+            <td>{film.id}</td>
           </tr>
           <tr>
             <th>Title</th>

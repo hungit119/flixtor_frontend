@@ -32,27 +32,34 @@ const Add = () => {
     trailerURL: "",
   });
   const inputRef = useRef(null);
+  const handleInputChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+    document
+      .querySelector(`[name="${e.target.name}"]`)
+      .classList.remove(cx("error-input"));
+  };
+  const validateFormInputByClassName = () => {
+    var result = true;
+    const inputFormCreate =
+      document.getElementsByClassName("form-input-create");
+    const array_inputFormCreate = Object.values(inputFormCreate);
+    array_inputFormCreate.forEach((input) => {
+      if (
+        input.value === "" &&
+        input.name !== "description" &&
+        input.name !== "tags" &&
+        input.name !== "director"
+      ) {
+        input.classList.add(cx("error-input"));
+        result = false;
+      }
+    });
+    return result;
+  };
   const handleClickCreate = async () => {
     try {
-      if (
-        form.title === "" ||
-        form.poster === "" ||
-        form.trailerURL === "" ||
-        form.thumnail === "" ||
-        form.time === "" ||
-        form.rating === "" ||
-        form.imdb === "" ||
-        form.release === "" ||
-        form.type === "" ||
-        form.quantity === "" ||
-        form.year === "" ||
-        form.genre === "" ||
-        form.countries === "" ||
-        form.type === "" ||
-        form.productions === "" ||
-        form.cast === ""
-      ) {
-        toast.warning("Please fill in the data completely!", {
+      if (validateFormInputByClassName() === false) {
+        toast.warning("Please fill in the required fields !!", {
           theme: "colored",
         });
         return;
@@ -91,8 +98,7 @@ const Add = () => {
         setForm({
           ...form,
           title: "",
-          poster:
-            "https://c.tenor.com/xnZaQ3O98dMAAAAC/thinking-processing.gif",
+          poster: "",
           thumnail: "",
           time: "",
           type: "",
@@ -121,11 +127,11 @@ const Add = () => {
       toast.error("Error creating film !");
     }
   };
-  const handleClickReset = (e) => {
+  const handleClickReset = () => {
     setForm({
       ...form,
       title: "",
-      poster: "https://c.tenor.com/xnZaQ3O98dMAAAAC/thinking-processing.gif",
+      poster: "",
       thumnail: "",
       time: "",
       type: "",
@@ -157,15 +163,13 @@ const Add = () => {
                     Title <span className={cx("required")}>*</span>
                   </Form.Label>
                   <Form.Control
-                    className={cx("form-control")}
+                    className={cx("form-control", "form-input-create")}
                     type="text"
                     placeholder="Enter title"
                     value={form.title}
                     name="title"
                     ref={inputRef}
-                    onChange={(e) =>
-                      setForm({ ...form, title: e.target.value })
-                    }
+                    onChange={handleInputChange}
                   />
                 </Form.Group>
                 <Row>
@@ -173,15 +177,13 @@ const Add = () => {
                     <Form.Group className={cx("mb-2")}>
                       <Form.Label>Description</Form.Label>
                       <Form.Control
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder="Enter description"
                         as="textarea"
                         rows={2}
                         value={form.description}
                         name="description"
-                        onChange={(e) =>
-                          setForm({ ...form, description: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                   </Col>
@@ -189,15 +191,13 @@ const Add = () => {
                     <Form.Group className={cx("mb-2")}>
                       <Form.Label>Tags</Form.Label>
                       <Form.Control
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder="Enter director"
                         as="textarea"
                         rows={2}
                         value={form.tags}
                         name="tags"
-                        onChange={(e) =>
-                          setForm({ ...form, tags: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                   </Col>
@@ -207,14 +207,12 @@ const Add = () => {
                     Poster URL <span className={cx("required")}>*</span>
                   </Form.Label>
                   <Form.Control
-                    className={cx("form-control")}
+                    className={cx("form-control", "form-input-create")}
                     placeholder="Enter poster URL"
                     as="input"
                     value={form.poster}
                     name="poster"
-                    onChange={(e) =>
-                      setForm({ ...form, poster: e.target.value })
-                    }
+                    onChange={handleInputChange}
                   />
                 </Form.Group>
                 <Form.Group className={cx("mb-2")}>
@@ -222,14 +220,12 @@ const Add = () => {
                     Thumnail URL <span className={cx("required")}>*</span>
                   </Form.Label>
                   <Form.Control
-                    className={cx("form-control")}
+                    className={cx("form-control", "form-input-create")}
                     placeholder="Enter thumnail URL"
                     as="input"
                     value={form.thumnail}
                     name="thumnail"
-                    onChange={(e) =>
-                      setForm({ ...form, thumnail: e.target.value })
-                    }
+                    onChange={handleInputChange}
                   />
                 </Form.Group>
                 <Row>
@@ -239,14 +235,12 @@ const Add = () => {
                         Rating <span className={cx("required")}>*</span>
                       </Form.Label>
                       <Form.Select
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         value={form.rating}
                         name="rating"
-                        onChange={(e) =>
-                          setForm({ ...form, rating: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       >
-                        <option> Enter rating </option>
+                        <option value=""> Enter rating </option>
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -262,13 +256,11 @@ const Add = () => {
                       </Form.Label>
                       <Form.Control
                         as="input"
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder={"Enter imdb"}
                         value={form.imdb}
                         name="imdb"
-                        onChange={(e) =>
-                          setForm({ ...form, imdb: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                   </Col>
@@ -279,13 +271,11 @@ const Add = () => {
                       </Form.Label>
                       <Form.Control
                         as="input"
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder={"Enter time"}
                         value={form.time}
                         name="time"
-                        onChange={(e) =>
-                          setForm({ ...form, time: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                   </Col>
@@ -296,13 +286,11 @@ const Add = () => {
                       </Form.Label>
                       <Form.Control
                         as="input"
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder={"Enter release"}
                         value={form.release}
                         name="release"
-                        onChange={(e) =>
-                          setForm({ ...form, release: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                   </Col>
@@ -312,14 +300,12 @@ const Add = () => {
                     <Form.Group className={cx("mb-2")}>
                       <Form.Label>Director</Form.Label>
                       <Form.Control
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder="Enter director"
                         as="input"
                         value={form.director}
                         name="director"
-                        onChange={(e) =>
-                          setForm({ ...form, director: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                     <Form.Group className={cx("mb-2")}>
@@ -327,14 +313,12 @@ const Add = () => {
                         Casts <span className={cx("required")}>*</span>
                       </Form.Label>
                       <Form.Control
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder="Enter casts name"
                         as="input"
                         value={form.cast}
                         name="cast"
-                        onChange={(e) =>
-                          setForm({ ...form, cast: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                     <Form.Group className={cx("mb-2")}>
@@ -342,14 +326,12 @@ const Add = () => {
                         Countries <span className={cx("required")}>*</span>
                       </Form.Label>
                       <Form.Control
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder="Enter countries"
                         as="input"
                         value={form.countries}
                         name="countries"
-                        onChange={(e) =>
-                          setForm({ ...form, countries: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                     <Form.Group className={cx("mb-2")}>
@@ -357,14 +339,12 @@ const Add = () => {
                         Genre <span className={cx("required")}>*</span>
                       </Form.Label>
                       <Form.Control
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder="Enter genre"
                         as="input"
                         value={form.genre}
                         name="genre"
-                        onChange={(e) =>
-                          setForm({ ...form, genre: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                   </Col>
@@ -376,14 +356,12 @@ const Add = () => {
                             Quanity <span className={cx("required")}>*</span>
                           </Form.Label>
                           <Form.Select
-                            className={cx("form-control")}
+                            className={cx("form-control", "form-input-create")}
                             value={form.quantity}
                             name="quantity"
-                            onChange={(e) =>
-                              setForm({ ...form, quantity: e.target.value })
-                            }
+                            onChange={handleInputChange}
                           >
-                            <option>Enter quantity</option>
+                            <option value="">Enter quantity</option>
                             <option value="HD">HD</option>
                             <option value="HDRip">HDRip</option>
                             <option value="TS">TS</option>
@@ -396,14 +374,12 @@ const Add = () => {
                             Type <span className={cx("required")}>*</span>
                           </Form.Label>
                           <Form.Select
-                            className={cx("form-control")}
+                            className={cx("form-control", "form-input-create")}
                             value={form.type}
                             name="type"
-                            onChange={(e) =>
-                              setForm({ ...form, type: e.target.value })
-                            }
+                            onChange={handleInputChange}
                           >
-                            <option>Enter type</option>
+                            <option value="">Enter type</option>
                             <option value="Movie">Movie</option>
                             <option value="TV-Serie">TV-Serie</option>
                           </Form.Select>
@@ -415,14 +391,12 @@ const Add = () => {
                             Year <span className={cx("required")}>*</span>
                           </Form.Label>
                           <Form.Select
-                            className={cx("form-control")}
+                            className={cx("form-control", "form-input-create")}
                             value={form.year}
                             name="year"
-                            onChange={(e) =>
-                              setForm({ ...form, year: e.target.value })
-                            }
+                            onChange={handleInputChange}
                           >
-                            <option>Enter year</option>
+                            <option value="">Enter year</option>
                             {[...Array(30)].map((item, index) => (
                               <option
                                 value={new Date().getFullYear() - index}
@@ -439,14 +413,12 @@ const Add = () => {
                             <span className={cx("required")}>*</span>
                           </Form.Label>
                           <Form.Control
-                            className={cx("form-control")}
+                            className={cx("form-control", "form-input-create")}
                             placeholder="Enter trailer URL"
                             as="input"
                             value={form.trailerURL}
                             name="trailerURL"
-                            onChange={(e) =>
-                              setForm({ ...form, trailerURL: e.target.value })
-                            }
+                            onChange={handleInputChange}
                           />
                         </Form.Group>
                       </Col>
@@ -456,14 +428,12 @@ const Add = () => {
                         Productions <span className={cx("required")}>*</span>
                       </Form.Label>
                       <Form.Control
-                        className={cx("form-control")}
+                        className={cx("form-control", "form-input-create")}
                         placeholder="Enter productions name"
                         as="input"
                         value={form.productions}
                         name="productions"
-                        onChange={(e) =>
-                          setForm({ ...form, productions: e.target.value })
-                        }
+                        onChange={handleInputChange}
                       />
                     </Form.Group>
                     <div className={cx("btn-group-custom")}>

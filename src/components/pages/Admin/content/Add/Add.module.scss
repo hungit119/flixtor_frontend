@@ -125,3 +125,7 @@
 .required {
   color: red;
 }
+.error-input {
+  border: 1px solid red;
+  transition: all ease-in-out 0.2s;
+}

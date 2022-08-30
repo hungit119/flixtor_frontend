@@ -216,11 +216,9 @@ const Add = () => {
                   />
                 </Form.Group>
                 <Form.Group className={cx("mb-2")}>
-                  <Form.Label>
-                    Thumnail URL <span className={cx("required")}>*</span>
-                  </Form.Label>
+                  <Form.Label>Thumnail URL</Form.Label>
                   <Form.Control
-                    className={cx("form-control", "form-input-create")}
+                    className={cx("form-control")}
                     placeholder="Enter thumnail URL"
                     as="input"
                     value={form.thumnail}
@@ -381,7 +379,7 @@ const Add = () => {
                           >
                             <option value="">Enter type</option>
                             <option value="Movie">Movie</option>
-                            <option value="TV-Serie">TV-Serie</option>
+                            <option value="TV-Series">TV-Series</option>
                           </Form.Select>
                         </Form.Group>
                       </Col>

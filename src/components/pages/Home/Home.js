@@ -13,7 +13,13 @@ import ButtonGroupShare from "../../ButtonGroupShare";
 import ListMovies from "../../ListMovies/ListMovies";
 import SessionsHome from "../../SessionsHome";
 import styles from "./Home.module.scss";
-import { setFilmsType } from "../../../redux/actions/filmsAction";
+import {
+  setFilmsLastestMovies,
+  setFilmsLastestTv,
+  setFilmsTrending,
+  setFilmsTypeMovies,
+  setFilmsTypeTv,
+} from "../../../redux/actions/filmsAction";
 import { filmsTypeSelector } from "../../../redux/selectors";
 const cx = className.bind(styles);
 
@@ -36,16 +42,16 @@ const tabs = [
 ];
 
 const HomePage = () => {
-  const dispatch = useDispatch();
   let params = useParams();
+  const dispatch = useDispatch();
   const filmsType = useSelector(filmsTypeSelector);
-  const getFilmsMovies = async () => {
+
+  // get api
+  const getMovies = async (urlApi, actionDispatch) => {
     try {
-      const response = await axios.get(
-        "http://localhost:8000/api/films/type/movie"
-      );
+      const response = await axios.get(urlApi);
       if (response.data.success) {
-        dispatch(setFilmsType(response.data.filmsType));
+        dispatch(actionDispatch(response.data.filmsType));
       }
     } catch (errors) {
       console.log(errors.message);
@@ -53,7 +59,26 @@ const HomePage = () => {
   };
 
   useEffect(() => {
-    getFilmsMovies();
+    getMovies(
+      "http://localhost:8000/api/films/type/movie?limit=24&year=2022",
+      setFilmsTypeMovies
+    );
+    getMovies(
+      "http://localhost:8000/api/films/type/TV-Series?limit=24",
+      setFilmsTypeTv
+    );
+    getMovies(
+      "http://localhost:8000/api/films/=/rating/5?limit=24",
+      setFilmsTrending
+    );
+    getMovies(
+      "http://localhost:8000/api/films/lastest/movie?limit=16",
+      setFilmsLastestMovies
+    );
+    getMovies(
+      "http://localhost:8000/api/films/lastest/tv-series?limit=16",
+      setFilmsLastestTv
+    );
   }, []);
 
   return (
@@ -75,17 +100,25 @@ const HomePage = () => {
           <ButtonGroupShare />
         </span>
       </div>
+
+      {/* List movies */}
       <SessionsHome title={"Recommended"} tabs={tabs}>
-        {params.param.match("movies") && <ListMovies items={filmsType} />}
-        {/* {params.param.match("tv-shows") && <ListMovies items={tvseries} />}
-        {params.param.match("trending") && <ListMovies items={trending} />} */}
+        {params.param.match("movies") && (
+          <ListMovies items={filmsType.movies} />
+        )}
+        {params.param.match("tv-shows") && (
+          <ListMovies items={filmsType.tvSeries} />
+        )}
+        {params.param.match("trending") && (
+          <ListMovies items={filmsType.trending} />
+        )}
       </SessionsHome>
-      {/* <SessionsHome title={"Lastest Movies"} viewall={true} href="movies">
-        <ListMovies items={movies} />
+      <SessionsHome title={"Lastest Movies"} viewall={true} href="movies">
+        <ListMovies items={filmsType.lastest.movies} />
       </SessionsHome>
       <SessionsHome title={"Lastest TV Series"} viewall={true} href="tv-series">
-        <ListMovies items={tvseries} />
-      </SessionsHome> */}
+        <ListMovies items={filmsType.lastest.tvSeries} />
+      </SessionsHome>
     </div>
   );
 };

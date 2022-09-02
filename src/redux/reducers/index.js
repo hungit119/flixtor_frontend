@@ -1,4 +1,5 @@
 import { filmAdminReducer } from "./filmAdminReducer";
+import { filmReducer } from "./filmReducer";
 import { filmsReducer } from "./filmsReducer";
 import { userReducer } from "./userReducer";
 
@@ -9,6 +10,7 @@ const rootReducer = combineReducers({
   filmsAdmin: filmsAdminReducer,
   filmAdmin: filmAdminReducer,
   films: filmsReducer,
+  film: filmReducer,
   users: userReducer,
 });
 

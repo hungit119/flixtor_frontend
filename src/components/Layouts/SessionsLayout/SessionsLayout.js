@@ -19,15 +19,12 @@ import upperCaseFirst from "../../../utils/UpperCaseFirst";
 import { useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import {
-  setFilmsMovies,
-  setFilmsType,
+  setFilmsTrending,
+  setFilmsTypeMovies,
+  setFilmsTypeTv,
 } from "../../../redux/actions/filmsAction";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  filmsMoviesSelector,
-  filmsSelector,
-  filmsTypeSelector,
-} from "../../../redux/selectors";
+import { filmsTypeSelector, filmsSelector } from "../../../redux/selectors";
 const cx = classNames.bind(styles);
 const genreMenu = [
   "Action",
@@ -161,20 +158,21 @@ const SessionsLayout = ({ title, root }) => {
     };
     console.log(options);
   };
-  const getFilms = async () => {
+  const getFilms = async (urlApi, actionDispatch) => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/films/type/${root.toLowerCase()}`
-      );
+      const response = await axios.get(urlApi);
       if (response.data.success) {
-        dispatch(setFilmsType(response.data.filmsType));
+        dispatch(actionDispatch(response.data.filmsType));
       }
     } catch (errors) {
       console.log(errors.message);
     }
   };
   useEffect(() => {
-    getFilms();
+    getFilms("http://localhost:8000/api/films/type/movie", setFilmsTypeMovies);
+    getFilms("http://localhost:8000/api/films/type/tv-series", setFilmsTypeTv);
+    getFilms("http://localhost:8000/api/films/>=/imdb/9", setFilmsTrending);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [root]);
   return (
     <div className={cx("wrapper")}>
@@ -341,7 +339,15 @@ const SessionsLayout = ({ title, root }) => {
               <span>Filter</span>
             </li>
           </ul>
-          <ListMovies items={filmsType} />
+          <ListMovies
+            items={
+              root === "movie"
+                ? filmsType.movies
+                : root === "tv-series"
+                ? filmsType.tvSeries
+                : filmsType.trending
+            }
+          />
         </>
       </SessionsHome>
     </div>

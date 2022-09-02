@@ -9,7 +9,9 @@ import { Link } from "react-router-dom";
 const cx = className.bind(styles);
 
 const MovieItem = ({ item, col = "col-cus" }) => {
-  const href = `/${item.type.toLowerCase()}/${item.id}`;
+  const href = `/${
+    item.type.toLowerCase() === "tv-series" ? "tv" : item.type.toLowerCase()
+  }/${item.id}`;
   return (
     <div className={cx(col)}>
       <TippyWrapper

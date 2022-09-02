@@ -2,19 +2,19 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilm } from "../../../../../redux/actions/filmAction";
+import { setFilmAdmin } from "../../../../../redux/actions/filmAction";
 import { Table } from "react-bootstrap";
-import { filmSelector } from "../../../../../redux/selectors";
+import { filmAdminSelector } from "../../../../../redux/selectors";
 const Film = () => {
   const dispatch = useDispatch();
   const params = useParams();
-  const film = useSelector(filmSelector);
+  const film = useSelector(filmAdminSelector);
   const getFilm = async () => {
     const response = await axios.get(
       `http://localhost:8000/api/film/${params.id}`
     );
     if (response.data.success) {
-      dispatch(setFilm(response.data.film));
+      dispatch(setFilmAdmin(response.data.film));
     }
   };
   useEffect(() => {

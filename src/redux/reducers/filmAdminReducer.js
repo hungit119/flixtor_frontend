@@ -1,4 +1,4 @@
-import { SET_FILM } from "../const";
+import { SET_FILM_ADMIN } from "../const";
 
 export const filmAdminReducer = (
   state = {
@@ -10,7 +10,7 @@ export const filmAdminReducer = (
   action
 ) => {
   switch (action.type) {
-    case SET_FILM:
+    case SET_FILM_ADMIN:
       return action.payload;
 
     default:

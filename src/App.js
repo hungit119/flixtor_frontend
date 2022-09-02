@@ -39,7 +39,7 @@ function App() {
           path="/tv-series"
           element={
             <DefaultLayout>
-              <SessionsLayout title={"TV Series"} root={"tv-serie"} />
+              <SessionsLayout title={"TV Series"} root={"tv-series"} />
             </DefaultLayout>
           }
         />

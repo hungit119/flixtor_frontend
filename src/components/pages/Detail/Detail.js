@@ -23,8 +23,8 @@ import ServerButton from "../../ServerButton";
 import SessionsHome from "../../SessionsHome";
 import ListMovies from "../../ListMovies/ListMovies";
 import { useDispatch, useSelector } from "react-redux";
-import { setFilm } from "../../../redux/actions/filmAction";
-import { filmSelector } from "../../../redux/selectors";
+import { setFilm, setFilmSuggests } from "../../../redux/actions/filmAction";
+import { filmSelector, filmSuggestsSelector } from "../../../redux/selectors";
 
 const cx = className.bind(styles);
 
@@ -33,6 +33,7 @@ const Detail = ({ type }) => {
   const [more, setMore] = useState(true);
   const dispatch = useDispatch();
   const film = useSelector(filmSelector);
+  const filmSuggests = useSelector(filmSuggestsSelector);
   const params = useParams();
 
   const handleLessBtnClick = () => {
@@ -54,10 +55,24 @@ const Detail = ({ type }) => {
       console.log(errors.message);
     }
   };
+  const getFilmsSuggest = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/films/suggest/${params.id}`
+      );
+      if (response.data.success) {
+        dispatch(setFilmSuggests(response.data.filmSuggests));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     getFilm();
-  }, []);
+    getFilmsSuggest();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params.id]);
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
@@ -84,7 +99,7 @@ const Detail = ({ type }) => {
           className={cx("iframe")}
           widtd="1470"
           height="720"
-          src={`https://www.youtube.com/embed/${film.trailerURL}`}
+          src={`https://www.youtube-nocookie.com/embed/${film.trailerURL}`}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -193,7 +208,9 @@ const Detail = ({ type }) => {
                       />
                       <span>{film.imdb}</span>
                     </span>
-                    <span className={cx("time-text")}>{film.times} min</span>
+                    <span className={cx("time-text")}>
+                      {film.times === 1 ? "na" : film.times} min
+                    </span>
                   </div>
                   <div className={cx("description")}>
                     <span
@@ -269,7 +286,9 @@ const Detail = ({ type }) => {
                         </tr>
                         <tr>
                           <th>Director:</th>
-                          <td>{film.director}</td>
+                          <td>
+                            {film.director === "" ? "N/A" : film.director}
+                          </td>
                         </tr>
                         <tr>
                           <th>Production:</th>
@@ -287,7 +306,9 @@ const Detail = ({ type }) => {
                               <Link
                                 to={`/production/${film.productions.trim()}`}
                               >
-                                {film.productions}
+                                {film.productions === ""
+                                  ? "N/A"
+                                  : film.productions}
                               </Link>
                             )}
                           </td>
@@ -322,7 +343,7 @@ const Detail = ({ type }) => {
           </Col>
           <Col lg={4} className={cx("suggess")}>
             <SessionsHome title={"You may also like"}>
-              {/* <ListMovies items={tvseries} col={"col-cus-4"} /> */}
+              <ListMovies items={filmSuggests} col={"col-cus-4"} />
             </SessionsHome>
           </Col>
         </Row>

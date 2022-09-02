@@ -24,7 +24,11 @@ import {
   setFilmsTypeTv,
 } from "../../../redux/actions/filmsAction";
 import { useDispatch, useSelector } from "react-redux";
-import { filmsTypeSelector, filmsSelector } from "../../../redux/selectors";
+import {
+  filmsTypeAllMoviesSelector,
+  filmsTypeAllTvSelector,
+  filmsTypeAllTrendingSelector,
+} from "../../../redux/selectors";
 const cx = classNames.bind(styles);
 const genreMenu = [
   "Action",
@@ -145,7 +149,13 @@ const SessionsLayout = ({ title, root }) => {
   const [optionsSort, setOptionsSort] = useState("Default");
 
   const dispatch = useDispatch();
-  const filmsType = useSelector(filmsTypeSelector);
+  const filmsType = useSelector(
+    root === "movie"
+      ? filmsTypeAllMoviesSelector
+      : root === "tv-series"
+      ? filmsTypeAllTvSelector
+      : filmsTypeAllTrendingSelector
+  );
 
   const handleSubmitFilter = (e) => {
     const options = {
@@ -339,15 +349,7 @@ const SessionsLayout = ({ title, root }) => {
               <span>Filter</span>
             </li>
           </ul>
-          <ListMovies
-            items={
-              root === "movie"
-                ? filmsType.movies
-                : root === "tv-series"
-                ? filmsType.tvSeries
-                : filmsType.trending
-            }
-          />
+          <ListMovies items={filmsType} pagnition={true} />
         </>
       </SessionsHome>
     </div>

@@ -116,3 +116,43 @@
     width: 100%;
   }
 }
+.paginate-container {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 3rem;
+  font-size: 1.5rem;
+  gap: 5px;
+}
+.caret {
+  font-size: 3rem;
+  color: var(--primary);
+}
+.paginate-page {
+  width: 40px;
+  height: 40px;
+}
+.paginate-link {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  color: black;
+  font-weight: 400;
+  line-height: 22.5px;
+  &:hover {
+    background-color: #dddddd;
+    color: #0f6674;
+  }
+}
+.paginate-active-link {
+  color: white;
+  background-color: var(--primary);
+  &:hover {
+    color: white;
+    background-color: var(--primary);
+  }
+}

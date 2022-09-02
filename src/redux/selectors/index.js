@@ -4,3 +4,6 @@ export const offSetSelector = (state) => state.offSet;
 export const filmsTypeSelector = (state) => state.films;
 export const filmSelector = (state) => state.film.filmData;
 export const filmSuggestsSelector = (state) => state.film.filmSuggests;
+export const filmsTypeAllMoviesSelector = (state) => state.films.movies;
+export const filmsTypeAllTvSelector = (state) => state.films.tvSeries;
+export const filmsTypeAllTrendingSelector = (state) => state.films.trending;

@@ -58,7 +58,7 @@ const Detail = ({ type }) => {
   const getFilmsSuggest = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/films/suggest/${params.id}`
+        `http://localhost:8000/api/films/suggest/${params.id}?limit=9`
       );
       if (response.data.success) {
         dispatch(setFilmSuggests(response.data.filmSuggests));

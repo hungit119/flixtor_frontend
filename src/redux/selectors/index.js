@@ -7,3 +7,4 @@ export const filmSuggestsSelector = (state) => state.film.filmSuggests;
 export const filmsTypeAllMoviesSelector = (state) => state.films.movies;
 export const filmsTypeAllTvSelector = (state) => state.films.tvSeries;
 export const filmsTypeAllTrendingSelector = (state) => state.films.trending;
+export const filmsFilterSelector = (state) => state.filmsFilter;

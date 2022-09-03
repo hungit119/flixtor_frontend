@@ -1,9 +1,9 @@
 .wrapper {
+  background-color: var(--global-background-color);
 }
 .index-base {
   margin: 80px auto 0;
   max-width: 1000px;
-  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;

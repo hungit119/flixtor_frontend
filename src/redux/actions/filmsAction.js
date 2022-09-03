@@ -1,4 +1,5 @@
 import {
+  SET_FILMS_FILTER,
   SET_FILMS_LASTEST_MOVIES,
   SET_FILMS_LASTEST_TV,
   SET_FILMS_LIST_ADMIN,
@@ -29,5 +30,9 @@ export const setFilmsLastestMovies = (films) => ({
 });
 export const setFilmsLastestTv = (films) => ({
   type: SET_FILMS_LASTEST_TV,
+  payload: films,
+});
+export const setFilmsFilter = (films) => ({
+  type: SET_FILMS_FILTER,
   payload: films,
 });

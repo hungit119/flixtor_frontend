@@ -54,7 +54,7 @@ const ListMovies = ({ items, col, pagnition = false }) => {
           />
         </div>
       ) : (
-        <></>
+        <> </>
       )}
     </Container>
   );

@@ -7,6 +7,7 @@ import Contact from "./components/pages/Contact/Contact";
 import HomePage from "./components/pages/Home";
 import SearchDetail from "./components/pages/SearchDetail";
 import SitePage from "./components/pages/Site";
+import FilmsFilter from "./components/pages/FilmsFilter/FilmsFilter";
 function App() {
   return (
     <div className="App">
@@ -88,6 +89,14 @@ function App() {
           element={
             <DefaultLayout headerOnly={true}>
               <Admin />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/films-filter/:redirect"
+          element={
+            <DefaultLayout>
+              <FilmsFilter />
             </DefaultLayout>
           }
         />

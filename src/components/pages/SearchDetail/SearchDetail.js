@@ -8,10 +8,15 @@ import {
   faSort,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
 import classNames from "classnames/bind";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useParams } from "react-router-dom";
+import { setFilmsFilter } from "../../../redux/actions/filmsAction";
+import { filmsFilterSelector } from "../../../redux/selectors";
 import upperCaseFirst from "../../../utils/UpperCaseFirst";
+import FilterBar from "../../FilterBar";
 import ListMovies from "../../ListMovies/ListMovies";
 import MenuDropDownSearch from "../../MenuDropDownSearch";
 import SessionsHome from "../../SessionsHome";
@@ -179,207 +184,33 @@ const optionsFilter = [
 ];
 
 const SearchDetail = () => {
-  const [optionsGenre, setOptionsGenre] = useState([]);
-  const [optionsType, setOptionsType] = useState([]);
-  const [optionsCountry, setOptionsCountry] = useState([]);
-  const [optionsYear, setOptionsYear] = useState([]);
-  const [optionsQuantity, setOptionsQuantity] = useState([]);
-  const [optionsSort, setOptionsSort] = useState("Default");
-
+  const dispatch = useDispatch();
   let params = useParams();
   let { key, type } = params;
-  useEffect(() => {
-    if (key === "genre") {
-      setOptionsGenre([type]);
-      setOptionsCountry([]);
-    } else {
-      setOptionsCountry([type]);
-      setOptionsGenre([]);
-    }
-  }, [key, type]);
+  const filmsByType = useSelector(filmsFilterSelector);
 
-  const handleSubmitFilter = (e) => {
-    const options = {
-      genre: optionsGenre,
-      type: optionsType,
-      country: optionsCountry,
-      year: optionsYear,
-      quantity: optionsQuantity,
-      sort: optionsSort,
-    };
-    console.log(options);
+  const getFilmsByType = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/films/byType?key=${key}&type=${type}`
+      );
+      if (response.data.success) {
+        dispatch(setFilmsFilter(response.data.filmsByType));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
+  useEffect(() => {
+    getFilmsByType();
+  }, [params]);
 
   return (
     <div className={cx("wrapper")}>
-      <SessionsHome title={"Filter Movies"}>
+      <SessionsHome title={`${upperCaseFirst(type)} Movies, TV Shows`}>
         <>
-          <ul className={cx("list-filter")}>
-            <li className={cx("list-filter-item")}>
-              <TippyHeadLess
-                position="bottom-start"
-                menuTippy={
-                  <MenuDropDownSearch
-                    menus={genreMenu}
-                    size={"large"}
-                    grid={3}
-                    title={"genre"}
-                    setOptions={setOptionsGenre}
-                  />
-                }
-              >
-                <button className={cx("item")}>
-                  <FontAwesomeIcon icon={faFolderOpen} />
-                  <span>Genre</span>
-                  <span className={cx("value")}>
-                    {optionsGenre.length <= 0 && key === "genre"
-                      ? type
-                      : optionsGenre.length === 1
-                      ? optionsGenre[0]
-                      : optionsGenre.length > 1
-                      ? `${optionsGenre.length} selected`
-                      : "All"}
-                  </span>
-                </button>
-              </TippyHeadLess>
-            </li>
-            <li className={cx("list-filter-item")}>
-              <TippyHeadLess
-                position="bottom-start"
-                menuTippy={
-                  <MenuDropDownSearch
-                    menus={typeMenu}
-                    size={"small"}
-                    grid={12}
-                    title={"type"}
-                    setOptions={setOptionsType}
-                  />
-                }
-              >
-                <button className={cx("item")}>
-                  <FontAwesomeIcon icon={faClone} />
-                  <span>Type</span>
-                  <span className={cx("value")}>
-                    {optionsType.length <= 0
-                      ? "All"
-                      : optionsType.length === 1
-                      ? optionsType[0]
-                      : `${optionsType.length} selected`}
-                  </span>
-                </button>
-              </TippyHeadLess>
-            </li>
-            <li className={cx("list-filter-item")}>
-              <TippyHeadLess
-                position="bottom-start"
-                menuTippy={
-                  <MenuDropDownSearch
-                    menus={countryMenu}
-                    size={"large"}
-                    grid={3}
-                    title={"country"}
-                    setOptions={setOptionsCountry}
-                  />
-                }
-              >
-                <button className={cx("item")}>
-                  <FontAwesomeIcon icon={faEarth} />
-                  <span>Country</span>
-                  <span className={cx("value")}>
-                    {optionsCountry.length <= 0 && key === "country"
-                      ? type
-                      : optionsCountry.length === 1
-                      ? optionsCountry[0]
-                      : optionsCountry.length > 1
-                      ? `${optionsCountry.length} selected`
-                      : "All"}
-                  </span>
-                </button>
-              </TippyHeadLess>
-            </li>
-            <li className={cx("list-filter-item")}>
-              <TippyHeadLess
-                position="bottom-start"
-                menuTippy={
-                  <MenuDropDownSearch
-                    menus={yearMenu}
-                    size={"medium"}
-                    grid={4}
-                    title={"year"}
-                    setOptions={setOptionsYear}
-                  />
-                }
-              >
-                <button className={cx("item")}>
-                  <FontAwesomeIcon icon={faCalendarDays} />
-                  <span>Year</span>
-                  <span className={cx("value")}>
-                    {optionsYear.length <= 0
-                      ? "All"
-                      : optionsYear.length === 1
-                      ? optionsYear[0]
-                      : `${optionsYear.length} selected`}
-                  </span>
-                </button>
-              </TippyHeadLess>
-            </li>
-            <li className={cx("list-filter-item")}>
-              <TippyHeadLess
-                position="bottom-start"
-                menuTippy={
-                  <MenuDropDownSearch
-                    menus={quantityMenu}
-                    size={"small"}
-                    grid={12}
-                    title={"quantity"}
-                    setOptions={setOptionsQuantity}
-                  />
-                }
-              >
-                <button className={cx("item")}>
-                  <FontAwesomeIcon icon={faCube} />
-                  <span>Quantity</span>
-                  <span className={cx("value")}>
-                    {optionsQuantity.length <= 0
-                      ? "All"
-                      : optionsQuantity.length === 1
-                      ? optionsQuantity[0]
-                      : `${optionsQuantity.length} selected`}
-                  </span>
-                </button>
-              </TippyHeadLess>
-            </li>
-            <li className={cx("list-filter-item")}>
-              <TippyHeadLess
-                position="bottom-start"
-                menuTippy={
-                  <MenuDropDownSearch
-                    menus={sortMenu}
-                    size={"small"}
-                    grid={12}
-                    title={"sort"}
-                    type="radio"
-                    setOptions={setOptionsSort}
-                  />
-                }
-              >
-                <button className={cx("item")}>
-                  <FontAwesomeIcon icon={faSort} />
-                  <span>Sort</span>
-                  <span className={cx("value")}>
-                    {optionsSort.length === 0 || optionsSort === "Default"
-                      ? "Default"
-                      : upperCaseFirst(optionsSort)}
-                  </span>
-                </button>
-              </TippyHeadLess>
-            </li>
-            <li className={cx("btn-filter")} onClick={handleSubmitFilter}>
-              <FontAwesomeIcon icon={faFilter} />
-              <span>Filter</span>
-            </li>
-          </ul>
-          {/* <ListMovies items={movies} /> */}
+          <FilterBar type={key} value={type} />
+          <ListMovies items={filmsByType} pagnition={true} />
         </>
       </SessionsHome>
     </div>

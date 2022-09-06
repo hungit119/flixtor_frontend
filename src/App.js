@@ -8,6 +8,7 @@ import HomePage from "./components/pages/Home";
 import SearchDetail from "./components/pages/SearchDetail";
 import SitePage from "./components/pages/Site";
 import FilmsFilter from "./components/pages/FilmsFilter/FilmsFilter";
+import SearchResult from "./components/pages/SearchResult";
 function App() {
   return (
     <div className="App">
@@ -97,6 +98,14 @@ function App() {
           element={
             <DefaultLayout>
               <FilmsFilter />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <DefaultLayout>
+              <SearchResult />
             </DefaultLayout>
           }
         />

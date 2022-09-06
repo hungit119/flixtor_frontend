@@ -2,6 +2,7 @@ import { filmAdminReducer } from "./filmAdminReducer";
 import { filmReducer } from "./filmReducer";
 import filmsFilterReducer from "./filmsFilterReducer";
 import { filmsReducer } from "./filmsReducer";
+import { searchReaducer } from "./searchReducer";
 import { userReducer } from "./userReducer";
 
 const { combineReducers } = require("redux");
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   films: filmsReducer,
   filmsFilter: filmsFilterReducer,
   film: filmReducer,
+  search: searchReaducer,
   users: userReducer,
 });
 

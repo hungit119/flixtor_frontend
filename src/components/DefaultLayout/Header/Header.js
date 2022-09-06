@@ -1,4 +1,5 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames/bind";
 import { Row, Col, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -19,6 +20,15 @@ import MenuUserInfor from "../../MenuUserInfor/MenuUserInfor";
 import TippyWrapper from "../../TippyWrapper";
 import MenuItem from "../../MenuItem";
 import Auth from "../../Auth";
+import Tippy from "@tippyjs/react";
+import TippySearch from "../../TippySearch";
+import SearchResult from "../../SearchResult";
+import { searchInputValueSelector } from "../../../redux/selectors";
+import {
+  setSearchInputValue,
+  setSearchResults,
+} from "../../../redux/actions/searchAction";
+import axios from "axios";
 const cx = classNames.bind(styles);
 
 const menuItemsGenre = [
@@ -90,6 +100,10 @@ const Header = () => {
   const [login, setLogin] = useState(false);
   const [resultSearch, setResultSearch] = useState([]);
   const [auth, setAuth] = useState("login");
+  const dispatch = useDispatch();
+
+  const searchInputValue = useSelector(searchInputValueSelector);
+
   let href = window.location.href;
   let inputSearchHeaderRef = useRef(null);
   const handleSearchClick = () => {
@@ -103,6 +117,24 @@ const Header = () => {
   const handleSetAuthType = (type) => {
     setAuth(type);
   };
+  const getFilmsSearch = async (url) => {
+    try {
+      const response = await axios.get(url);
+      if (response.data.success) {
+        dispatch(setSearchResults(response.data.searchResult));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getFilmsSearch(
+      `http://localhost:8000/api/films/search?keyword=${searchInputValue}&limit=${
+        searchInputValue === "" ? "0" : "5"
+      }`
+    );
+  }, [searchInputValue]);
 
   return (
     <>
@@ -185,13 +217,21 @@ const Header = () => {
                 <></>
               ) : (
                 <Col lg={8} className={cx("search-wrapper")}>
-                  <input
-                    ref={inputSearchHeaderRef}
-                    type="text"
-                    className={cx("search-input")}
-                    placeholder="Enter your keywords..."
-                    autoComplete="off"
-                  />
+                  <TippySearch
+                    SearchResultElemnt={<SearchResult width="395px" />}
+                  >
+                    <input
+                      ref={inputSearchHeaderRef}
+                      type="text"
+                      className={cx("search-input")}
+                      placeholder="Enter your keywords header..."
+                      autoComplete="off"
+                      value={searchInputValue}
+                      onChange={(e) => {
+                        dispatch(setSearchInputValue(e.target.value));
+                      }}
+                    />
+                  </TippySearch>
                   <span
                     className={cx("search-icon-wrapper")}
                     onClick={handleSearchClick}
@@ -236,12 +276,18 @@ const Header = () => {
             Find Movies, TV Shows and more
           </div>
           <div className={cx("container-header-search")}>
-            <input
-              className={cx("header-search-input")}
-              type="text"
-              placeholder="Enter your keywords..."
-              ref={inputSearchHeaderRef}
-            ></input>
+            <TippySearch SearchResultElemnt={<SearchResult />}>
+              <input
+                className={cx("header-search-input")}
+                type="text"
+                placeholder="Enter your keywords..."
+                ref={inputSearchHeaderRef}
+                value={searchInputValue}
+                onChange={(e) => {
+                  dispatch(setSearchInputValue(e.target.value));
+                }}
+              ></input>
+            </TippySearch>
             <span
               className={cx("header-search-btn")}
               onClick={handleSearchClick}

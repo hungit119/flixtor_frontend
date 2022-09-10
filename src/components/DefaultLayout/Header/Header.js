@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import classNames from "classnames/bind";
 import { Row, Col, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
@@ -23,12 +23,16 @@ import Auth from "../../Auth";
 import Tippy from "@tippyjs/react";
 import TippySearch from "../../TippySearch";
 import SearchResult from "../../SearchResult";
-import { searchInputValueSelector } from "../../../redux/selectors";
+import {
+  searchInputValueSelector,
+  searchResultSelector,
+} from "../../../redux/selectors";
 import {
   setSearchInputValue,
   setSearchResults,
 } from "../../../redux/actions/searchAction";
 import axios from "axios";
+import useDebounce from "../../../hooks/useDebounce";
 const cx = classNames.bind(styles);
 
 const menuItemsGenre = [
@@ -98,16 +102,27 @@ const menuItemCountry = [
 const Header = () => {
   const [modalShow, setmodalShow] = useState(false);
   const [login, setLogin] = useState(false);
-  const [resultSearch, setResultSearch] = useState([]);
   const [auth, setAuth] = useState("login");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const searchInputValue = useSelector(searchInputValueSelector);
+  const debounced = useDebounce(searchInputValue, 500);
+  const searchResult = useSelector(searchResultSelector);
 
   let href = window.location.href;
   let inputSearchHeaderRef = useRef(null);
+
+  const handleChangeInputValue = (e) => {
+    dispatch(setSearchInputValue(e.target.value));
+  };
+
   const handleSearchClick = () => {
-    inputSearchHeaderRef.current.focus();
+    if (searchResult.length === 0) {
+      inputSearchHeaderRef.current.focus();
+    } else {
+      return navigate(`/search?keyword=${searchInputValue}`);
+    }
   };
   const hide = () => setmodalShow(false);
   const show = () => {
@@ -130,11 +145,11 @@ const Header = () => {
 
   useEffect(() => {
     getFilmsSearch(
-      `http://localhost:8000/api/films/search?keyword=${searchInputValue}&limit=${
-        searchInputValue === "" ? "0" : "5"
+      `http://localhost:8000/api/films/search?keyword=${debounced}&limit=${
+        debounced === "" ? "0" : "5"
       }`
     );
-  }, [searchInputValue]);
+  }, [debounced]);
 
   return (
     <>
@@ -227,9 +242,7 @@ const Header = () => {
                       placeholder="Enter your keywords header..."
                       autoComplete="off"
                       value={searchInputValue}
-                      onChange={(e) => {
-                        dispatch(setSearchInputValue(e.target.value));
-                      }}
+                      onChange={handleChangeInputValue}
                     />
                   </TippySearch>
                   <span
@@ -283,26 +296,28 @@ const Header = () => {
                 placeholder="Enter your keywords..."
                 ref={inputSearchHeaderRef}
                 value={searchInputValue}
-                onChange={(e) => {
-                  dispatch(setSearchInputValue(e.target.value));
-                }}
+                onChange={handleChangeInputValue}
               ></input>
+
+              <span
+                className={cx("header-search-btn")}
+                onClick={handleSearchClick}
+              >
+                <FontAwesomeIcon
+                  icon={faSearch}
+                  className={cx("search-icon-header-home")}
+                />
+              </span>
+              <div
+                className={cx("header-arrow-btn")}
+                onClick={handleSearchClick}
+              >
+                <FontAwesomeIcon
+                  icon={faArrowRight}
+                  className={cx("arrow-icon-header-home")}
+                />
+              </div>
             </TippySearch>
-            <span
-              className={cx("header-search-btn")}
-              onClick={handleSearchClick}
-            >
-              <FontAwesomeIcon
-                icon={faSearch}
-                className={cx("search-icon-header-home")}
-              />
-            </span>
-            <div className={cx("header-arrow-btn")} onClick={handleSearchClick}>
-              <FontAwesomeIcon
-                icon={faArrowRight}
-                className={cx("arrow-icon-header-home")}
-              />
-            </div>
           </div>
         </div>
       ) : (

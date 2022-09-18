@@ -4,6 +4,8 @@ import {
   SET_FILM_SORT_DEL,
   SET_FILM_SUGGESTS,
   SET_ID_FILM_DELETE,
+  SET_ID_FILM_REMOVE,
+  SET_ID_FILM_RESTORE,
 } from "../const";
 
 export const setFilmAdmin = (film) => {
@@ -22,5 +24,13 @@ export const setFilmSuggests = (filmSuggests) => ({
 });
 export const setFilmIdDelete = (id) => ({
   type: SET_ID_FILM_DELETE,
+  payload: id,
+});
+export const setFilmIdRestore = (id) => ({
+  type: SET_ID_FILM_RESTORE,
+  payload: id,
+});
+export const setFilmIdRemove = (id) => ({
+  type: SET_ID_FILM_REMOVE,
   payload: id,
 });

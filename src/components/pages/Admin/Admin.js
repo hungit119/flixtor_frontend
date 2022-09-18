@@ -12,6 +12,7 @@ import {
 import Add from "./content/Add";
 import List from "./content/List";
 import Film from "./content/Film/Film";
+import Delete from "./content/Delete";
 const cx = className.bind(styles);
 
 const Admin = () => {
@@ -42,6 +43,7 @@ const Admin = () => {
             path="/film/update/:id"
             element={<Add typeFunction="update" />}
           />
+          <Route path="/delete" element={<Delete />} />
         </Routes>
       </div>
     </div>

@@ -6,7 +6,10 @@ import {
   SET_FILMS_TRENDING,
   SET_FILMS_TYPE_MOVIES,
   SET_FILMS_TYPE_TV,
+  SET_FILM_REMOVED,
+  SET_FILM_RESTORE,
   SET_FILM_SORT_DEL,
+  SET_FILM_TRASH,
 } from "../const";
 
 export const setFilmsListAdmin = (films) => ({
@@ -39,5 +42,17 @@ export const setFilmsFilter = (films) => ({
 });
 export const setFilmSortDel = (id) => ({
   type: SET_FILM_SORT_DEL,
+  payload: id,
+});
+export const setFilmRestore = (id) => ({
+  type: SET_FILM_RESTORE,
+  payload: id,
+});
+export const setFilmTrash = (films) => ({
+  type: SET_FILM_TRASH,
+  payload: films,
+});
+export const setFilmRemoved = (id) => ({
+  type: SET_FILM_REMOVED,
   payload: id,
 });

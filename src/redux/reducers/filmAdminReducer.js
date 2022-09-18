@@ -2,6 +2,8 @@ import {
   SET_FILM_ADMIN,
   SET_FILM_SORT_DEL,
   SET_ID_FILM_DELETE,
+  SET_ID_FILM_REMOVE,
+  SET_ID_FILM_RESTORE,
 } from "../const";
 
 export const filmAdminReducer = (
@@ -27,6 +29,8 @@ export const filmAdminReducer = (
       trailerURL: "",
     },
     id: "",
+    idRestore: "",
+    idRemove: "",
   },
   action
 ) => {
@@ -36,6 +40,11 @@ export const filmAdminReducer = (
 
     case SET_ID_FILM_DELETE:
       return { ...state, id: action.payload };
+    case SET_ID_FILM_RESTORE:
+      return { ...state, idRestore: action.payload };
+    case SET_ID_FILM_REMOVE:
+      return { ...state, idRemove: action.payload };
+
     default:
       return state;
   }

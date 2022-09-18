@@ -2,10 +2,24 @@ import { SET_FILM_ADMIN } from "../const";
 
 export const filmAdminReducer = (
   state = {
-    countries: "",
-    genres: "",
+    title: "",
+    poster: "",
+    thumnail: "",
+    times: "",
+    type: "",
+    quantity: "",
+    description: "",
+    tags: "",
     productions: "",
+    genres: "",
+    countries: "",
+    rating: "",
+    imdb: "",
+    releases: "",
+    director: "",
     casts: "",
+    year: "",
+    trailerURL: "",
   },
   action
 ) => {

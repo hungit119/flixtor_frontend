@@ -1,37 +1,47 @@
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import className from "classnames/bind";
-import React, { useRef, useState } from "react";
 import axios from "axios";
+import className from "classnames/bind";
+import React, { useEffect, useRef, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
-import { ToastContainer, toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
+import { setFilmAdmin } from "../../../../../redux/actions/filmAction";
+import { filmAdminSelector } from "../../../../../redux/selectors";
 import TippyWrapper from "../../../../TippyWrapper";
 import ToolTipBox from "../../../../ToolTipBox";
 import styles from "./Add.module.scss";
 const cx = className.bind(styles);
 
-const Add = () => {
+const Add = ({ typeFunction }) => {
   const [form, setForm] = useState({
     title: "",
     poster: "",
     thumnail: "",
-    time: "",
+    times: "",
     type: "",
     quantity: "",
     description: "",
     tags: "",
     productions: "",
-    genre: "",
+    genres: "",
     countries: "",
     rating: "",
     imdb: "",
-    release: "",
+    releases: "",
     director: "",
-    cast: "",
+    casts: "",
     year: "",
     trailerURL: "",
   });
+  const [stt, setStt] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const params = useParams();
   const inputRef = useRef(null);
+  const filmUpdate = useSelector(filmAdminSelector);
+
   const handleInputChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     document
@@ -69,12 +79,12 @@ const Add = () => {
         poster: form.poster,
         trailerURL: form.trailerURL,
         thumnail: form.thumnail,
-        time: form.time,
+        time: form.times,
         description: form.description,
         tags: form.tags,
         rating: form.rating,
         imdb: form.imdb,
-        release: form.release,
+        release: form.releases,
         director: form.director,
         type_id: `${form.type}_id`,
         quantity_id: `${form.quantity}_id`,
@@ -82,9 +92,9 @@ const Add = () => {
       };
       const payload = {
         filmData,
-        genres_film: form.genre,
+        genres_film: form.genres,
         countries_film: form.countries,
-        casts_film: form.cast,
+        casts_film: form.casts,
         productions_film: form.productions,
       };
       const response = await axios.post(
@@ -100,19 +110,19 @@ const Add = () => {
           title: "",
           poster: "",
           thumnail: "",
-          time: "",
+          times: "",
           type: "",
           quantity: "",
           description: "",
           tags: "",
           productions: "",
-          genre: "",
+          genres: "",
           countries: "",
           rating: "",
           imdb: "",
-          release: "",
+          releases: "",
           director: "",
-          cast: "",
+          casts: "",
           year: "",
           trailerURL: "",
         });
@@ -127,29 +137,86 @@ const Add = () => {
       toast.error("Error creating film !");
     }
   };
+  const handleClickUpdate = async () => {
+    try {
+      const newFilmData = {
+        title: form.title,
+        poster: form.poster,
+        trailerURL: form.trailerURL,
+        thumnail: form.thumnail,
+        time: form.times,
+        description: form.description,
+        tags: form.tags,
+        rating: form.rating,
+        imdb: form.imdb,
+        release: form.releases,
+        director: form.director,
+        type_id: `${form.type}_id`,
+        quantity_id: `${form.quantity}_id`,
+        year_id: `${form.year}_id`,
+      };
+      const newPayload = {
+        newFilmData,
+        genres_film: form.genres,
+        countries_film: form.countries,
+        casts_film: form.casts,
+        productions_film: form.productions,
+      };
+      const response = await axios.post(
+        `http://localhost:8000/api/film/update?idFilm=${params.id}&stt=${stt}`,
+        { newPayload }
+      );
+      if (response.data.success) {
+        navigate("/admin");
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   const handleClickReset = () => {
     setForm({
       ...form,
       title: "",
       poster: "",
       thumnail: "",
-      time: "",
+      times: "",
       type: "",
       quantity: "",
       description: "",
       tags: "",
       productions: "",
-      genre: "",
+      genres: "",
       countries: "",
       rating: "",
       imdb: "",
-      release: "",
+      releases: "",
       director: "",
-      cast: "",
+      casts: "",
       year: "",
       trailerURL: "",
     });
   };
+  const getFilm = async () => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/film/${params.id}`
+      );
+      if (response.data.success) {
+        setForm(response.data.film);
+        setStt(response.data.film.stt);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+  useEffect(() => {
+    if (typeFunction === "update") {
+      getFilm();
+    } else {
+      handleClickReset();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filmUpdate, typeFunction]);
   return (
     <>
       <ToastContainer />
@@ -165,7 +232,7 @@ const Add = () => {
                   <Form.Control
                     className={cx("form-control", "form-input-create")}
                     type="text"
-                    placeholder="Enter title"
+                    placeholder={"Enter title"}
                     value={form.title}
                     name="title"
                     ref={inputRef}
@@ -271,8 +338,8 @@ const Add = () => {
                         as="input"
                         className={cx("form-control", "form-input-create")}
                         placeholder={"Enter time"}
-                        value={form.time}
-                        name="time"
+                        value={form.times}
+                        name="times"
                         onChange={handleInputChange}
                       />
                     </Form.Group>
@@ -286,8 +353,8 @@ const Add = () => {
                         as="input"
                         className={cx("form-control", "form-input-create")}
                         placeholder={"Enter release"}
-                        value={form.release}
-                        name="release"
+                        value={form.releases}
+                        name="releases"
                         onChange={handleInputChange}
                       />
                     </Form.Group>
@@ -314,8 +381,8 @@ const Add = () => {
                         className={cx("form-control", "form-input-create")}
                         placeholder="Enter casts name"
                         as="input"
-                        value={form.cast}
-                        name="cast"
+                        value={form.casts}
+                        name="casts"
                         onChange={handleInputChange}
                       />
                     </Form.Group>
@@ -340,8 +407,8 @@ const Add = () => {
                         className={cx("form-control", "form-input-create")}
                         placeholder="Enter genre"
                         as="input"
-                        value={form.genre}
-                        name="genre"
+                        value={form.genres}
+                        name="genres"
                         onChange={handleInputChange}
                       />
                     </Form.Group>
@@ -435,12 +502,23 @@ const Add = () => {
                       />
                     </Form.Group>
                     <div className={cx("btn-group-custom")}>
-                      <Button
-                        className={cx("btn-custom")}
-                        onClick={handleClickCreate}
-                      >
-                        Create
-                      </Button>
+                      {typeFunction === "update" ? (
+                        <Button
+                          variant="success"
+                          className={cx("btn-custom")}
+                          onClick={handleClickUpdate}
+                        >
+                          Update
+                        </Button>
+                      ) : (
+                        <Button
+                          className={cx("btn-custom")}
+                          onClick={handleClickCreate}
+                        >
+                          Create
+                        </Button>
+                      )}
+
                       <Button
                         className={cx("btn-custom")}
                         variant="danger"
@@ -490,7 +568,7 @@ const Add = () => {
                         <div className={cx("movie-body")}>
                           <span className={cx("movie-meta")}>
                             <span>{form.year}</span> &#8226;{" "}
-                            <span>{form.time} min</span>
+                            <span>{form.times} min</span>
                           </span>
                           <span className={cx("movies-type")}>{form.type}</span>
                         </div>

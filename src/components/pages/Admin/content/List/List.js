@@ -55,6 +55,7 @@ const List = () => {
                 <th>ID</th>
                 <th>Title</th>
                 <th></th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
@@ -67,6 +68,13 @@ const List = () => {
                     <Link to={`/admin/film/${page.id}`}>
                       <Button size="lg" variant="danger">
                         Detail
+                      </Button>
+                    </Link>
+                  </td>
+                  <td>
+                    <Link to={`/admin/film/update/${page.id}`}>
+                      <Button size="lg" variant="success">
+                        Update
                       </Button>
                     </Link>
                   </td>

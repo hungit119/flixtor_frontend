@@ -27,10 +27,6 @@ const Admin = () => {
             <FontAwesomeIcon icon={faAdd} className={cx("icon")} />
             <span>Create a movie</span>
           </Link>
-          <Link to={"/admin/update"} className={cx("side-item")}>
-            <FontAwesomeIcon icon={faEdit} className={cx("icon")} />
-            <span>Movie Update</span>
-          </Link>
           <Link to={"/admin/delete"} className={cx("side-item")}>
             <FontAwesomeIcon icon={faTrash} className={cx("icon")} />
             <span>Delete movies</span>
@@ -41,8 +37,11 @@ const Admin = () => {
         <Routes>
           <Route path="/" element={<List />} />
           <Route path="/add" element={<Add />} />
-          <Route path="/update" element={<h1>Cập nhật phim</h1>} />
           <Route path="/film/:id" element={<Film />} />
+          <Route
+            path="/film/update/:id"
+            element={<Add typeFunction="update" />}
+          />
         </Routes>
       </div>
     </div>

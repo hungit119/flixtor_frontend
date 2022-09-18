@@ -6,6 +6,7 @@ import {
   SET_FILMS_TRENDING,
   SET_FILMS_TYPE_MOVIES,
   SET_FILMS_TYPE_TV,
+  SET_FILM_SORT_DEL,
 } from "../const";
 
 export const setFilmsListAdmin = (films) => ({
@@ -35,4 +36,8 @@ export const setFilmsLastestTv = (films) => ({
 export const setFilmsFilter = (films) => ({
   type: SET_FILMS_FILTER,
   payload: films,
+});
+export const setFilmSortDel = (id) => ({
+  type: SET_FILM_SORT_DEL,
+  payload: id,
 });

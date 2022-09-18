@@ -1,5 +1,6 @@
-export const filmsSelector = (state) => state.filmsAdmin;
-export const filmAdminSelector = (state) => state.filmAdmin;
+export const filmsSelector = (state) =>
+  state.filmsAdmin.filter((film) => film.sortDel === 0);
+export const filmAdminSelector = (state) => state.filmAdmin.film;
 export const offSetSelector = (state) => state.offSet;
 export const filmsTypeSelector = (state) => state.films;
 export const filmSelector = (state) => state.film.filmData;
@@ -12,3 +13,4 @@ export const searchInputValueSelector = (state) => state.search.searchInput;
 export const searchResultSelector = (state) => state.search.searchResults;
 export const searchResultFullSelector = (state) =>
   state.search.searchResultsFull;
+export const filmIdSelector = (state) => state.filmAdmin.id;

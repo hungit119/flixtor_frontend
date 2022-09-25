@@ -8,8 +8,17 @@ import {
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import { ACCESS_TOKEN_NAME } from "../../constants";
+import setAuthToken from "../../utils/setAuthToken";
 const cx = classNames.bind(styles);
 const MenuUserInfor = () => {
+  const handleClickLogout = () => {
+    if (localStorage[ACCESS_TOKEN_NAME]) {
+      localStorage.removeItem(ACCESS_TOKEN_NAME);
+      setAuthToken();
+      window.location.reload();
+    }
+  };
   return (
     <div className={cx("wrapper")}>
       <div className={cx("menu-user-item")}>
@@ -36,7 +45,7 @@ const MenuUserInfor = () => {
           className={cx("icon-menu-user-info")}
           icon={faSignOut}
         />
-        <span>Sign Out</span>
+        <span onClick={handleClickLogout}>Sign Out</span>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import styles from "./ButtonCus.module.scss";
 import { Button } from "react-bootstrap";
 const cx = className.bind(styles);
 
-const ButtonCus = ({ children, classname, style }) => {
+const ButtonCus = ({ children, classname, style, onClick }) => {
   const classnames = cx("btn-flat", {
     [classname]: classname,
   });
@@ -27,7 +27,13 @@ const ButtonCus = ({ children, classname, style }) => {
               }
             `}
       </style>
-      <Button variant="flat" size="xxl" className={classname} style={style}>
+      <Button
+        variant="flat"
+        size="xxl"
+        className={classname}
+        style={style}
+        onClick={onClick}
+      >
         {children}
       </Button>
     </>

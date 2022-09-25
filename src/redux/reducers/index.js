@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   filmsFilter: filmsFilterReducer,
   film: filmReducer,
   search: searchReaducer,
-  users: userReducer,
+  user: userReducer,
 });
 
 export default rootReducer;

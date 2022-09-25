@@ -181,6 +181,10 @@
   display: flex;
   align-items: center;
 }
+.infor-user-username {
+  max-width: 100px;
+  overflow: hidden;
+}
 .sortDown-icon {
   margin: 0 0 8px 4px;
 }

@@ -1,181 +1,377 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import className from "classnames/bind";
 import styles from "./Auth.module.scss";
-import { Button } from "react-bootstrap";
+import { Button, Spinner, Toast } from "react-bootstrap";
 import ButtonCus from "../ButtonCus";
+import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
+import { ACCESS_TOKEN_NAME, apiUrl } from "../../constants";
+import { useDispatch } from "react-redux";
+import { setUserInfo } from "../../redux/actions/authAction";
 const cx = className.bind(styles);
 
 const Auth = ({ type = "register", handleSetAuthType }) => {
-  const [inputFalse, setInputFalse] = useState(false);
-  return (
-    <div className={cx("wrapper")}>
-      <div className={cx("header")}>
-        {type === "login"
-          ? "Sign In"
-          : type === "forgot-password"
-          ? "Forgot Password"
-          : "Create Account"}
-      </div>
-      {type === "register" ? (
-        <div className={cx("description")}>
-          Create an account to enjoy more features
-        </div>
-      ) : (
-        <></>
-      )}
-      <div className={cx("input-group")}>
-        <div className={cx("label")}>
-          {type === "register" ? "Username" : "Your account"}
-        </div>
-        <div className={cx("input-wrapper")}>
-          <input
-            className={cx("input")}
-            type="text"
-            placeholder={
-              type === "register" ? "Your username" : "Your username or email"
-            }
-            name="username"
-          />
-        </div>
-      </div>
-      {type === "register" ? (
-        <div className={cx("input-group")}>
-          <div className={cx("label")}>Email address</div>
-          <div className={cx("input-wrapper")}>
-            <input
-              className={cx("input")}
-              type="text"
-              placeholder="Your email"
-              name="email"
-            />
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {type === "forgot-password" ? (
-        <></>
-      ) : (
-        <div className={cx("input-group")}>
-          <div className={cx("label")}>Password</div>
-          <div className={cx("input-wrapper")}>
-            <input
-              className={cx("input")}
-              type="text"
-              placeholder="Your password"
-              name="password"
-            />
-          </div>
-        </div>
-      )}
-      {type === "register" ? (
-        <div className={cx("input-group")}>
-          <div className={cx("label")}>Password confirmation</div>
-          <div className={cx("input-wrapper")}>
-            <input
-              className={cx("input")}
-              type="text"
-              placeholder="Repeat your password"
-              name="re-password"
-            />
-          </div>
-        </div>
-      ) : (
-        <></>
-      )}
-      {type === "register" ? (
-        <></>
-      ) : type === "login" ? (
-        <>
-          <div
-            className={cx("forgot")}
-            onClick={() => {
-              handleSetAuthType("forgot-password");
-            }}
-          >
-            Forgot your password?
-          </div>
-          <div className={cx("remember")}>
-            <input type="checkbox" />
-            <span>Remember me</span>
-          </div>
-        </>
-      ) : (
-        <></>
-      )}
-      <div>
-        {/* <style type="text/css">
-          {`
-              .btn-flat {
-                background-color: #17a2b8;
-                color: white;
-              }
+  const dispatch = useDispatch();
+  const [loginSuccess, setLoginSuccess] = useState(false);
+  const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [registerForm, setRegisterForm] = useState({
+    username: "",
+    password: "",
+    email: "",
+    rePassword: "",
+  });
+  const [loginForm, setLoginForm] = useState({
+    username: "",
+    password: "",
+  });
+  const [forgotPassForm, setForgotPassForm] = useState({
+    username: "",
+  });
 
-              .btn-xxl {
-                padding: 11px 23px;
-                font-size: 1.575rem;
-              }
-              .btn-flat:hover, .btn-flat:focus, .btn-flat:active, .btn-flat.active, .open>.dropdown-toggle.btn-flat {
-                color: #fff;
-                background-color: #138496;
-              }
-            `}
-        </style>
-        <Button variant="flat" size="xxl" className={cx("btn-flat")}>
-          {type === "register"
-            ? "Register"
-            : type === "login"
-            ? "Login"
-            : "Forgot"}
-        </Button> */}
-        <ButtonCus
-          classname={"btn-flat-auth"}
-          style={{ width: "100%", marginTop: "30px" }}
-        >
-          {type === "register"
-            ? "Register"
-            : type === "login"
-            ? "Login"
-            : "Forgot"}
-        </ButtonCus>
-      </div>
-      <div className={cx("footer")}>
+  const validateFormInputByClassName = (className) => {
+    var result = true;
+    const inputFormCreate = document.getElementsByClassName(className);
+    const array_inputFormCreate = Object.values(inputFormCreate);
+    array_inputFormCreate.forEach((input) => {
+      if (input.value === "") {
+        input.classList.add(cx("error-input"));
+        result = false;
+      }
+    });
+    return result;
+  };
+
+  // Handle Change Input
+
+  const handleInputRegisterChange = (e) => {
+    setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
+    document
+      .querySelector(`[name="${e.target.name}"]`)
+      .classList.remove(cx("error-input"));
+  };
+  const handleInputLoginChange = (e) => {
+    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
+    document
+      .querySelector(`[name="${e.target.name}"]`)
+      .classList.remove(cx("error-input"));
+  };
+  const handleInputForgotPassChange = (e) => {
+    setForgotPassForm({ ...forgotPassForm, [e.target.name]: e.target.value });
+    document
+      .querySelector(`[name="${e.target.name}"]`)
+      .classList.remove(cx("error-input"));
+  };
+
+  // Handle Click Buttons
+
+  const handleRegisterClick = async () => {
+    if (validateFormInputByClassName("register") === false) {
+      toast.warning("Please fill in the required fields !!", {
+        theme: "colored",
+      });
+      return;
+    }
+    if (registerForm.password !== registerForm.rePassword) {
+      document
+        .querySelector("[name=rePassword]")
+        .classList.add(cx("error-input"));
+      toast.error("Re-password must same password  !!", {
+        theme: "colored",
+      });
+      return;
+    }
+    const formValue = { ...registerForm };
+    try {
+      setIsLoading(true);
+      const response = await axios.post(`${apiUrl}/auth/register`, {
+        ...formValue,
+      });
+      if (response.data.success) {
+        setIsLoading(false);
+        dispatch(setUserInfo(response.data.reply));
+        const { accessToken } = response.data.reply;
+        localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
+        setRegisterSuccess(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          window.location.reload();
+        }, 1000);
+      } else {
+        toast.error(response.data.message, {
+          theme: "colored",
+        });
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Incorrect username or password", {
+        theme: "colored",
+      });
+      setIsLoading(false);
+    }
+  };
+  const handleLoginClick = async () => {
+    if (validateFormInputByClassName("login") === false) {
+      toast.warning("Please fill in the required fields !!", {
+        theme: "colored",
+      });
+      return;
+    }
+    const formValue = { ...loginForm };
+    try {
+      setIsLoading(true);
+      const response = await axios.post(`${apiUrl}/auth/login`, {
+        ...formValue,
+      });
+      if (response.data.success) {
+        dispatch(setUserInfo(response.data.reply.username));
+        const { accessToken } = response.data.reply;
+        localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
+        setLoginSuccess(true);
+        setTimeout(() => {
+          setIsLoading(false);
+          window.location.reload();
+        }, 1000);
+      } else {
+        toast.error(response.data.message, {
+          theme: "colored",
+        });
+        setIsLoading(false);
+      }
+    } catch (error) {
+      console.log(error.message);
+      toast.error("Incorrect username or password", {
+        theme: "colored",
+      });
+      setIsLoading(false);
+    }
+  };
+  const handleForgotClick = () => {
+    if (validateFormInputByClassName("forgotPass") === false) {
+      toast.warning("Please fill in the required fields !!", {
+        theme: "colored",
+      });
+      return;
+    }
+    const formValue = { ...forgotPassForm };
+    console.log({ formValue });
+  };
+  return (
+    <>
+      <ToastContainer />
+      <div className={cx("wrapper")}>
+        <div className={cx("header")}>
+          {type === "login"
+            ? "Sign In"
+            : type === "forgot-password"
+            ? "Forgot Password"
+            : "Create Account"}
+        </div>
         {type === "register" ? (
+          registerSuccess ? (
+            <div className={cx("notice-auth")}>Register successfully</div>
+          ) : (
+            <div className={cx("description")}>
+              Create an account to enjoy more features
+            </div>
+          )
+        ) : (
           <>
-            <span>Have an account ?</span>{" "}
+            {loginSuccess ? (
+              <div className={cx("notice-auth")}>Logged in successfully</div>
+            ) : (
+              <></>
+            )}
+          </>
+        )}
+        <div className={cx("input-group")}>
+          <div className={cx("label")}>
+            {type === "register" ? "Username" : "Your account"}
+          </div>
+          <div className={cx("input-wrapper")}>
+            <input
+              className={cx(
+                "input",
+                type === "register"
+                  ? "register"
+                  : type === "login"
+                  ? "login"
+                  : "forgotPass"
+              )}
+              type="text"
+              placeholder={"Your username"}
+              name="username"
+              onChange={
+                type === "register"
+                  ? handleInputRegisterChange
+                  : type === "forgot-password"
+                  ? handleInputForgotPassChange
+                  : handleInputLoginChange
+              }
+              value={
+                type === "register"
+                  ? registerForm.username
+                  : type === "login"
+                  ? loginForm.username
+                  : forgotPassForm.username
+              }
+            />
+          </div>
+        </div>
+        {type === "register" ? (
+          <div className={cx("input-group")}>
+            <div className={cx("label")}>Email address</div>
+            <div className={cx("input-wrapper")}>
+              <input
+                className={cx("input", "register")}
+                type="text"
+                placeholder="Your email"
+                name="email"
+                onChange={handleInputRegisterChange}
+              />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+        {type === "forgot-password" ? (
+          <></>
+        ) : (
+          <div className={cx("input-group")}>
+            <div className={cx("label")}>Password</div>
+            <div className={cx("input-wrapper")}>
+              <input
+                className={cx(
+                  "input",
+                  type === "register" ? "register" : "login"
+                )}
+                type="password"
+                placeholder="Your password"
+                name="password"
+                onChange={
+                  type === "register"
+                    ? handleInputRegisterChange
+                    : handleInputLoginChange
+                }
+                value={
+                  type === "register"
+                    ? registerForm.password
+                    : loginForm.password
+                }
+              />
+            </div>
+          </div>
+        )}
+        {type === "register" ? (
+          <div className={cx("input-group")}>
+            <div className={cx("label")}>Password confirmation</div>
+            <div className={cx("input-wrapper")}>
+              <input
+                className={cx("input", "register")}
+                type="password"
+                placeholder="Repeat your password"
+                name="rePassword"
+                onChange={handleInputRegisterChange}
+              />
+            </div>
+          </div>
+        ) : (
+          <></>
+        )}
+        {type === "register" ? (
+          <></>
+        ) : type === "login" ? (
+          <>
+            <div
+              className={cx("forgot")}
+              onClick={() => {
+                handleSetAuthType("forgot-password");
+                setLoginForm({ username: "", password: "" });
+              }}
+            >
+              Forgot your password?
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+        {isLoading ? (
+          <div className={cx("text-center")}>
+            <Spinner animation="border" variant="primary" />
+          </div>
+        ) : (
+          <></>
+        )}
+        <div>
+          {type === "register" ? (
+            <ButtonCus
+              classname={"btn-flat-auth"}
+              style={{ width: "100%", marginTop: "30px" }}
+              onClick={handleRegisterClick}
+            >
+              Register
+            </ButtonCus>
+          ) : type === "login" ? (
+            <ButtonCus
+              classname={"btn-flat-auth"}
+              style={{ width: "100%", marginTop: "30px" }}
+              onClick={handleLoginClick}
+            >
+              Login
+            </ButtonCus>
+          ) : (
+            <ButtonCus
+              classname={"btn-flat-auth"}
+              style={{ width: "100%", marginTop: "30px" }}
+              onClick={handleForgotClick}
+            >
+              Forgot
+            </ButtonCus>
+          )}
+        </div>
+
+        <div className={cx("footer")}>
+          {type === "register" ? (
+            <>
+              <span>Have an account ?</span>{" "}
+              <span
+                className={cx("btn-register-link")}
+                onClick={() => {
+                  handleSetAuthType("login");
+                  setRegisterForm({ username: "", password: "" });
+                }}
+              >
+                Login
+              </span>
+            </>
+          ) : type === "login" ? (
+            <>
+              <span>Don't have an account ?</span>{" "}
+              <span
+                className={cx("btn-register-link")}
+                onClick={() => {
+                  handleSetAuthType("register");
+                  setLoginForm({ username: "", password: "" });
+                }}
+              >
+                Register
+              </span>
+            </>
+          ) : (
             <span
               className={cx("btn-register-link")}
               onClick={() => {
                 handleSetAuthType("login");
+                setForgotPassForm({ username: "" });
               }}
             >
-              Login
+              Back to Sign In
             </span>
-          </>
-        ) : type === "login" ? (
-          <>
-            <span>Don't have an account ?</span>{" "}
-            <span
-              className={cx("btn-register-link")}
-              onClick={() => {
-                handleSetAuthType("register");
-              }}
-            >
-              Register
-            </span>
-          </>
-        ) : (
-          <span
-            className={cx("btn-register-link")}
-            onClick={() => {
-              handleSetAuthType("login");
-            }}
-          >
-            Back to Sign In
-          </span>
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

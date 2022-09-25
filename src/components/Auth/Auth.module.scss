@@ -76,3 +76,31 @@
   color: #495057;
   margin: 20px 0 15px;
 }
+.error-input {
+  border: 1px solid red;
+  transition: all ease-in-out 0.2s;
+}
+.notice-auth {
+  background-color: #d1ecf1;
+  color: #0c5460;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  padding: 0 17.5px;
+  border-radius: 3px;
+  margin-bottom: 14px;
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+  animation-duration: 0.5s;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

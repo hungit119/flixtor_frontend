@@ -18,3 +18,5 @@ export const filmIdRestoreSelector = (state) => state.filmAdmin.idRestore;
 export const filmIdRemoveSelector = (state) => state.filmAdmin.idRemove;
 export const filmsTrashSelector = (state) =>
   state.filmsAdmin.films.filter((film) => film.sortDel === 1);
+// User
+export const userInfoUsernameSelector = (state) => state.user.username;

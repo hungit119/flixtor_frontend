@@ -21,3 +21,7 @@ export const SET_ID_FILM_RESTORE = "SET_ID_FILM_RESTORE";
 export const SET_FILM_RESTORE = "SET_FILM_RESTORE";
 export const SET_ID_FILM_REMOVE = "SET_ID_FILM_REMOVE";
 export const SET_FILM_REMOVED = "SET_FILM_REMOVED";
+
+// Auth const
+
+export const SET_USER_INFOR = "SET_USER_INFOR";

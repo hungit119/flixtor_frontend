@@ -26,6 +26,8 @@ import SearchResult from "../../SearchResult";
 import {
   searchInputValueSelector,
   searchResultSelector,
+  userInfoSelector,
+  userInfoUsernameSelector,
 } from "../../../redux/selectors";
 import {
   setSearchInputValue,
@@ -33,6 +35,9 @@ import {
 } from "../../../redux/actions/searchAction";
 import axios from "axios";
 import useDebounce from "../../../hooks/useDebounce";
+import { ACCESS_TOKEN_NAME, apiUrl } from "../../../constants";
+import setAuthToken from "../../../utils/setAuthToken";
+import { setUserInfo } from "../../../redux/actions/authAction";
 const cx = classNames.bind(styles);
 
 const menuItemsGenre = [
@@ -109,7 +114,7 @@ const Header = () => {
   const searchInputValue = useSelector(searchInputValueSelector);
   const debounced = useDebounce(searchInputValue, 500);
   const searchResult = useSelector(searchResultSelector);
-
+  const username = useSelector(userInfoUsernameSelector);
   let href = window.location.href;
   let inputSearchHeaderRef = useRef(null);
 
@@ -132,6 +137,24 @@ const Header = () => {
   const handleSetAuthType = (type) => {
     setAuth(type);
   };
+  const loadUser = async () => {
+    try {
+      if (localStorage[ACCESS_TOKEN_NAME]) {
+        setAuthToken(localStorage[ACCESS_TOKEN_NAME]);
+      }
+      const response = await axios.get(`${apiUrl}/auth`);
+      if (response.data.success) {
+        dispatch(setUserInfo(response.data.userInfo.username));
+        setmodalShow(false);
+        setLogin(true);
+      } else {
+        dispatch(setUserInfo({}));
+        setLogin(false);
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   const getFilmsSearch = async (url) => {
     try {
       const response = await axios.get(url);
@@ -143,6 +166,9 @@ const Header = () => {
     }
   };
 
+  useEffect(() => {
+    loadUser();
+  }, []);
   useEffect(() => {
     getFilmsSearch(
       `http://localhost:8000/api/films/search?keyword=${debounced}&limit=${
@@ -260,7 +286,9 @@ const Header = () => {
                 {login ? (
                   <TippyHeadLess menuTippy={<MenuUserInfor />}>
                     <button className={cx("dropdown-user-info")}>
-                      <span>{"hungtdmotadev"}</span>
+                      <span className={cx("infor-user-username")}>
+                        {username}
+                      </span>
                       <FontAwesomeIcon
                         className={cx("sortDown-icon")}
                         icon={faSortDown}

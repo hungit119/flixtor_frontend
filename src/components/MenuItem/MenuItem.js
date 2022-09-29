@@ -12,7 +12,7 @@ const MenuItem = ({ root, items }) => {
         <Row>
           {items.map((item, index) => (
             <Col lg={4} md={4} className={cx("menu-item")} key={index}>
-              <Link to={`/${root}/${item.toLowerCase()}`}>{item}</Link>
+              <Link to={`/search/${root}/${item.toLowerCase()}`}>{item}</Link>
             </Col>
           ))}
         </Row>

@@ -25,24 +25,28 @@ const ToolTipBox = ({ href, item }) => {
 
           {item.countries.includes(",") ? (
             item.countries.split(",").map((country, index) => (
-              <Link key={index} to={"#"}>
+              <Link key={index} to={`/search/country/${country.trim()}`}>
                 {country},
               </Link>
             ))
           ) : (
-            <Link to={"#"}>{item.countries}</Link>
+            <Link to={`/search/country/${item.countries.trim()}`}>
+              {item.countries}
+            </Link>
           )}
         </div>
         <div>
           <span>Genre : </span>
           {item.genres.includes(",") ? (
             item.genres.split(",").map((genre, index) => (
-              <Link key={index} to={"#"}>
+              <Link key={index} to={`/search/genre/${genre.trim()}`}>
                 {genre},
               </Link>
             ))
           ) : (
-            <Link to={"#"}>{item.genres}</Link>
+            <Link to={`/search/genre/${item.genres.trim()}`}>
+              {item.genres}
+            </Link>
           )}
         </div>
       </div>

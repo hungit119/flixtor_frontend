@@ -183,7 +183,7 @@ const optionsFilter = [
   },
 ];
 
-const SearchDetail = () => {
+const SearchDetail = ({ typeKeyword }) => {
   const dispatch = useDispatch();
   let params = useParams();
   let { key, type } = params;

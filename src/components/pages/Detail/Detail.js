@@ -252,13 +252,15 @@ const Detail = ({ type }) => {
                               film.countries.split(",").map((item, index) => (
                                 <Link
                                   key={index}
-                                  to={`/country/${item.trim()}`}
+                                  to={`/search/country/${item.trim()}`}
                                 >
                                   {item},
                                 </Link>
                               ))
                             ) : (
-                              <Link to={`/country/${film.countries.trim()}`}>
+                              <Link
+                                to={`/search/country/${film.countries.trim()}`}
+                              >
                                 {film.countries}
                               </Link>
                             )}
@@ -269,12 +271,15 @@ const Detail = ({ type }) => {
                           <td>
                             {film.genres.includes(",") ? (
                               film.genres.split(",").map((item, index) => (
-                                <Link key={index} to={`/genre/${item.trim()}`}>
+                                <Link
+                                  key={index}
+                                  to={`/search/genre/${item.trim()}`}
+                                >
                                   {item},
                                 </Link>
                               ))
                             ) : (
-                              <Link to={`/genres/${film.genres.trim()}`}>
+                              <Link to={`/search/genre/${film.genres.trim()}`}>
                                 {film.genres}
                               </Link>
                             )}
@@ -297,14 +302,14 @@ const Detail = ({ type }) => {
                               film.productions.split(",").map((item, index) => (
                                 <Link
                                   key={index}
-                                  to={`/production/${item.trim()}`}
+                                  to={`/films/search/production/${item.trim()}`}
                                 >
                                   {item},
                                 </Link>
                               ))
                             ) : (
                               <Link
-                                to={`/production/${film.productions.trim()}`}
+                                to={`/films/search/production/${film.productions.trim()}`}
                               >
                                 {film.productions === ""
                                   ? "N/A"
@@ -318,12 +323,17 @@ const Detail = ({ type }) => {
                           <td>
                             {film.casts.includes(",") ? (
                               film.casts.split(",").map((item, index) => (
-                                <Link key={index} to={`/cast/${item.trim()}`}>
+                                <Link
+                                  key={index}
+                                  to={`/films/search/cast/${item.trim()}`}
+                                >
                                   {item},
                                 </Link>
                               ))
                             ) : (
-                              <Link to={`/cast/${film.casts.trim()}`}>
+                              <Link
+                                to={`/films/search/cast/${film.casts.trim()}`}
+                              >
                                 {film.casts}
                               </Link>
                             )}

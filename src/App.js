@@ -54,7 +54,7 @@ function App() {
           }
         />
         <Route
-          path="/:key/:type"
+          path="search/:key/:type"
           element={
             <DefaultLayout>
               <SearchDetail />
@@ -106,6 +106,14 @@ function App() {
           element={
             <DefaultLayout>
               <SearchResult />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/films/search/:key/:type"
+          element={
+            <DefaultLayout>
+              <SearchResult feature={"searchByType"} />
             </DefaultLayout>
           }
         />

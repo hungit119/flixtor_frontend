@@ -12,6 +12,10 @@
   a {
     color: black;
   }
+  &:hover {
+    background-color: var(--primary);
+    color: white;
+  }
 }
 .icon-menu-user-info {
   margin-right: 5px;

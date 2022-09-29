@@ -9,6 +9,7 @@ import SearchDetail from "./components/pages/SearchDetail";
 import SitePage from "./components/pages/Site";
 import FilmsFilter from "./components/pages/FilmsFilter/FilmsFilter";
 import SearchResult from "./components/pages/SearchResult";
+import UserProfile from "./components/pages/Profile/UserProfile";
 function App() {
   return (
     <div className="App">
@@ -114,6 +115,14 @@ function App() {
           element={
             <DefaultLayout>
               <SearchResult feature={"searchByType"} />
+            </DefaultLayout>
+          }
+        />
+        <Route
+          path="/user/profile"
+          element={
+            <DefaultLayout>
+              <UserProfile />
             </DefaultLayout>
           }
         />

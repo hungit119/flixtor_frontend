@@ -5,11 +5,11 @@
   height: 90px;
   display: flex;
   padding: 10px 15px;
-  border-color: #e9ecef;
+  border-color: var(--bg--search-result-color);
   border-style: solid none none;
   border-width: 1px 0px 0px;
   &:hover {
-    background-color: #e9ecef;
+    background-color: var(--bg--search-result-color);
   }
 }
 .img-search-item {
@@ -18,14 +18,14 @@
   border-radius: 6px;
 }
 .info-search {
-  color: #6c757d;
+  color: var(--color-meta);
   font-size: 15px;
   line-height: 22.5px;
   margin: 0px 0px 0px 6px;
   text-align: left;
 }
 .title {
-  color: #212529;
+  color: var(--input-color-auth);
   font-size: 15px;
   font-weight: 500;
   line-height: 22.5px;

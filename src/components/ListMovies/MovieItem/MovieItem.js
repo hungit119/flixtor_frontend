@@ -1,19 +1,55 @@
 import React from "react";
 import className from "classnames/bind";
-import styles from "../ListMovies.module.scss";
+import styles from "./MovieItem.module.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCirclePlay,
+  faXmark,
+  faXmarkSquare,
+} from "@fortawesome/free-solid-svg-icons";
 import TippyWrapper from "../../TippyWrapper";
 import ToolTipBox from "../../ToolTipBox";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { apiUrl, NOTIFY_ALL_TOAST } from "../../../constants";
+import { setFilmsWatchList } from "../../../redux/actions/filmsAction";
+import { toast } from "react-toastify";
+import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 const cx = className.bind(styles);
 
-const MovieItem = ({ item, col = "col-cus" }) => {
+const MovieItem = ({ item, col = "col-cus", type }) => {
+  const dispatch = useDispatch();
   const href = `/${
     item.type.toLowerCase() === "tv-series" ? "tv" : item.type.toLowerCase()
   }/${item.id}`;
+  const handleClickDeleteWatchList = async () => {
+    try {
+      const response = await axios.get(
+        `${apiUrl}/film/watch-list/remove?fid=${item.id}`
+      );
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmsWatchList(resData.data));
+        toast.success("Deleted film from watch list !", {
+          toastId: NOTIFY_ALL_TOAST,
+        });
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
   return (
-    <div className={cx(col)}>
+    <div className={cx(col, "wrapper")}>
+      {type === "watch-list" ? (
+        <span
+          className={cx("delete-icon")}
+          onClick={handleClickDeleteWatchList}
+        >
+          <FontAwesomeIcon icon={faXmark} className={cx("xmart-icon")} />
+        </span>
+      ) : (
+        <></>
+      )}
       <TippyWrapper
         content={<ToolTipBox href={href} item={item} />}
         position="right"

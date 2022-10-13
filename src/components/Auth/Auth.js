@@ -8,6 +8,7 @@ import axios from "axios";
 import { ACCESS_TOKEN_NAME, apiUrl } from "../../constants";
 import { useDispatch } from "react-redux";
 import { setUserInfo } from "../../redux/actions/authAction";
+import ResponseApiHandle from "../../utils/ResponseApiHandle";
 const cx = className.bind(styles);
 
 const Auth = ({ type = "register", handleSetAuthType }) => {
@@ -87,22 +88,26 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
       const response = await axios.post(`${apiUrl}/auth/register`, {
         ...formValue,
       });
-      if (response.data.success) {
-        setIsLoading(false);
-        dispatch(setUserInfo(response.data.reply));
-        const { accessToken } = response.data.reply;
-        localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
-        setRegisterSuccess(true);
-        setTimeout(() => {
+      ResponseApiHandle(
+        response,
+        (resData) => {
           setIsLoading(false);
-          window.location.reload();
-        }, 1000);
-      } else {
-        toast.error(response.data.message, {
-          theme: "colored",
-        });
-        setIsLoading(false);
-      }
+          dispatch(setUserInfo(resData.reply));
+          const { accessToken } = resData.reply;
+          localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
+          setRegisterSuccess(true);
+          setTimeout(() => {
+            setIsLoading(false);
+            window.location.reload();
+          }, 1000);
+        },
+        (errorData) => {
+          toast.error(errorData.message, {
+            theme: "colored",
+          });
+          setIsLoading(false);
+        }
+      );
     } catch (error) {
       console.log(error.message);
       toast.error("Incorrect username or password", {
@@ -124,21 +129,25 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
       const response = await axios.post(`${apiUrl}/auth/login`, {
         ...formValue,
       });
-      if (response.data.success) {
-        dispatch(setUserInfo(response.data.reply.username));
-        const { accessToken } = response.data.reply;
-        localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
-        setLoginSuccess(true);
-        setTimeout(() => {
+      ResponseApiHandle(
+        response,
+        (resData) => {
+          dispatch(setUserInfo(resData.reply.username));
+          const { accessToken } = resData.reply;
+          localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
+          setLoginSuccess(true);
+          setTimeout(() => {
+            setIsLoading(false);
+            window.location.reload();
+          }, 1000);
+        },
+        (errorData) => {
+          toast.error(errorData.message, {
+            theme: "colored",
+          });
           setIsLoading(false);
-          window.location.reload();
-        }, 1000);
-      } else {
-        toast.error(response.data.message, {
-          theme: "colored",
-        });
-        setIsLoading(false);
-      }
+        }
+      );
     } catch (error) {
       console.log(error.message);
       toast.error("Incorrect username or password", {

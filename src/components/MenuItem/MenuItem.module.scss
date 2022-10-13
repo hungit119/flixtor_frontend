@@ -8,10 +8,10 @@
 .menu-item {
   text-align: start;
   padding: 5px 10px;
-  color: #444;
+  color: var(--text-color-title);
   font-size: 0.9em;
   a {
-    color: #000;
+    color: var(--black);
     display: block;
   }
   &:hover {

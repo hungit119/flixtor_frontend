@@ -10,9 +10,16 @@ import SitePage from "./components/pages/Site";
 import FilmsFilter from "./components/pages/FilmsFilter/FilmsFilter";
 import SearchResult from "./components/pages/SearchResult";
 import UserProfile from "./components/pages/Profile/UserProfile";
+import { toast, ToastContainer } from "react-toastify";
+import { NOTIFY_ALL_TOAST } from "./constants";
 function App() {
   return (
     <div className="App">
+      <ToastContainer
+        containerId={NOTIFY_ALL_TOAST}
+        pauseOnFocusLoss={false}
+        pauseOnHover={false}
+      />
       <Routes>
         <Route
           path="/"
@@ -119,7 +126,7 @@ function App() {
           }
         />
         <Route
-          path="/user/profile"
+          path="/user/*"
           element={
             <DefaultLayout>
               <UserProfile />

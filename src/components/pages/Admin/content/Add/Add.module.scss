@@ -61,7 +61,7 @@
   font-size: 1.5rem;
   font-weight: 500;
   margin: 4px 0;
-  color: #212529;
+  color: var(--input-color-auth);
 }
 .movie-body {
   display: flex;
@@ -69,13 +69,13 @@
   align-items: center;
 }
 .movie-meta {
-  color: #6c757d;
+  color: var(--color-meta);
   font-size: 1.4rem;
 }
 .movies-type {
-  color: #6c757d;
+  color: var(--color-meta);
   font-size: 1.08rem;
-  border-color: #a1a8ae;
+  border-color: var(--color-border-info);
   border-radius: 3px;
   border-style: solid;
   border-width: 1px;

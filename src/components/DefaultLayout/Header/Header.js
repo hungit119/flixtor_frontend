@@ -38,6 +38,7 @@ import useDebounce from "../../../hooks/useDebounce";
 import { ACCESS_TOKEN_NAME, apiUrl } from "../../../constants";
 import setAuthToken from "../../../utils/setAuthToken";
 import { setUserInfo } from "../../../redux/actions/authAction";
+import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 const cx = classNames.bind(styles);
 
 const menuItemsGenre = [
@@ -143,14 +144,18 @@ const Header = () => {
         setAuthToken(localStorage[ACCESS_TOKEN_NAME]);
       }
       const response = await axios.get(`${apiUrl}/auth`);
-      if (response.data.success) {
-        dispatch(setUserInfo(response.data.userInfo.username));
-        setmodalShow(false);
-        setLogin(true);
-      } else {
-        dispatch(setUserInfo({}));
-        setLogin(false);
-      }
+      ResponseApiHandle(
+        response,
+        (resData) => {
+          dispatch(setUserInfo(resData.userInfo));
+          setmodalShow(false);
+          setLogin(true);
+        },
+        (errorData) => {
+          dispatch(setUserInfo({}));
+          setLogin(false);
+        }
+      );
     } catch (error) {
       console.log(error.message);
     }
@@ -158,9 +163,9 @@ const Header = () => {
   const getFilmsSearch = async (url) => {
     try {
       const response = await axios.get(url);
-      if (response.data.success) {
-        dispatch(setSearchResults(response.data.searchResult));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setSearchResults(resData.searchResult));
+      });
     } catch (error) {
       console.log(error.message);
     }

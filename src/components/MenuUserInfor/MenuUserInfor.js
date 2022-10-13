@@ -21,24 +21,17 @@ const MenuUserInfor = () => {
   };
   return (
     <div className={cx("wrapper")}>
-      <div className={cx("menu-user-item")}>
-        <Link to="/user/profile">
-          <FontAwesomeIcon
-            className={cx("icon-menu-user-info")}
-            icon={faUserCircle}
-          />
-          <span>Profile</span>
-        </Link>
-      </div>
-      <div className={cx("menu-user-item")}>
-        <Link to={"/user/watchlist"}>
-          <FontAwesomeIcon
-            className={cx("icon-menu-user-info")}
-            icon={faHeart}
-          />
-          <span>My Watch List</span>
-        </Link>
-      </div>
+      <a className={cx("menu-user-item")} href="/user/profile">
+        <FontAwesomeIcon
+          className={cx("icon-menu-user-info")}
+          icon={faUserCircle}
+        />
+        <span>Profile</span>
+      </a>
+      <a className={cx("menu-user-item")} href="/user/watch-list">
+        <FontAwesomeIcon className={cx("icon-menu-user-info")} icon={faHeart} />
+        <span>My Watch List</span>
+      </a>
       <hr />
       <div className={cx("menu-user-item")}>
         <FontAwesomeIcon

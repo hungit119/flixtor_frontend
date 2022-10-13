@@ -9,6 +9,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import { setFilmAdmin } from "../../../../../redux/actions/filmAction";
 import { filmAdminSelector } from "../../../../../redux/selectors";
+import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import TippyWrapper from "../../../../TippyWrapper";
 import ToolTipBox from "../../../../ToolTipBox";
 import styles from "./Add.module.scss";
@@ -101,37 +102,41 @@ const Add = ({ typeFunction }) => {
         "http://localhost:8000/api/film/create",
         { payload }
       );
-      if (response.data.success) {
-        toast.success(response.data.message, {
-          theme: "colored",
-        });
-        setForm({
-          ...form,
-          title: "",
-          poster: "",
-          thumnail: "",
-          times: "",
-          type: "",
-          quantity: "",
-          description: "",
-          tags: "",
-          productions: "",
-          genres: "",
-          countries: "",
-          rating: "",
-          imdb: "",
-          releases: "",
-          director: "",
-          casts: "",
-          year: "",
-          trailerURL: "",
-        });
-        inputRef.current.focus();
-      } else {
-        toast.error(response.data.message, {
-          theme: "colored",
-        });
-      }
+      ResponseApiHandle(
+        response,
+        (resData) => {
+          toast.success(resData.message, {
+            theme: "colored",
+          });
+          setForm({
+            ...form,
+            title: "",
+            poster: "",
+            thumnail: "",
+            times: "",
+            type: "",
+            quantity: "",
+            description: "",
+            tags: "",
+            productions: "",
+            genres: "",
+            countries: "",
+            rating: "",
+            imdb: "",
+            releases: "",
+            director: "",
+            casts: "",
+            year: "",
+            trailerURL: "",
+          });
+          inputRef.current.focus();
+        },
+        (errorData) => {
+          toast.error(errorData.message, {
+            theme: "colored",
+          });
+        }
+      );
     } catch (error) {
       console.log(error.message);
       toast.error("Error creating film !");
@@ -166,9 +171,9 @@ const Add = ({ typeFunction }) => {
         `http://localhost:8000/api/film/update?idFilm=${params.id}&stt=${stt}`,
         { newPayload }
       );
-      if (response.data.success) {
+      ResponseApiHandle(response, (resData) => {
         navigate("/admin");
-      }
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -201,10 +206,10 @@ const Add = ({ typeFunction }) => {
       const response = await axios.get(
         `http://localhost:8000/api/film/${params.id}`
       );
-      if (response.data.success) {
+      ResponseApiHandle(response, (resData) => {
         setForm(response.data.film);
         setStt(response.data.film.stt);
-      }
+      });
     } catch (error) {
       console.log(error.message);
     }

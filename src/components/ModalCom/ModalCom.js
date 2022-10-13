@@ -13,6 +13,7 @@ import {
   filmIdRestoreSelector,
   filmIdSelector,
 } from "../../redux/selectors";
+import ResponseApiHandle from "../../utils/ResponseApiHandle";
 const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
   const dispatch = useDispatch();
   const id = useSelector(
@@ -29,10 +30,10 @@ const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
         `http://localhost:8000/api/film/sortDelete`,
         { id }
       );
-      if (response.data.success) {
-        dispatch(setFilmSortDel(response.data.id));
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmSortDel(resData.id));
         setShowModal(false);
-      }
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -43,10 +44,10 @@ const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
         `http://localhost:8000/api/film/sortDelete?restore=true`,
         { id }
       );
-      if (response.data.success) {
-        dispatch(setFilmRestore(response.data.id));
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmRestore(resData.id));
         setShowModal(false);
-      }
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -57,10 +58,10 @@ const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
         "http://localhost:8000/api/film/remove",
         { id }
       );
-      if (response.data.success) {
-        dispatch(setFilmRemoved(response.data.id));
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmRemoved(resData.id));
         setShowModal(false);
-      }
+      });
     } catch (error) {
       console.log(error.message);
     }

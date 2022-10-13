@@ -4,6 +4,7 @@ const {
   SET_FILMS_TRENDING,
   SET_FILMS_LASTEST_MOVIES,
   SET_FILMS_LASTEST_TV,
+  SET_FILMS_WATCH_LIST,
 } = require("../const");
 
 export const filmsReducer = (
@@ -12,6 +13,7 @@ export const filmsReducer = (
     tvSeries: [],
     trending: [],
     lastest: { movies: [], tvSeries: [] },
+    watchList: [],
   },
   action
 ) => {
@@ -31,6 +33,11 @@ export const filmsReducer = (
       return {
         ...state,
         lastest: { ...state.lastest, tvSeries: action.payload },
+      };
+    case SET_FILMS_WATCH_LIST:
+      return {
+        ...state,
+        watchList: action.payload,
       };
     default:
       return state;

@@ -18,6 +18,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setFilmsFilter } from "../../redux/actions/filmsAction";
+import ResponseApiHandle from "../../utils/ResponseApiHandle";
 const cx = classNames.bind(styles);
 
 const genreMenu = [
@@ -200,9 +201,9 @@ const FilterBar = ({ type, value }) => {
           },
         }
       );
-      if (response.data.success) {
-        dispatch(setFilmsFilter(response.data.filmsFilter));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmsFilter(resData.filmsFilter));
+      });
     } catch (error) {
       console.log(error.message);
     }

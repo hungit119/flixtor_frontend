@@ -3,3 +3,4 @@ export const apiUrl =
     ? "http://localhost:8000/api"
     : "somedeployedURL";
 export const ACCESS_TOKEN_NAME = "token";
+export const NOTIFY_ALL_TOAST = "notify_all";

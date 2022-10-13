@@ -1,0 +1,44 @@
+.wrapper {
+  width: 100%;
+}
+.header-content {
+  width: 100%;
+  text-align: start;
+  font-size: 3rem;
+  font-weight: 300;
+  color: var(--primary);
+}
+.header-content-title {
+  border-bottom: 2px solid var(--color-info-default);
+  display: inline-block;
+}
+.content {
+  margin-top: 24px;
+}
+.filter {
+  display: flex;
+  align-items: center;
+}
+.btn-filter {
+  background-color: var(--bg--filter-color-primary);
+  color: var(--text-color-input);
+  font-size: 1.2825rem;
+  line-height: 19.2375px;
+  padding: 10px 22px;
+  text-align: center;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.sort-value {
+  color: var(--input-color-auth);
+  display: inline;
+  font-size: 1.2825rem;
+  font-weight: 100;
+  line-height: 19.2375px;
+  text-align: center;
+}
+.filter-fea {
+  background-color: var(--primary);
+  color: var(--bg--filter-color-primary);
+}

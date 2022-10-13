@@ -3,7 +3,7 @@
   background-color: white;
   padding: 10px 15px;
   border-radius: 6px;
-  box-shadow: 2px 1px 9px 1px #111111;
+  box-shadow: 2px 1px 9px 1px var(--text-color-header);
 }
 .title {
   color: var(--primary);
@@ -17,13 +17,13 @@
   justify-content: space-between;
   font-size: 1.35rem;
   line-height: 18px;
-  color: #6c757d;
+  color: var(--color-meta);
 }
 .imdb {
-  color: #495057;
+  color: var(--footer-color);
 }
 .icon {
-  color: #ffc107;
+  color: var(--color-warning);
   width: 12px;
 }
 .quantity {
@@ -36,7 +36,7 @@
 }
 .description {
   font-size: 1.275rem;
-  color: #6c757d;
+  color: var(--color-meta);
   font-weight: 300;
   line-height: 18px;
   margin: 10px 0 0;
@@ -48,11 +48,11 @@
 .origin {
   margin-top: 10px;
   font-size: 1.215rem;
-  color: #6c757d;
+  color: var(--color-meta);
   a {
-    color: #6c757d;
+    color: var(--color-meta);
     &:hover {
-      color: #ced4da;
+      color: var(--border-color-primary);
     }
   }
 }
@@ -73,17 +73,17 @@
   transition: all 0.2s ease-in-out;
   text-align: center;
   a {
-    color: white;
+    color: white !important;
     display: block;
     width: 100%;
     height: 100%;
   }
   &:hover {
-    background-color: #0f6674;
+    background-color: var(--color-primary);
   }
 }
 .bookmark {
-  background-color: #e61b39;
+  background-color: var(--bg-red-skye);
   border-radius: 4.5px;
   font-size: 15px;
   text-align: center;
@@ -92,7 +92,7 @@
   transition: all 0.2s ease-in-out;
   cursor: pointer;
   a {
-    color: white;
+    color: white !important;
     display: block;
     width: 100%;
     height: 100%;
@@ -101,10 +101,11 @@
     }
   }
   &:hover {
-    background-color: #c71630;
+    background-color: var(--bg-red-tip);
   }
 }
 .icon-heart {
+  color: white;
   &:hover {
     color: white;
   }

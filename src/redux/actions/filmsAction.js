@@ -6,6 +6,7 @@ import {
   SET_FILMS_TRENDING,
   SET_FILMS_TYPE_MOVIES,
   SET_FILMS_TYPE_TV,
+  SET_FILMS_WATCH_LIST,
   SET_FILM_REMOVED,
   SET_FILM_RESTORE,
   SET_FILM_SORT_DEL,
@@ -55,4 +56,8 @@ export const setFilmTrash = (films) => ({
 export const setFilmRemoved = (id) => ({
   type: SET_FILM_REMOVED,
   payload: id,
+});
+export const setFilmsWatchList = (films) => ({
+  type: SET_FILMS_WATCH_LIST,
+  payload: films,
 });

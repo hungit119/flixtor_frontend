@@ -13,9 +13,9 @@
 }
 .item {
   align-items: flex-start;
-  background-color: #dee2e6;
+  background-color: var(--bg-default);
   border-radius: 5px;
-  color: #343a40;
+  color: var(--text-color-input);
   display: inline-block;
   font-size: 1.2825rem;
   line-height: 19.2375px;
@@ -27,7 +27,7 @@
   }
 }
 .value {
-  color: #212529;
+  color: var(--input-color-auth);
   display: inline;
   font-size: 1.2825rem;
   font-weight: 100;

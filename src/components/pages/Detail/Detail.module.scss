@@ -48,9 +48,9 @@
 }
 .option {
   cursor: pointer;
-  background-color: #dadfe3;
+  background-color: var(--bg-color-detail);
   border-radius: 3px;
-  color: #495057;
+  color: var(--footer-color);
   font-size: 1.2rem;
   line-height: 25px;
   margin: 0 10px 8px 0;
@@ -110,7 +110,7 @@
 }
 .title {
   width: 78%;
-  color: #212529;
+  color: var(--input-color-auth);
   font-size: 3.75rem;
   font-weight: 300;
   line-height: 45px;
@@ -121,11 +121,11 @@
   margin-top: 12px;
 }
 .star {
-  color: #ced4da;
+  color: var(--border-color-primary);
   font-size: 2.25rem;
 }
 .star-active {
-  color: #ffc107;
+  color: var(--color-warning);
 }
 .meta {
   font-size: 1.35rem;
@@ -134,11 +134,11 @@
 }
 .quantity {
   background-color: white;
-  border-color: #212529;
+  border-color: var(--input-color-auth);
   border-radius: 3.75px;
   border-style: solid;
   border-width: 1px;
-  color: #212529;
+  color: var(--input-color-auth);
   display: inline-block;
   font-size: 1.1475rem;
   font-weight: 700;
@@ -172,9 +172,9 @@
   -webkit-box-orient: vertical;
 }
 .btn-less {
-  background-color: #dee2e6;
+  background-color: var(--bg-default);
   border-radius: 3px;
-  color: #6c757d;
+  color: var(--color-meta);
   display: inline-flex;
   align-items: center;
   font-size: 1.134rem;
@@ -190,9 +190,9 @@
   }
 }
 .btn-expand {
-  background-color: #dee2e6;
+  background-color: var(--bg-default);
   border-radius: 3px;
-  color: #6c757d;
+  color: var(--color-meta);
   display: inline-flex;
   align-items: center;
   font-size: 1.134rem;
@@ -205,7 +205,7 @@
 }
 .icon-des {
   margin-right: 4px;
-  color: #6c757d;
+  color: var(--color-meta);
 }
 .info {
   color: var(--text-color-title);
@@ -216,7 +216,7 @@
   text-align: left;
   th {
     font-weight: 400;
-    color: #495057;
+    color: var(--footer-color);
     padding-right: 60px;
   }
   td {

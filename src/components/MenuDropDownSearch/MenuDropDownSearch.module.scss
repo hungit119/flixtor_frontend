@@ -1,6 +1,6 @@
 .wrapper {
   background-color: white;
-  border: 1px solid #ccc;
+  border: 1px solid var(--color-info-default);
   border-radius: 10px;
   padding: 20px;
 }
@@ -10,7 +10,7 @@
   align-items: center;
   text-align: left;
   font-size: 1.35rem;
-  color: #343a40;
+  color: var(--text-color-input);
   &:hover {
     background-color: var(--primary);
     color: white;

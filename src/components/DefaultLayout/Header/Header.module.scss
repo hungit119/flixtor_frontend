@@ -53,7 +53,7 @@
   }
   &:hover {
     cursor: pointer;
-    color: #ffffff;
+    color: var(--white);
   }
 }
 
@@ -72,7 +72,7 @@
 .search-input {
   height: 40px;
   width: 100%;
-  background-color: #ffffff;
+  background-color: var(--white);
   border-radius: 4.5px;
   font-size: 15px;
   font-weight: 300;
@@ -93,7 +93,7 @@
   cursor: pointer;
 }
 .search-icon {
-  color: #606060;
+  color: var(--header-color-search-icon);
   width: 20px;
   height: 20px;
 }
@@ -138,7 +138,7 @@
   width: 450px;
   background-color: white;
   border-radius: 10px;
-  color: #495057;
+  color: var(--footer-color);
   box-shadow: 0 2px 10px rgb(0 0 0 / 50%);
   animation-name: scrollDown;
   animation-duration: 0.2s;
@@ -168,7 +168,7 @@
 .modal-cancel-icon {
   width: 11.96px;
   height: 27.2px;
-  color: #444444;
+  color: var(--text-color-header);
 }
 // dropdown
 .dropdown-user-info {
@@ -209,7 +209,7 @@
 }
 
 .header-search-input {
-  background-color: #ffffff;
+  background-color: var(--white);
   border-radius: 10px;
   box-shadow: 0 10px 15px rgb(0 0 0 / 15%);
   font-size: 2.4rem;
@@ -232,7 +232,7 @@
 .search-icon-header-home {
   width: 22.5px;
   height: 23.5px;
-  color: #444444;
+  color: var(--text-color-title);
 }
 .header-arrow-btn {
   width: 70px;
@@ -247,7 +247,7 @@
   cursor: pointer;
   transition: all 0.4s ease;
   &:hover {
-    background-color: #117a8b;
+    background-color: var(--header-color-primary);
   }
 }
 .arrow-icon-header-home {

@@ -15,6 +15,7 @@ import {
   setFilmIdRestore,
 } from "../../../../../redux/actions/filmAction";
 import ModalCom from "../../../../ModalCom/ModalCom";
+import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 
 const cx = classNames.bind(styles);
 
@@ -33,9 +34,9 @@ const Delete = () => {
       const response = await axios.get(
         "http://localhost:8000/api/films?sortDel=true"
       );
-      if (response.data.success) {
-        dispatch(setFilmTrash(response.data.films));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmTrash(resData.films));
+      });
     } catch (error) {
       console.log(error.message);
     }

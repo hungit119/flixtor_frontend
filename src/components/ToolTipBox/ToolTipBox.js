@@ -1,12 +1,55 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { apiUrl, NOTIFY_ALL_TOAST } from "../../constants";
 import className from "classnames/bind";
 import styles from "./ToolTipBox.module.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faPlay, faStar } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHeart,
+  faMinus,
+  faPlay,
+  faStar,
+} from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import { userIDSelector } from "../../redux/selectors";
+import { toast } from "react-toastify";
+import { ToastContainer } from "react-bootstrap";
 const cx = className.bind(styles);
 
 const ToolTipBox = ({ href, item }) => {
+  const [addedToWatchlist, setAddedToWatchlist] = useState(false);
+
+  const handleClickBookmart = async () => {
+    try {
+      const response = await axios.get(
+        `${apiUrl}/film/watchlist/addedWatchlist?fid=${item.id}`
+      );
+      if (response.data.success) {
+        if (response.data.rows.length === 0) {
+          setAddedToWatchlist(true);
+          // add this film to watchlist with user_id = current user id
+          const response = await axios.post(`${apiUrl}/film/watchlist/add`, {
+            fid: item.id,
+          });
+          if (response.data.success) {
+            toast.success("This film added to my watchlist!", {
+              toastId: NOTIFY_ALL_TOAST,
+              position: "bottom-right",
+            });
+          }
+        } else {
+          toast.success("This film was added to watchlist", {
+            toastId: NOTIFY_ALL_TOAST,
+            position: "bottom-right",
+          });
+        }
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("title")}>{item.title}</div>
@@ -56,10 +99,12 @@ const ToolTipBox = ({ href, item }) => {
             <FontAwesomeIcon icon={faPlay} /> Watch now
           </Link>
         </span>
-        <span className={cx("bookmark")}>
-          <Link to={"#"}>
+        <span className={cx("bookmark")} onClick={handleClickBookmart}>
+          {addedToWatchlist ? (
+            <FontAwesomeIcon icon={faMinus} className={cx("icon-heart")} />
+          ) : (
             <FontAwesomeIcon icon={faHeart} className={cx("icon-heart")} />
-          </Link>
+          )}
         </span>
       </div>
     </div>

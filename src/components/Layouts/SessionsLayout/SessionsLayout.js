@@ -30,6 +30,7 @@ import {
   filmsTypeAllTrendingSelector,
 } from "../../../redux/selectors";
 import FilterBar from "../../FilterBar";
+import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 const cx = classNames.bind(styles);
 const SessionsLayout = ({ title, root }) => {
   const dispatch = useDispatch();
@@ -43,9 +44,9 @@ const SessionsLayout = ({ title, root }) => {
   const getFilms = async (urlApi, actionDispatch) => {
     try {
       const response = await axios.get(urlApi);
-      if (response.data.success) {
-        dispatch(actionDispatch(response.data.filmsType));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(actionDispatch(resData.filmsType));
+      });
     } catch (errors) {
       console.log(errors.message);
     }

@@ -21,29 +21,29 @@
     height: 1px;
     bottom: -5px;
     left: 0;
-    background-color: #bbc3ca;
+    background-color: var(--bg-session-home-color);
   }
 }
 .tabs {
 }
 .tab-item {
   display: inline-block;
-  background-color: #dee2e6;
-  color: #495057;
+  background-color: var(--bg-default);
+  color: var(--footer-color);
   font-size: 1.35rem;
   border-radius: 3px;
   padding: 0 10px;
   margin: 0 2px;
   line-height: 29.7px;
   &:hover {
-    color: #495057;
+    color: var(--footer-color);
   }
 }
 .active {
   background-color: var(--primary);
-  color: #fff;
+  color: var(--white);
   &:hover {
-    color: #fff;
+    color: var(--white);
   }
 }
 .header-sessions-right {
@@ -54,6 +54,6 @@
     color: var(--primary);
   }
   &:hover {
-    color: #0f6674;
+    color: var(--color-primary);
   }
 }

@@ -1,0 +1,20 @@
+.wrapper {
+  width: 70%;
+  background-color: var(--bg-profile-menu-color);
+  padding: 8px 20px;
+  border-radius: 8px;
+  margin: 6px 0;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: var(--bg-profile-menu-color-info);
+    cursor: pointer;
+  }
+}
+.active {
+  background-color: var(--primary);
+  color: white !important;
+  &:hover {
+    background-color: var(--primary);
+    color: white;
+  }
+}

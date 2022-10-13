@@ -10,6 +10,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilmsFilter } from "../../../redux/actions/filmsAction";
 import { filmsFilterSelector } from "../../../redux/selectors";
+import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 const cx = classNames.bind(styles);
 
 const FilmFilter = () => {
@@ -35,9 +36,9 @@ const FilmFilter = () => {
           },
         }
       );
-      if (response.data.success) {
-        dispatch(setFilmsFilter(response.data.filmsFilter));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmsFilter(resData.filmsFilter));
+      });
     } catch (error) {
       console.log(error.message);
     }

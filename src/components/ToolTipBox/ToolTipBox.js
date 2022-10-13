@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { userIDSelector } from "../../redux/selectors";
 import { toast } from "react-toastify";
 import { ToastContainer } from "react-bootstrap";
+import ResponseApiHandle from "../../utils/ResponseApiHandle";
 const cx = className.bind(styles);
 
 const ToolTipBox = ({ href, item }) => {
@@ -25,26 +26,26 @@ const ToolTipBox = ({ href, item }) => {
       const response = await axios.get(
         `${apiUrl}/film/watchlist/addedWatchlist?fid=${item.id}`
       );
-      if (response.data.success) {
-        if (response.data.rows.length === 0) {
+      ResponseApiHandle(response, async (resData) => {
+        if (resData.rows.length === 0) {
           setAddedToWatchlist(true);
           // add this film to watchlist with user_id = current user id
           const response = await axios.post(`${apiUrl}/film/watchlist/add`, {
             fid: item.id,
           });
-          if (response.data.success) {
+          ResponseApiHandle(response, (resData) => {
             toast.success("This film added to my watchlist!", {
               toastId: NOTIFY_ALL_TOAST,
               position: "bottom-right",
             });
-          }
+          });
         } else {
           toast.success("This film was added to watchlist", {
             toastId: NOTIFY_ALL_TOAST,
             position: "bottom-right",
           });
         }
-      }
+      });
     } catch (error) {
       console.log(error.message);
     }

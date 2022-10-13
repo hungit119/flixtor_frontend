@@ -11,6 +11,7 @@ import {
 } from "../../../../redux/actions/authAction";
 import { userInfoSelector } from "../../../../redux/selectors";
 import Message from "../../../Message";
+import ResponseApiHandle from "../../../../utils/ResponseApiHandle";
 const cx = classNames.bind(styles);
 const UserInfo = () => {
   const dispatch = useDispatch();
@@ -27,9 +28,9 @@ const UserInfo = () => {
   const getUser = async () => {
     try {
       const response = await axios.get(`${apiUrl}/auth`);
-      if (response.data.success) {
-        setForm({ ...response.data.userInfo, confirmPassword: "" });
-      }
+      ResponseApiHandle(response, (resData) => {
+        setForm({ ...resData.userInfo, confirmPassword: "" });
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -51,13 +52,13 @@ const UserInfo = () => {
             data: { ...form },
           }
         );
-        if (response.data.success) {
-          if (response.data.verify) {
+        ResponseApiHandle(response, (resData) => {
+          if (resData.verify) {
             // set new user infor on redux
             dispatch(
               setUpdateInforUser({
-                username: response.data.newData.username,
-                email: response.data.newData.email,
+                username: resData.newData.username,
+                email: resData.newData.email,
               })
             );
             setIsLoading(false);
@@ -66,9 +67,9 @@ const UserInfo = () => {
               setShowSuccessMessage(false);
             }, [1000]);
           } else {
-            console.log(response.data.message);
+            console.log(resData.message);
           }
-        }
+        });
       } catch (error) {
         console.log(error.message);
       }

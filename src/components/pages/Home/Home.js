@@ -21,6 +21,7 @@ import {
   setFilmsTypeTv,
 } from "../../../redux/actions/filmsAction";
 import { filmsTypeSelector } from "../../../redux/selectors";
+import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 const cx = className.bind(styles);
 
 const tabs = [
@@ -50,9 +51,9 @@ const HomePage = () => {
   const getMovies = async (urlApi, actionDispatch) => {
     try {
       const response = await axios.get(urlApi);
-      if (response.data.success) {
-        dispatch(actionDispatch(response.data.filmsType));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(actionDispatch(resData.filmsType));
+      });
     } catch (errors) {
       console.log(errors.message);
     }

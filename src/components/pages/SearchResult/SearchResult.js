@@ -21,6 +21,7 @@ import { useLocation, useParams } from "react-router-dom";
 import useQuery from "../../../hooks/useQuery";
 import { apiUrl } from "../../../constants";
 import { setFilmsFilter } from "../../../redux/actions/filmsAction";
+import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 const cx = classNames.bind(styles);
 const SearchResult = ({ feature }) => {
   const params = useParams();
@@ -33,9 +34,9 @@ const SearchResult = ({ feature }) => {
       const response = await axios.get(
         `${apiUrl}/films/search?keyword=${searchInputValue}`
       );
-      if (response.data.success) {
-        dispatch(setSearchResultsFull(response.data.searchResult));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setSearchResultsFull(resData.searchResult));
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -45,9 +46,9 @@ const SearchResult = ({ feature }) => {
       const response = await axios.get(
         `${apiUrl}/films/byType?key=${type}&type=${value}`
       );
-      if (response.data.success) {
-        dispatch(setFilmsFilter(response.data.filmsByType));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmsFilter(resData.filmsByType));
+      });
     } catch (error) {
       console.log(error.message);
     }

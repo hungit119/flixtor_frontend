@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setFilmAdmin } from "../../../../../redux/actions/filmAction";
 import { Table } from "react-bootstrap";
 import { filmAdminSelector } from "../../../../../redux/selectors";
+import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 const Film = () => {
   const dispatch = useDispatch();
   const params = useParams();
@@ -13,9 +14,9 @@ const Film = () => {
     const response = await axios.get(
       `http://localhost:8000/api/film/${params.id}`
     );
-    if (response.data.success) {
-      dispatch(setFilmAdmin(response.data.film));
-    }
+    ResponseApiHandle(response, (resData) => {
+      dispatch(setFilmAdmin(resData.film));
+    });
   };
   useEffect(() => {
     getFilm();

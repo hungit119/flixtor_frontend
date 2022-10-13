@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useParams } from "react-router-dom";
 import { setFilmsFilter } from "../../../redux/actions/filmsAction";
 import { filmsFilterSelector } from "../../../redux/selectors";
+import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 import upperCaseFirst from "../../../utils/UpperCaseFirst";
 import FilterBar from "../../FilterBar";
 import ListMovies from "../../ListMovies/ListMovies";
@@ -194,9 +195,9 @@ const SearchDetail = ({ typeKeyword }) => {
       const response = await axios.get(
         `http://localhost:8000/api/films/byType?key=${key}&type=${type}`
       );
-      if (response.data.success) {
-        dispatch(setFilmsFilter(response.data.filmsByType));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmsFilter(resData.filmsByType));
+      });
     } catch (error) {
       console.log(error.message);
     }

@@ -11,6 +11,7 @@ import { Link } from "react-router-dom";
 import { setFilmIdDelete } from "../../../../../redux/actions/filmAction";
 import { setFilmsListAdmin } from "../../../../../redux/actions/filmsAction";
 import { filmsSelector } from "../../../../../redux/selectors";
+import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import ModalCom from "../../../../ModalCom/ModalCom";
 import styles from "./List.module.scss";
 const cx = className.bind(styles);
@@ -25,9 +26,9 @@ const List = () => {
   const getFullFilms = async () => {
     try {
       const response = await axios.get("http://localhost:8000/api/films");
-      if (response.data.success) {
-        dispatch(setFilmsListAdmin(response.data.films));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmsListAdmin(resData.films));
+      });
     } catch (errors) {
       console.log(errors.message);
     }

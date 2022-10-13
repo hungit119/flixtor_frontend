@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import className from "classnames/bind";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -25,6 +25,7 @@ import ListMovies from "../../ListMovies/ListMovies";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilm, setFilmSuggests } from "../../../redux/actions/filmAction";
 import { filmSelector, filmSuggestsSelector } from "../../../redux/selectors";
+import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 
 const cx = className.bind(styles);
 
@@ -36,6 +37,9 @@ const Detail = ({ type }) => {
   const filmSuggests = useSelector(filmSuggestsSelector);
   const params = useParams();
 
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  });
   const handleLessBtnClick = () => {
     setMore(!more);
   };
@@ -48,9 +52,9 @@ const Detail = ({ type }) => {
       const response = await axios.get(
         `http://localhost:8000/api/film/${params.id}`
       );
-      if (response.data.success) {
-        dispatch(setFilm(response.data.film));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilm(resData.film));
+      });
     } catch (errors) {
       console.log(errors.message);
     }
@@ -60,9 +64,9 @@ const Detail = ({ type }) => {
       const response = await axios.get(
         `http://localhost:8000/api/films/suggest/${params.id}?limit=9`
       );
-      if (response.data.success) {
-        dispatch(setFilmSuggests(response.data.filmSuggests));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmSuggests(resData.filmSuggests));
+      });
     } catch (error) {
       console.log(error.message);
     }

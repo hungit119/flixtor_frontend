@@ -11,6 +11,7 @@ import { setFilmsWatchList } from "../../../../redux/actions/filmsAction";
 import { filmsWatchListSelector } from "../../../../redux/selectors";
 import TippyHeadLess from "../../../TippyHeadLess";
 import MenuDropDownSearch from "../../../MenuDropDownSearch";
+import ResponseApiHandle from "../../../../utils/ResponseApiHandle";
 const cx = classNames.bind(styles);
 
 const sortMenu = [
@@ -28,9 +29,9 @@ const UserWatchList = () => {
   const getWatchList = async () => {
     try {
       const response = await axios.get(`${apiUrl}/films/watch-list`);
-      if (response.data.success) {
-        dispatch(setFilmsWatchList(response.data.data));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmsWatchList(resData.data));
+      });
     } catch (error) {
       console.log(error.message);
     }
@@ -40,9 +41,9 @@ const UserWatchList = () => {
       const response = await axios.get(
         `${apiUrl}/films/watch-list?sortBy=${sortBy}`
       );
-      if (response.data.success) {
-        dispatch(setFilmsWatchList(response.data.data));
-      }
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setFilmsWatchList(resData.data));
+      });
     } catch (error) {
       console.log(error.message);
     }

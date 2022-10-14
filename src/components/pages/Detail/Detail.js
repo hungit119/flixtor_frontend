@@ -1,31 +1,29 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
-import className from "classnames/bind";
-import { Link, useParams } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Row, Col } from "react-bootstrap";
-import axios from "axios";
 import {
-  faCircle,
   faCircleCheck,
   faCircleExclamation,
   faCircleHalfStroke,
   faComment,
-  faExclamation,
   faHeart,
   faMinus,
   faPlus,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import className from "classnames/bind";
+import React, { useEffect, useLayoutEffect, useState } from "react";
+import { Col, Row } from "react-bootstrap";
+import { Link, useParams } from "react-router-dom";
 
-import styles from "./Detail.module.scss";
-import ButtonGroupShare from "../../ButtonGroupShare";
-import ServerButton from "../../ServerButton";
-import SessionsHome from "../../SessionsHome";
-import ListMovies from "../../ListMovies/ListMovies";
 import { useDispatch, useSelector } from "react-redux";
 import { setFilm, setFilmSuggests } from "../../../redux/actions/filmAction";
 import { filmSelector, filmSuggestsSelector } from "../../../redux/selectors";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
+import ButtonGroupShare from "../../ButtonGroupShare";
+import ListMovies from "../../ListMovies/ListMovies";
+import ServerButton from "../../ServerButton";
+import SessionsHome from "../../SessionsHome";
+import styles from "./Detail.module.scss";
 
 const cx = className.bind(styles);
 

@@ -4,7 +4,6 @@ import axios from "axios";
 import className from "classnames/bind";
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
-import Modal from "react-bootstrap/Modal";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -36,6 +35,7 @@ const List = () => {
 
   useEffect(() => {
     getFullFilms();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

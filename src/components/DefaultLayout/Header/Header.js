@@ -1,124 +1,69 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import classNames from "classnames/bind";
-import { Row, Col, Image } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
-  faHeart,
   faSearch,
-  faSignOut,
   faSortDown,
   faUserCircle,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
-
-import styles from "./Header.module.scss";
-import TippyHeadLess from "../../TippyHeadLess";
-import MenuUserInfor from "../../MenuUserInfor/MenuUserInfor";
-import TippyWrapper from "../../TippyWrapper";
-import MenuItem from "../../MenuItem";
-import Auth from "../../Auth";
-import Tippy from "@tippyjs/react";
-import TippySearch from "../../TippySearch";
-import SearchResult from "../../SearchResult";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import classNames from "classnames/bind";
+import React, { useEffect, useRef, useState } from "react";
+import { Col, Image, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import {
-  searchInputValueSelector,
-  searchResultSelector,
-  userInfoSelector,
-  userInfoUsernameSelector,
-} from "../../../redux/selectors";
+  ACCESS_TOKEN_NAME,
+  apiUrl,
+  menuItemCountry,
+  menuItemsGenre,
+} from "../../../constants";
+import useDebounce from "../../../hooks/useDebounce";
+import { setUserInfo } from "../../../redux/actions/authAction";
 import {
   setSearchInputValue,
   setSearchResults,
 } from "../../../redux/actions/searchAction";
-import axios from "axios";
-import useDebounce from "../../../hooks/useDebounce";
-import { ACCESS_TOKEN_NAME, apiUrl } from "../../../constants";
-import setAuthToken from "../../../utils/setAuthToken";
-import { setUserInfo } from "../../../redux/actions/authAction";
+import {
+  searchInputValueSelector,
+  searchResultSelector,
+  userInfoUsernameSelector,
+} from "../../../redux/selectors";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
+import setAuthToken from "../../../utils/setAuthToken";
+import Auth from "../../Auth";
+import MenuItem from "../../MenuItem";
+import MenuUserInfor from "../../MenuUserInfor/MenuUserInfor";
+import SearchResult from "../../SearchResult";
+import TippyHeadLess from "../../TippyHeadLess";
+import TippySearch from "../../TippySearch";
+import TippyWrapper from "../../TippyWrapper";
+import styles from "./Header.module.scss";
 const cx = classNames.bind(styles);
 
-const menuItemsGenre = [
-  "Action",
-  "Adventure",
-  "Animation",
-  "Biography",
-  "Costume",
-  "Comedy",
-  "Crime",
-  "Documentary",
-  "Drama",
-  "Family",
-  "Fantasy",
-  "Game-Show",
-  "History",
-  "Horror",
-  "Kungfu",
-  "Music",
-  "Mystery",
-  "Reality-TV",
-  "Romance",
-  "Sci-Fi",
-  "Sport",
-  "Thriller",
-  "TV-Show",
-  "War",
-  "Western",
-];
-const menuItemCountry = [
-  "Argentina",
-  "Australia",
-  "Austria",
-  "Belgium",
-  "Brazil",
-  "Canada",
-  "China",
-  "Czech Republic",
-  "Denmark",
-  "Finland",
-  "France",
-  "Germany",
-  "Hong Kong",
-  "Hungary",
-  "India",
-  "International",
-  "Ireland",
-  "Israel",
-  "Italy",
-  "Japan",
-  "Mexico",
-  "Netherlands",
-  "New Zealand",
-  "Norway",
-  "Philippines",
-  "Poland",
-  "Romania",
-  "Russia",
-  "South Africa",
-  "South Korea",
-  "Spain",
-  "Sweden",
-  "Switzerland",
-  "United Kingdom",
-  "United States",
-];
 const Header = () => {
+  // State component
   const [modalShow, setmodalShow] = useState(false);
   const [login, setLogin] = useState(false);
   const [auth, setAuth] = useState("login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Global state component
   const searchInputValue = useSelector(searchInputValueSelector);
   const debounced = useDebounce(searchInputValue, 500);
   const searchResult = useSelector(searchResultSelector);
   const username = useSelector(userInfoUsernameSelector);
+
   let href = window.location.href;
   let inputSearchHeaderRef = useRef(null);
 
+  const hide = () => setmodalShow(false);
+  const show = () => {
+    setAuth("login");
+    setmodalShow(true);
+  };
+  // Handle input
   const handleChangeInputValue = (e) => {
     dispatch(setSearchInputValue(e.target.value));
   };
@@ -130,14 +75,10 @@ const Header = () => {
       return navigate(`/search?keyword=${searchInputValue}`);
     }
   };
-  const hide = () => setmodalShow(false);
-  const show = () => {
-    setAuth("login");
-    setmodalShow(true);
-  };
   const handleSetAuthType = (type) => {
     setAuth(type);
   };
+
   const loadUser = async () => {
     try {
       if (localStorage[ACCESS_TOKEN_NAME]) {
@@ -173,6 +114,7 @@ const Header = () => {
 
   useEffect(() => {
     loadUser();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   useEffect(() => {
     getFilmsSearch(
@@ -180,6 +122,7 @@ const Header = () => {
         debounced === "" ? "0" : "5"
       }`
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounced]);
 
   return (

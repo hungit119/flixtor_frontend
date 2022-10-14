@@ -1,9 +1,9 @@
-import React from "react";
-import className from "classnames/bind";
-import styles from "./FilterItem.module.scss";
-import TippyHeadLess from "../TippyHeadLess";
-import MenuDropDownSearch from "../MenuDropDownSearch";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import className from "classnames/bind";
+import React from "react";
+import MenuDropDownSearch from "../MenuDropDownSearch";
+import TippyHeadLess from "../TippyHeadLess";
+import styles from "./FilterItem.module.scss";
 const cx = className.bind(styles);
 
 const FilterItem = ({ item }) => {

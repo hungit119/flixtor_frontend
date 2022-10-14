@@ -1,21 +1,17 @@
-import React from "react";
-import className from "classnames/bind";
-import styles from "./MovieItem.module.scss";
+import { faCirclePlay, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCirclePlay,
-  faXmark,
-  faXmarkSquare,
-} from "@fortawesome/free-solid-svg-icons";
-import TippyWrapper from "../../TippyWrapper";
-import ToolTipBox from "../../ToolTipBox";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import axios from "axios";
+import className from "classnames/bind";
+import React from "react";
+import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import { apiUrl, NOTIFY_ALL_TOAST } from "../../../constants";
 import { setFilmsWatchList } from "../../../redux/actions/filmsAction";
-import { toast } from "react-toastify";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
+import TippyWrapper from "../../TippyWrapper";
+import ToolTipBox from "../../ToolTipBox";
+import styles from "./MovieItem.module.scss";
 const cx = className.bind(styles);
 
 const MovieItem = ({ item, col = "col-cus", type }) => {

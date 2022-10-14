@@ -1,27 +1,21 @@
-import React, { useEffect, useState } from "react";
-import className from "classnames/bind";
-import styles from "./Auth.module.scss";
-import { Button, Spinner, Toast } from "react-bootstrap";
-import ButtonCus from "../ButtonCus";
-import { toast, ToastContainer } from "react-toastify";
 import axios from "axios";
-import { ACCESS_TOKEN_NAME, apiUrl } from "../../constants";
+import className from "classnames/bind";
+import React, { useState } from "react";
+import { Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { toast, ToastContainer } from "react-toastify";
+import { ACCESS_TOKEN_NAME, apiUrl } from "../../constants";
 import { setUserInfo } from "../../redux/actions/authAction";
 import ResponseApiHandle from "../../utils/ResponseApiHandle";
+import ButtonCus from "../ButtonCus";
+import styles from "./Auth.module.scss";
 const cx = className.bind(styles);
 
 const Auth = ({ type = "register", handleSetAuthType }) => {
-  const dispatch = useDispatch();
+  // State component
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [registerSuccess, setRegisterSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [registerForm, setRegisterForm] = useState({
-    username: "",
-    password: "",
-    email: "",
-    rePassword: "",
-  });
   const [loginForm, setLoginForm] = useState({
     username: "",
     password: "",
@@ -29,7 +23,15 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
   const [forgotPassForm, setForgotPassForm] = useState({
     username: "",
   });
+  const [registerForm, setRegisterForm] = useState({
+    username: "",
+    password: "",
+    email: "",
+    rePassword: "",
+  });
+  const dispatch = useDispatch();
 
+  // Validate form input
   const validateFormInputByClassName = (className) => {
     var result = true;
     const inputFormCreate = document.getElementsByClassName(className);
@@ -44,7 +46,6 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
   };
 
   // Handle Change Input
-
   const handleInputRegisterChange = (e) => {
     setRegisterForm({ ...registerForm, [e.target.name]: e.target.value });
     document
@@ -65,7 +66,6 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
   };
 
   // Handle Click Buttons
-
   const handleRegisterClick = async () => {
     if (validateFormInputByClassName("register") === false) {
       toast.warning("Please fill in the required fields !!", {
@@ -85,6 +85,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
     const formValue = { ...registerForm };
     try {
       setIsLoading(true);
+      // Handle Api
       const response = await axios.post(`${apiUrl}/auth/register`, {
         ...formValue,
       });

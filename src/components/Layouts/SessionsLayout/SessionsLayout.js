@@ -1,36 +1,22 @@
-import React, { useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import styles from "./SessionsLayout.module.scss";
-import SessionsHome from "../../SessionsHome";
-import ListMovies from "../../ListMovies/ListMovies";
-import TippyHeadLess from "../../TippyHeadLess";
-import MenuDropDownSearch from "../../MenuDropDownSearch";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faCalendarDays,
-  faClone,
-  faCube,
-  faEarth,
-  faFilter,
-  faFolderOpen,
-  faSort,
-} from "@fortawesome/free-solid-svg-icons";
-import upperCaseFirst from "../../../utils/UpperCaseFirst";
-import { Navigate, useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import classNames from "classnames/bind";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setFilmsTrending,
   setFilmsTypeMovies,
   setFilmsTypeTv,
 } from "../../../redux/actions/filmsAction";
-import { useDispatch, useSelector } from "react-redux";
 import {
   filmsTypeAllMoviesSelector,
-  filmsTypeAllTvSelector,
   filmsTypeAllTrendingSelector,
+  filmsTypeAllTvSelector,
 } from "../../../redux/selectors";
-import FilterBar from "../../FilterBar";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
+import FilterBar from "../../FilterBar";
+import ListMovies from "../../ListMovies/ListMovies";
+import SessionsHome from "../../SessionsHome";
+import styles from "./SessionsLayout.module.scss";
 const cx = classNames.bind(styles);
 const SessionsLayout = ({ title, root }) => {
   const dispatch = useDispatch();
@@ -41,6 +27,7 @@ const SessionsLayout = ({ title, root }) => {
       ? filmsTypeAllTvSelector
       : filmsTypeAllTrendingSelector
   );
+  // Handle get film
   const getFilms = async (urlApi, actionDispatch) => {
     try {
       const response = await axios.get(urlApi);

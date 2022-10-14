@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import { useDispatch, useSelector } from "react-redux";
-import styles from "./UserInfo.module.scss";
 import axios from "axios";
-import { apiUrl } from "../../../../constants";
+import classNames from "classnames/bind";
+import React, { useEffect, useState } from "react";
 import { Container, Form, Spinner } from "react-bootstrap";
-import {
-  setUpdateInforUser,
-  setUserAllInfo,
-} from "../../../../redux/actions/authAction";
+import { useDispatch, useSelector } from "react-redux";
+import { apiUrl } from "../../../../constants";
+import { setUpdateInforUser } from "../../../../redux/actions/authAction";
 import { userInfoSelector } from "../../../../redux/selectors";
-import Message from "../../../Message";
 import ResponseApiHandle from "../../../../utils/ResponseApiHandle";
+import Message from "../../../Message";
+import styles from "./UserInfo.module.scss";
 const cx = classNames.bind(styles);
 const UserInfo = () => {
   const dispatch = useDispatch();

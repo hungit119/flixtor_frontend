@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import styles from "./TippySearch.module.scss";
 import Tippy from "@tippyjs/react/headless";
+import classNames from "classnames/bind";
+import { motion, useSpring } from "framer-motion";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  searchInputValueSelector,
-  searchResultSelector,
-} from "../../redux/selectors";
+import { useLocation } from "react-router-dom";
 import {
   setSearchInputValue,
   setSearchResults,
 } from "../../redux/actions/searchAction";
-import { useSpring, motion } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { searchResultSelector } from "../../redux/selectors";
+import styles from "./TippySearch.module.scss";
 const cx = classNames.bind(styles);
 
 const TippySearch = ({ children, SearchResultElemnt }) => {
-  const location = useLocation();
-  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
+  const dispatch = useDispatch();
+  const location = useLocation();
   const searchResults = useSelector(searchResultSelector);
   const springConfig = { damping: 15, stiffness: 300 };
   const opacity = useSpring(0, springConfig);

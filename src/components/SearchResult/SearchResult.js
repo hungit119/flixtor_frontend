@@ -1,15 +1,15 @@
-import React from "react";
-import classNames from "classnames/bind";
-import styles from "./SearchResult.module.scss";
-import { Link } from "react-router-dom";
-import SearchResultItem from "./SearchResultItem";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
+import React from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   searchInputValueSelector,
   searchResultSelector,
 } from "../../redux/selectors";
+import styles from "./SearchResult.module.scss";
+import SearchResultItem from "./SearchResultItem";
 
 const cx = classNames.bind(styles);
 

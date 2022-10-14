@@ -1,15 +1,14 @@
-import React from "react";
-import classNames from "classnames/bind";
-import styles from "./MenuUserInfor.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart,
   faSignOut,
   faUserCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
+import React from "react";
 import { ACCESS_TOKEN_NAME } from "../../constants";
 import setAuthToken from "../../utils/setAuthToken";
+import styles from "./MenuUserInfor.module.scss";
 const cx = classNames.bind(styles);
 const MenuUserInfor = () => {
   const handleClickLogout = () => {

@@ -1,5 +1,5 @@
-import React from "react";
 import className from "classnames/bind";
+import React from "react";
 import styles from "./ButtonShare.module.scss";
 const cx = className.bind(styles);
 const ButtonShare = ({ icon, title, variant, option = null }) => {

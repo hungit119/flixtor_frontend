@@ -6,13 +6,10 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import className from "classnames/bind";
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import ButtonGroupShare from "../../ButtonGroupShare";
-import ListMovies from "../../ListMovies/ListMovies";
-import SessionsHome from "../../SessionsHome";
-import styles from "./Home.module.scss";
+import { useParams } from "react-router-dom";
+import { tabs } from "../../../constants";
 import {
   setFilmsLastestMovies,
   setFilmsLastestTv,
@@ -22,25 +19,11 @@ import {
 } from "../../../redux/actions/filmsAction";
 import { filmsTypeSelector } from "../../../redux/selectors";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
+import ButtonGroupShare from "../../ButtonGroupShare";
+import ListMovies from "../../ListMovies/ListMovies";
+import SessionsHome from "../../SessionsHome";
+import styles from "./Home.module.scss";
 const cx = className.bind(styles);
-
-const tabs = [
-  {
-    title: "Movies",
-    icon: <FontAwesomeIcon icon={faPlayCircle} />,
-    href: "movies",
-  },
-  {
-    title: "TV-Shows",
-    icon: <FontAwesomeIcon icon={faList} />,
-    href: "tv-shows",
-  },
-  {
-    title: "Trending",
-    icon: <FontAwesomeIcon icon={faChartLine} />,
-    href: "trending",
-  },
-];
 
 const HomePage = () => {
   let params = useParams();

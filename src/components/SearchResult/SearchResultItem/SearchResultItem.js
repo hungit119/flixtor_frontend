@@ -1,10 +1,9 @@
-import React from "react";
-import classNames from "classnames/bind";
-import styles from "./SearchResultItem.module.scss";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { useSpring } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import classNames from "classnames/bind";
+import React from "react";
+import { Link } from "react-router-dom";
+import styles from "./SearchResultItem.module.scss";
 
 const cx = classNames.bind(styles);
 

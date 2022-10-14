@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import styles from "./UserWatchList.module.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilter, faSort } from "@fortawesome/free-solid-svg-icons";
-import WatchList from "./WatchList";
-import { apiUrl } from "../../../../constants";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import classNames from "classnames/bind";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { apiUrl } from "../../../../constants";
 import { setFilmsWatchList } from "../../../../redux/actions/filmsAction";
 import { filmsWatchListSelector } from "../../../../redux/selectors";
-import TippyHeadLess from "../../../TippyHeadLess";
-import MenuDropDownSearch from "../../../MenuDropDownSearch";
 import ResponseApiHandle from "../../../../utils/ResponseApiHandle";
+import MenuDropDownSearch from "../../../MenuDropDownSearch";
+import TippyHeadLess from "../../../TippyHeadLess";
+import styles from "./UserWatchList.module.scss";
+import WatchList from "./WatchList";
 const cx = classNames.bind(styles);
 
 const sortMenu = [
@@ -23,8 +23,8 @@ const sortMenu = [
 ];
 
 const UserWatchList = () => {
-  const [sortBy, setSortBy] = useState("Default");
   const dispatch = useDispatch();
+  const [sortBy, setSortBy] = useState("Default");
   const filmsWatchList = useSelector(filmsWatchListSelector);
   const getWatchList = async () => {
     try {

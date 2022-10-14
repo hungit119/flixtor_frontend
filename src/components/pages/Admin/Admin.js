@@ -1,18 +1,13 @@
-import React from "react";
-import className from "classnames/bind";
-import styles from "./Admin.module.scss";
-import { Routes, Route, Link } from "react-router-dom";
+import { faAdd, faList, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faAdd,
-  faEdit,
-  faList,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
+import className from "classnames/bind";
+import React from "react";
+import { Link, Route, Routes } from "react-router-dom";
+import styles from "./Admin.module.scss";
 import Add from "./content/Add";
-import List from "./content/List";
-import Film from "./content/Film/Film";
 import Delete from "./content/Delete";
+import Film from "./content/Film/Film";
+import List from "./content/List";
 const cx = className.bind(styles);
 
 const Admin = () => {

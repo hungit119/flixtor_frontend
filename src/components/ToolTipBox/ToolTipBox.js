@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { apiUrl, NOTIFY_ALL_TOAST } from "../../constants";
-import className from "classnames/bind";
-import styles from "./ToolTipBox.module.scss";
-import { Link } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeart,
   faMinus,
   faPlay,
   faStar,
 } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
-import { userIDSelector } from "../../redux/selectors";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import className from "classnames/bind";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import { ToastContainer } from "react-bootstrap";
+import { apiUrl, NOTIFY_ALL_TOAST } from "../../constants";
 import ResponseApiHandle from "../../utils/ResponseApiHandle";
+import styles from "./ToolTipBox.module.scss";
 const cx = className.bind(styles);
 
 const ToolTipBox = ({ href, item }) => {

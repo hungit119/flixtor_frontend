@@ -1,7 +1,7 @@
-import React, { useRef, useState } from "react";
 import className from "classnames/bind";
-import styles from "./MenuDropDownSearch.module.scss";
+import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import styles from "./MenuDropDownSearch.module.scss";
 const cx = className.bind(styles);
 
 const MenuDropDownSearch = ({

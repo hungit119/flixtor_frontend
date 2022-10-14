@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import className from "classnames/bind";
-import { Col, Container, Image, Row } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Container, Row } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
 import styles from "./ListMovies.module.scss";
 import MovieItem from "./MovieItem";
-import ReactPaginate from "react-paginate";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 const cx = className.bind(styles);
 
 const ListMovies = ({ items, col, pagnition = false }) => {

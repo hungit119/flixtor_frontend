@@ -1,31 +1,25 @@
-import React, { useEffect, useState } from "react";
-import classNames from "classnames/bind";
-import styles from "./SearchResult.module.scss";
-import SessionsLayout from "../../Layouts/SessionsLayout";
-import FilterBar from "../../FilterBar";
-import SessionsHome from "../../SessionsHome";
 import axios from "axios";
-import ListMovies from "../../ListMovies/ListMovies";
+import classNames from "classnames/bind";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { apiUrl } from "../../../constants";
+import useQuery from "../../../hooks/useQuery";
+import { setFilmsFilter } from "../../../redux/actions/filmsAction";
+import { setSearchResultsFull } from "../../../redux/actions/searchAction";
 import {
   filmsFilterSelector,
-  searchInputValueSelector,
   searchResultFullSelector,
-  searchResultSelector,
 } from "../../../redux/selectors";
-import {
-  setSearchResults,
-  setSearchResultsFull,
-} from "../../../redux/actions/searchAction";
-import { useLocation, useParams } from "react-router-dom";
-import useQuery from "../../../hooks/useQuery";
-import { apiUrl } from "../../../constants";
-import { setFilmsFilter } from "../../../redux/actions/filmsAction";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
+import FilterBar from "../../FilterBar";
+import ListMovies from "../../ListMovies/ListMovies";
+import SessionsHome from "../../SessionsHome";
+import styles from "./SearchResult.module.scss";
 const cx = classNames.bind(styles);
 const SearchResult = ({ feature }) => {
-  const params = useParams();
   const dispatch = useDispatch();
+  const params = useParams();
   const searchInputValue = useQuery().get("keyword");
   const searchResultsFull = useSelector(searchResultFullSelector);
   const filmsFilterByType = useSelector(filmsFilterSelector);
@@ -59,6 +53,7 @@ const SearchResult = ({ feature }) => {
     } else {
       searchFilms();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchInputValue]);
   return (
     <div className={cx("wrapper")}>

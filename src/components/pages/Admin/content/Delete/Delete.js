@@ -1,21 +1,20 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import classNames from "classnames/bind";
-import styles from "./Delete.module.scss";
-import { Button, Table } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import ReactPaginate from "react-paginate";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import { setFilmTrash } from "../../../../../redux/actions/filmsAction";
-import { filmsTrashSelector } from "../../../../../redux/selectors";
+import classNames from "classnames/bind";
+import React, { useEffect, useState } from "react";
+import { Button, Table } from "react-bootstrap";
+import ReactPaginate from "react-paginate";
+import { useDispatch, useSelector } from "react-redux";
 import {
   setFilmIdRemove,
   setFilmIdRestore,
 } from "../../../../../redux/actions/filmAction";
-import ModalCom from "../../../../ModalCom/ModalCom";
+import { setFilmTrash } from "../../../../../redux/actions/filmsAction";
+import { filmsTrashSelector } from "../../../../../redux/selectors";
 import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
+import ModalCom from "../../../../ModalCom/ModalCom";
+import styles from "./Delete.module.scss";
 
 const cx = classNames.bind(styles);
 
@@ -43,6 +42,7 @@ const Delete = () => {
   };
   useEffect(() => {
     getFilmOnTrash();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
-import React from "react";
 import classNames from "classnames/bind";
+import React from "react";
 import styles from "./Message.module.scss";
 const cx = classNames.bind(styles);
 

@@ -1,9 +1,9 @@
 import axios from "axios";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { setFilmAdmin } from "../../../../../redux/actions/filmAction";
 import { Table } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { setFilmAdmin } from "../../../../../redux/actions/filmAction";
 import { filmAdminSelector } from "../../../../../redux/selectors";
 import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 const Film = () => {
@@ -20,6 +20,7 @@ const Film = () => {
   };
   useEffect(() => {
     getFilm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>

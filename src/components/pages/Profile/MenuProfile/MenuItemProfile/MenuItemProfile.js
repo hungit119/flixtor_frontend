@@ -28,6 +28,6 @@ MenuItemProfile.propTypes = {
   title: PropTypes.string,
   type: PropTypes.string,
   to: PropTypes.string,
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
 };
 export default MenuItemProfile;

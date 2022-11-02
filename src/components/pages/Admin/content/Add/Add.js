@@ -535,54 +535,60 @@ const Add = ({ typeFunction }) => {
                 </Row>
               </Col>
               <Col lg={6} className={cx("preview-wrapper")}>
-                <div className={cx("preview")}>
-                  <TippyWrapper
-                    content={
-                      <ToolTipBox
-                        item={{
-                          title: form.title,
-                          imdb: form.imdb,
-                          quantity: form.quantity,
-                          description: form.description,
-                          countries: form.countries || "",
-                          genres: form.genres || "",
-                        }}
-                      />
-                    }
-                    position={"right"}
-                    animation={true}
-                  >
-                    <div className={cx("movie")}>
-                      <div className={cx("movie-image")}>
-                        <img
-                          className={cx("movie-image-src")}
-                          src={form.poster}
-                          alt="img"
+                {form.poster ? (
+                  <div className={cx("preview")}>
+                    <TippyWrapper
+                      content={
+                        <ToolTipBox
+                          item={{
+                            title: form.title,
+                            imdb: form.imdb,
+                            quantity: form.quantity,
+                            description: form.description,
+                            countries: form.countries || "",
+                            genres: form.genres || "",
+                          }}
                         />
-                        <div className={cx("movie-overlay")}></div>
-                        <div className={cx("movie-overlay-icon-wrapper")}>
-                          <FontAwesomeIcon
-                            className={cx("movie-play-icon")}
-                            icon={faCirclePlay}
+                      }
+                      position={"right"}
+                      animation={true}
+                    >
+                      <div className={cx("movie")}>
+                        <div className={cx("movie-image")}>
+                          <img
+                            className={cx("movie-image-src")}
+                            src={form.poster}
+                            alt="img"
                           />
+                          <div className={cx("movie-overlay")}></div>
+                          <div className={cx("movie-overlay-icon-wrapper")}>
+                            <FontAwesomeIcon
+                              className={cx("movie-play-icon")}
+                              icon={faCirclePlay}
+                            />
+                          </div>
+                        </div>
+                        <div className={cx("movie-info")}>
+                          <div className={cx("movie-title")}>{form.title}</div>
+                          <div className={cx("movie-body")}>
+                            <span className={cx("movie-meta")}>
+                              <span>{form.year}</span> &#8226;{" "}
+                              <span>{form.times} min</span>
+                            </span>
+                            <span className={cx("movies-type")}>
+                              {form.type}
+                            </span>
+                          </div>
+                        </div>
+                        <div className={cx("movie-quantity")}>
+                          {form.quantity}
                         </div>
                       </div>
-                      <div className={cx("movie-info")}>
-                        <div className={cx("movie-title")}>{form.title}</div>
-                        <div className={cx("movie-body")}>
-                          <span className={cx("movie-meta")}>
-                            <span>{form.year}</span> &#8226;{" "}
-                            <span>{form.times} min</span>
-                          </span>
-                          <span className={cx("movies-type")}>{form.type}</span>
-                        </div>
-                      </div>
-                      <div className={cx("movie-quantity")}>
-                        {form.quantity}
-                      </div>
-                    </div>
-                  </TippyWrapper>
-                </div>
+                    </TippyWrapper>
+                  </div>
+                ) : (
+                  <h3>Preview Movie</h3>
+                )}
               </Col>
             </Row>
           </Container>

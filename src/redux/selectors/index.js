@@ -29,6 +29,6 @@ export const userRuleSelector = (state) => state.user.rule;
 export const showModalSelector = (state) => state.control.modalShow;
 // Admin
 export const userAdminSelector = (state) => state.admin.users;
-//Auth
-export const isLoginSelector = (state) => state.auth.isLogin;
-export const isLoadingSelector = (state) => state.auth.isLoading;
+// Auth
+export const isAuthenticatedSelector = (state) => state.auth.isAuthenticated;
+export const authLoadingSelector = (state) => state.auth.authLoading;

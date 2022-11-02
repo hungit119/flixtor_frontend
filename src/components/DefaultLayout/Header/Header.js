@@ -8,35 +8,25 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import classNames from "classnames/bind";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import {
-  ACCESS_TOKEN_NAME,
-  apiUrl,
-  menuItemCountry,
-  menuItemsGenre,
-} from "../../../constants";
+import { menuItemCountry, menuItemsGenre } from "../../../constants";
 import useDebounce from "../../../hooks/useDebounce";
-import {
-  setAuthLoading,
-  setAuthLogin,
-} from "../../../redux/actions/authAction";
 import { setShowModal } from "../../../redux/actions/controlAction";
 import {
   setSearchInputValue,
   setSearchResults,
 } from "../../../redux/actions/searchAction";
-import { setUserInfo } from "../../../redux/actions/userAction";
 import {
+  isLoginSelector,
   searchInputValueSelector,
   searchResultSelector,
   showModalSelector,
   userInfoUsernameSelector,
 } from "../../../redux/selectors";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
-import setAuthToken from "../../../utils/setAuthToken";
 import Auth from "../../Auth";
 import MenuItem from "../../MenuItem";
 import MenuUserInfor from "../../MenuUserInfor/MenuUserInfor";
@@ -49,7 +39,6 @@ const cx = classNames.bind(styles);
 
 const Header = () => {
   // State component
-  const [login, setLogin] = useState(false);
   const [auth, setAuth] = useState("login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -85,46 +74,20 @@ const Header = () => {
     setAuth(type);
   };
 
-  const loadUser = async () => {
-    try {
-      dispatch(setAuthLoading(true));
-      if (localStorage[ACCESS_TOKEN_NAME]) {
-        setAuthToken(localStorage[ACCESS_TOKEN_NAME]);
+  const getFilmsSearch = useCallback(
+    async (url) => {
+      try {
+        const response = await axios.get(url);
+        ResponseApiHandle(response, (resData) => {
+          dispatch(setSearchResults(resData.searchResult));
+        });
+      } catch (error) {
+        console.log(error.message);
       }
-      const response = await axios.get(`${apiUrl}/auth`);
-      ResponseApiHandle(
-        response,
-        (resData) => {
-          dispatch(setAuthLogin(true));
-          dispatch(setAuthLoading(false));
-          dispatch(setUserInfo(resData.userInfo));
-          dispatch(setShowModal(false));
-          setLogin(true);
-        },
-        (errorData) => {
-          dispatch(setUserInfo({}));
-          setLogin(false);
-        }
-      );
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  const getFilmsSearch = async (url) => {
-    try {
-      const response = await axios.get(url);
-      ResponseApiHandle(response, (resData) => {
-        dispatch(setSearchResults(resData.searchResult));
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+    },
+    [dispatch]
+  );
 
-  useEffect(() => {
-    loadUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   useEffect(() => {
     getFilmsSearch(
       `http://localhost:8000/api/films/search?keyword=${debounced}&limit=${
@@ -240,7 +203,7 @@ const Header = () => {
                 </Col>
               )}
               <Col lg={3} className={cx("user-info")}>
-                {login ? (
+                {username ? (
                   <TippyHeadLess menuTippy={<MenuUserInfor />}>
                     <button className={cx("dropdown-user-info")}>
                       <span className={cx("infor-user-username")}>

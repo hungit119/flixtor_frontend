@@ -12,11 +12,8 @@ import { useSelector } from "react-redux";
 import { NavLink, Route, Routes } from "react-router-dom";
 import { userRuleSelector } from "../../../redux/selectors";
 import styles from "./Admin.module.scss";
-import Add from "./content/Add";
-import Delete from "./content/Delete";
-import Film from "./content/Film/Film";
-import List from "./content/List";
-import User from "./content/User";
+import PermissionRouter from "./components/PermissionRouter/PermissionRouter";
+import privateRouter from "./routes";
 const cx = className.bind(styles);
 
 const Admin = () => {
@@ -64,15 +61,20 @@ const Admin = () => {
         </div>
         <hr />
         <Routes>
-          <Route path="/dashboard" element={<List />} />
-          <Route path="/add" element={<Add />} />
-          <Route path="/film/:id" element={<Film />} />
-          <Route
-            path="/film/update/:id"
-            element={<Add typeFunction="update" />}
-          />
-          <Route path="/delete" element={<Delete />} />
-          <Route path="/user" element={<User />} />
+          {privateRouter.map((route, index) => {
+            let Page = route.component;
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <PermissionRouter permission={route.permission}>
+                    <Page typeFunction={route.typeFunction} />
+                  </PermissionRouter>
+                }
+              />
+            );
+          })}
         </Routes>
       </div>
     </div>

@@ -41,7 +41,7 @@ const ButtonCus = ({ children, classname, style, onClick }) => {
 ButtonCus.propTypes = {
   children: PropTypes.node.isRequired,
   classname: PropTypes.string,
-  style: PropTypes.string,
+  style: PropTypes.object,
   onClick: PropTypes.func,
 };
 

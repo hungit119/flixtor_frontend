@@ -1,18 +1,18 @@
 import axios from "axios";
 import className from "classnames/bind";
 import PropTypes from "prop-types";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { ACCESS_TOKEN_NAME, apiUrl } from "../../constants";
-import { setUserInfo } from "../../redux/actions/userAction";
+import { setAuthentication } from "../../redux/actions/authAction";
 import { setShowModal } from "../../redux/actions/controlAction";
+import { setUserInfo } from "../../redux/actions/userAction";
 import ResponseApiHandle from "../../utils/ResponseApiHandle";
 import ButtonCus from "../ButtonCus";
 import Message from "../Message";
 import styles from "./Auth.module.scss";
-import { setAuthLogin } from "../../redux/actions/authAction";
 const cx = className.bind(styles);
 
 const Auth = ({ type = "register", handleSetAuthType }) => {
@@ -104,9 +104,9 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
         (resData) => {
           setIsLoading(false);
           dispatch(setUserInfo(resData.reply));
-          dispatch(setAuthLogin(true));
           const { accessToken } = resData.reply;
           localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
+          dispatch(setAuthentication(true));
           setnotificationCheckMail(true);
           setTimeout(() => {
             dispatch(setShowModal(false));
@@ -145,9 +145,9 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
         response,
         (resData) => {
           dispatch(setUserInfo(resData.reply.username));
-          dispatch(setAuthLogin(true));
           const { accessToken } = resData.reply;
           localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
+          dispatch(setAuthentication(true));
           setLoginSuccess(true);
           setTimeout(() => {
             setIsLoading(false);

@@ -33,12 +33,12 @@ const ModalAdmin = ({ title, body, show, setShowModal, handle, id }) => {
 };
 
 ModalAdmin.propTypes = {
-  title: PropTypes.string.isRequired,
-  body: PropTypes.string.isRequired,
-  show: PropTypes.bool.isRequired,
-  setShowModal: PropTypes.func.isRequired,
-  handle: PropTypes.func.isRequired,
-  id: PropTypes.string.isRequired,
+  title: PropTypes.string,
+  body: PropTypes.string,
+  show: PropTypes.bool,
+  setShowModal: PropTypes.func,
+  handle: PropTypes.func,
+  id: PropTypes.string,
 };
 
 export default ModalAdmin;

@@ -27,6 +27,7 @@ import upperCaseFirst from "../../utils/UpperCaseFirst";
 import MenuDropDownSearch from "../MenuDropDownSearch";
 import TippyHeadLess from "../TippyHeadLess";
 import styles from "./FilterBar.module.scss";
+import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 
 const FilterBar = ({ type, value }) => {
@@ -252,6 +253,11 @@ const FilterBar = ({ type, value }) => {
       </li>
     </ul>
   );
+};
+
+FilterBar.propTypes = {
+  type: PropTypes.any,
+  value: PropTypes.any,
 };
 
 export default FilterBar;

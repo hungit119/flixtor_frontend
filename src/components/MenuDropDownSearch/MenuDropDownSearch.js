@@ -2,6 +2,7 @@ import className from "classnames/bind";
 import React, { useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import styles from "./MenuDropDownSearch.module.scss";
+import PropTypes from "prop-types";
 const cx = className.bind(styles);
 
 const MenuDropDownSearch = ({
@@ -52,6 +53,15 @@ const MenuDropDownSearch = ({
       </Container>
     </div>
   );
+};
+
+MenuDropDownSearch.propTypes = {
+  menus: PropTypes.array.isRequired,
+  size: PropTypes.string,
+  grid: PropTypes.number,
+  type: PropTypes.string,
+  title: PropTypes.string,
+  setOptions: PropTypes.func,
 };
 
 export default MenuDropDownSearch;

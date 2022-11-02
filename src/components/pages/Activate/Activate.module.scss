@@ -1,0 +1,23 @@
+.wrapper {
+  height: 409px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.activate-message {
+  margin-top: 12px;
+  color: var(--text-color-header);
+  font-size: 1.7rem;
+  font-weight: 500;
+}
+.activated-message {
+  color: var(--primary);
+  font-size: 2rem;
+  font-weight: 500;
+  text-align: center;
+}

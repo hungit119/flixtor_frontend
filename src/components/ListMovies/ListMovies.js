@@ -6,6 +6,7 @@ import { Container, Row } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import styles from "./ListMovies.module.scss";
 import MovieItem from "./MovieItem";
+import PropTypes from "prop-types";
 const cx = className.bind(styles);
 
 const ListMovies = ({ items, col, pagnition = false }) => {
@@ -58,6 +59,12 @@ const ListMovies = ({ items, col, pagnition = false }) => {
       )}
     </Container>
   );
+};
+
+ListMovies.propTypes = {
+  items: PropTypes.array.isRequired,
+  col: PropTypes.string,
+  pagnition: PropTypes.bool,
 };
 
 export default ListMovies;

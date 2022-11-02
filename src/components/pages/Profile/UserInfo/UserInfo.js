@@ -1,10 +1,12 @@
+import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import classNames from "classnames/bind";
 import React, { useEffect, useState } from "react";
 import { Container, Form, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { apiUrl } from "../../../../constants";
-import { setUpdateInforUser } from "../../../../redux/actions/authAction";
+import { setUpdateInforUser } from "../../../../redux/actions/userAction";
 import { userInfoSelector } from "../../../../redux/selectors";
 import ResponseApiHandle from "../../../../utils/ResponseApiHandle";
 import Message from "../../../Message";
@@ -79,7 +81,15 @@ const UserInfo = () => {
     <div className={cx("wrapper")}>
       <div className={cx("edit-input")}>
         <div className={cx("header-content")}>
-          <div className={cx("header-content-title")}>Edit Profile</div>
+          <div className={cx("header-content-title")}>Edit Profile</div>{" "}
+          {userInfo.verify && userInfo.id !== "" ? (
+            <FontAwesomeIcon
+              icon={faCircleCheck}
+              style={{ color: "#17a2b8" }}
+            />
+          ) : (
+            <span style={{ color: "red" }}>(Not activate your email)</span>
+          )}
         </div>
         <div className={cx("form-edit-profile")}>
           <Container>

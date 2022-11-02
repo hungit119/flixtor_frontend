@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./SearchResultItem.module.scss";
+import PropTypes from "prop-types";
 
 const cx = classNames.bind(styles);
 
@@ -30,6 +31,9 @@ const SearchResultItem = ({ data }) => {
       </div>
     </Link>
   );
+};
+SearchResultItem.propTypes = {
+  data: PropTypes.object.isRequired,
 };
 
 export default SearchResultItem;

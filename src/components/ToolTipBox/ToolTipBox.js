@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { apiUrl, NOTIFY_ALL_TOAST } from "../../constants";
 import ResponseApiHandle from "../../utils/ResponseApiHandle";
 import styles from "./ToolTipBox.module.scss";
+import PropTypes from "prop-types";
 const cx = className.bind(styles);
 
 const ToolTipBox = ({ href, item }) => {
@@ -108,5 +109,8 @@ const ToolTipBox = ({ href, item }) => {
     </div>
   );
 };
-
+ToolTipBox.propTypes = {
+  href: PropTypes.string,
+  item: PropTypes.object,
+};
 export default ToolTipBox;

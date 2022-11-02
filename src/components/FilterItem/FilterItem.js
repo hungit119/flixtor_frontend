@@ -4,6 +4,7 @@ import React from "react";
 import MenuDropDownSearch from "../MenuDropDownSearch";
 import TippyHeadLess from "../TippyHeadLess";
 import styles from "./FilterItem.module.scss";
+import PropTypes from "prop-types";
 const cx = className.bind(styles);
 
 const FilterItem = ({ item }) => {
@@ -30,4 +31,7 @@ const FilterItem = ({ item }) => {
   );
 };
 
+FilterItem.propTypes = {
+  item: PropTypes.object,
+};
 export default FilterItem;

@@ -1,20 +1,26 @@
 import axios from "axios";
 import className from "classnames/bind";
-import React, { useState } from "react";
+import PropTypes from "prop-types";
+import React, { useCallback, useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
 import { ACCESS_TOKEN_NAME, apiUrl } from "../../constants";
-import { setUserInfo } from "../../redux/actions/authAction";
+import { setUserInfo } from "../../redux/actions/userAction";
+import { setShowModal } from "../../redux/actions/controlAction";
 import ResponseApiHandle from "../../utils/ResponseApiHandle";
 import ButtonCus from "../ButtonCus";
+import Message from "../Message";
 import styles from "./Auth.module.scss";
+import { setAuthLogin } from "../../redux/actions/authAction";
 const cx = className.bind(styles);
 
 const Auth = ({ type = "register", handleSetAuthType }) => {
   // State component
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [registerSuccess, setRegisterSuccess] = useState(false);
+  const [forgottenPassword, setForgottenPassword] = useState(false);
+  const [forgottenPasswordEmail, setForgottenPasswordEmail] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [loginForm, setLoginForm] = useState({
     username: "",
@@ -29,6 +35,8 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
     email: "",
     rePassword: "",
   });
+
+  const [notificationCheckMail, setnotificationCheckMail] = useState(false);
   const dispatch = useDispatch();
 
   // Validate form input
@@ -52,12 +60,14 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
       .querySelector(`[name="${e.target.name}"]`)
       .classList.remove(cx("error-input"));
   };
+
   const handleInputLoginChange = (e) => {
     setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
     document
       .querySelector(`[name="${e.target.name}"]`)
       .classList.remove(cx("error-input"));
   };
+
   const handleInputForgotPassChange = (e) => {
     setForgotPassForm({ ...forgotPassForm, [e.target.name]: e.target.value });
     document
@@ -94,13 +104,14 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
         (resData) => {
           setIsLoading(false);
           dispatch(setUserInfo(resData.reply));
+          dispatch(setAuthLogin(true));
           const { accessToken } = resData.reply;
           localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
-          setRegisterSuccess(true);
+          setnotificationCheckMail(true);
           setTimeout(() => {
-            setIsLoading(false);
+            dispatch(setShowModal(false));
             window.location.reload();
-          }, 1000);
+          }, 2000);
         },
         (errorData) => {
           toast.error(errorData.message, {
@@ -134,6 +145,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
         response,
         (resData) => {
           dispatch(setUserInfo(resData.reply.username));
+          dispatch(setAuthLogin(true));
           const { accessToken } = resData.reply;
           localStorage.setItem(ACCESS_TOKEN_NAME, accessToken);
           setLoginSuccess(true);
@@ -157,7 +169,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
       setIsLoading(false);
     }
   };
-  const handleForgotClick = () => {
+  const handleForgotClick = async () => {
     if (validateFormInputByClassName("forgotPass") === false) {
       toast.warning("Please fill in the required fields !!", {
         theme: "colored",
@@ -165,7 +177,20 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
       return;
     }
     const formValue = { ...forgotPassForm };
-    console.log({ formValue });
+    try {
+      const response = await axios.post(`${apiUrl}/auth/forgotPassword`, {
+        ...formValue,
+      });
+      if (response.data.success) {
+        setForgottenPassword(true);
+        setForgottenPasswordEmail(false);
+      } else {
+        setForgottenPasswordEmail(true);
+        setForgottenPassword(false);
+      }
+    } catch (error) {
+      throw error;
+    }
   };
   return (
     <>
@@ -210,7 +235,9 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
                   : "forgotPass"
               )}
               type="text"
-              placeholder={"Your username"}
+              placeholder={
+                type === "forgot-password" ? "Your email" : "Your username"
+              }
               name="username"
               onChange={
                 type === "register"
@@ -315,13 +342,20 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
         )}
         <div>
           {type === "register" ? (
-            <ButtonCus
-              classname={"btn-flat-auth"}
-              style={{ width: "100%", marginTop: "30px" }}
-              onClick={handleRegisterClick}
-            >
-              Register
-            </ButtonCus>
+            <>
+              <Message
+                variant={"success"}
+                text={"An email has been sent to you, please check your inbox"}
+                show={notificationCheckMail}
+              />
+              <ButtonCus
+                classname={"btn-flat-auth"}
+                style={{ width: "100%", marginTop: "30px" }}
+                onClick={handleRegisterClick}
+              >
+                Register
+              </ButtonCus>
+            </>
           ) : type === "login" ? (
             <ButtonCus
               classname={"btn-flat-auth"}
@@ -331,13 +365,28 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
               Login
             </ButtonCus>
           ) : (
-            <ButtonCus
-              classname={"btn-flat-auth"}
-              style={{ width: "100%", marginTop: "30px" }}
-              onClick={handleForgotClick}
-            >
-              Forgot
-            </ButtonCus>
+            <>
+              <Message
+                variant={"success"}
+                text={
+                  "An email has been sent to you to change your password, please check your inbox"
+                }
+                show={forgottenPassword}
+              />
+              <Message
+                variant={"error"}
+                text={"Email not exist in server"}
+                show={forgottenPasswordEmail}
+              />
+              <ButtonCus
+                classname={"btn-flat-auth"}
+                style={{ width: "100%", marginTop: "30px" }}
+                onClick={handleForgotClick}
+                show={forgottenPasswordEmail}
+              >
+                Forgot
+              </ButtonCus>
+            </>
           )}
         </div>
 
@@ -383,6 +432,11 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
       </div>
     </>
   );
+};
+
+Auth.propTypes = {
+  type: PropTypes.string,
+  handleSetAuthType: PropTypes.func,
 };
 
 export default Auth;

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import className from "classnames/bind";
 import React from "react";
 import styles from "./ServerButton.module.scss";
+import PropTypes from "prop-types";
 const cx = className.bind(styles);
 
 const ServerButton = ({ title, active }) => {
@@ -17,6 +18,11 @@ const ServerButton = ({ title, active }) => {
       </div>
     </div>
   );
+};
+
+ServerButton.propTypes = {
+  title: PropTypes.string,
+  active: PropTypes.bool,
 };
 
 export default ServerButton;

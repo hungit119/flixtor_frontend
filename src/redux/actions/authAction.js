@@ -1,18 +1,10 @@
-import {
-  SET_UPDATE_INFOR_USER,
-  SET_USER_ALL_INFO,
-  SET_USER_INFOR,
-} from "../const";
+import { SET_AUTH_LOADING, SET_AUTH_LOGIN } from "../const";
 
-export const setUserInfo = (userInfo) => ({
-  type: SET_USER_INFOR,
-  payload: userInfo,
+export const setAuthLogin = (isLogin) => ({
+  type: SET_AUTH_LOGIN,
+  payload: isLogin,
 });
-export const setUserAllInfo = (allUserInfo) => ({
-  type: SET_USER_ALL_INFO,
-  payload: allUserInfo,
-});
-export const setUpdateInforUser = (updateUserInfo) => ({
-  type: SET_UPDATE_INFOR_USER,
-  payload: updateUserInfo,
+export const setAuthLoading = (isLoading) => ({
+  type: SET_AUTH_LOADING,
+  payload: isLoading,
 });

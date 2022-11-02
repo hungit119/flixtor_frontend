@@ -15,9 +15,10 @@ import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 import FilterBar from "../../FilterBar";
 import ListMovies from "../../ListMovies/ListMovies";
 import SessionsHome from "../../SessionsHome";
-import styles from "./SearchResult.module.scss";
+import styles from "./SearchResultAll.module.scss";
+import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
-const SearchResult = ({ feature }) => {
+const SearchResultAll = ({ feature }) => {
   const dispatch = useDispatch();
   const params = useParams();
   const searchInputValue = useQuery().get("keyword");
@@ -74,4 +75,8 @@ const SearchResult = ({ feature }) => {
   );
 };
 
-export default SearchResult;
+SearchResultAll.propTypes = {
+  feature: PropTypes.string,
+};
+
+export default SearchResultAll;

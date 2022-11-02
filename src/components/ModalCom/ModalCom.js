@@ -14,6 +14,7 @@ import {
   filmIdSelector,
 } from "../../redux/selectors";
 import ResponseApiHandle from "../../utils/ResponseApiHandle";
+import PropTypes from "prop-types";
 const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
   const dispatch = useDispatch();
   const id = useSelector(
@@ -102,6 +103,12 @@ const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
       </Modal>
     </>
   );
+};
+
+ModalCom.propTypes = {
+  show: PropTypes.bool,
+  setShowModal: PropTypes.func,
+  type: PropTypes.string,
 };
 
 export default ModalCom;

@@ -17,13 +17,18 @@ import { Link, useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setFilm, setFilmSuggests } from "../../../redux/actions/filmAction";
-import { filmSelector, filmSuggestsSelector } from "../../../redux/selectors";
+import {
+  filmSelector,
+  filmSuggestsSelector,
+  userIDSelector,
+} from "../../../redux/selectors";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 import ButtonGroupShare from "../../ButtonGroupShare";
 import ListMovies from "../../ListMovies/ListMovies";
 import ServerButton from "../../ServerButton";
 import SessionsHome from "../../SessionsHome";
 import styles from "./Detail.module.scss";
+import PropTypes from "prop-types";
 
 const cx = className.bind(styles);
 
@@ -75,6 +80,7 @@ const Detail = ({ type }) => {
     getFilmsSuggest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
+
   return (
     <div className={cx("wrapper")}>
       <div className={cx("header")}>
@@ -362,6 +368,10 @@ const Detail = ({ type }) => {
       </div>
     </div>
   );
+};
+
+Detail.propTypes = {
+  type: PropTypes.string,
 };
 
 export default Detail;

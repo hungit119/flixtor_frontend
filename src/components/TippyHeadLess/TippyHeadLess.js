@@ -1,5 +1,6 @@
 import Tippy from "@tippyjs/react/headless";
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 const TippyHeadLess = ({ children, menuTippy, position = "bottom" }) => {
   const [visible, setVisible] = useState(false);
   const show = () => setVisible(true);
@@ -20,5 +21,9 @@ const TippyHeadLess = ({ children, menuTippy, position = "bottom" }) => {
     </Tippy>
   );
 };
-
+TippyHeadLess.propTypes = {
+  children: PropTypes.node.isRequired,
+  menuTippy: PropTypes.node.isRequired,
+  position: PropTypes.string,
+};
 export default TippyHeadLess;

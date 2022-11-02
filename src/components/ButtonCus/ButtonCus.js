@@ -2,12 +2,10 @@ import className from "classnames/bind";
 import React from "react";
 import { Button } from "react-bootstrap";
 import styles from "./ButtonCus.module.scss";
+import PropTypes from "prop-types";
 const cx = className.bind(styles);
 
 const ButtonCus = ({ children, classname, style, onClick }) => {
-  const classnames = cx("btn-flat", {
-    [classname]: classname,
-  });
   return (
     <>
       <style type="text/css">
@@ -38,6 +36,13 @@ const ButtonCus = ({ children, classname, style, onClick }) => {
       </Button>
     </>
   );
+};
+
+ButtonCus.propTypes = {
+  children: PropTypes.node.isRequired,
+  classname: PropTypes.string,
+  style: PropTypes.string,
+  onClick: PropTypes.func,
 };
 
 export default ButtonCus;

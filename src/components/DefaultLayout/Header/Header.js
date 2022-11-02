@@ -19,14 +19,20 @@ import {
   menuItemsGenre,
 } from "../../../constants";
 import useDebounce from "../../../hooks/useDebounce";
-import { setUserInfo } from "../../../redux/actions/authAction";
+import {
+  setAuthLoading,
+  setAuthLogin,
+} from "../../../redux/actions/authAction";
+import { setShowModal } from "../../../redux/actions/controlAction";
 import {
   setSearchInputValue,
   setSearchResults,
 } from "../../../redux/actions/searchAction";
+import { setUserInfo } from "../../../redux/actions/userAction";
 import {
   searchInputValueSelector,
   searchResultSelector,
+  showModalSelector,
   userInfoUsernameSelector,
 } from "../../../redux/selectors";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
@@ -43,13 +49,13 @@ const cx = classNames.bind(styles);
 
 const Header = () => {
   // State component
-  const [modalShow, setmodalShow] = useState(false);
   const [login, setLogin] = useState(false);
   const [auth, setAuth] = useState("login");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // Global state component
+  const modalShow = useSelector(showModalSelector);
   const searchInputValue = useSelector(searchInputValueSelector);
   const debounced = useDebounce(searchInputValue, 500);
   const searchResult = useSelector(searchResultSelector);
@@ -58,10 +64,10 @@ const Header = () => {
   let href = window.location.href;
   let inputSearchHeaderRef = useRef(null);
 
-  const hide = () => setmodalShow(false);
+  const hide = () => dispatch(setShowModal(false));
   const show = () => {
     setAuth("login");
-    setmodalShow(true);
+    dispatch(setShowModal(true));
   };
   // Handle input
   const handleChangeInputValue = (e) => {
@@ -81,6 +87,7 @@ const Header = () => {
 
   const loadUser = async () => {
     try {
+      dispatch(setAuthLoading(true));
       if (localStorage[ACCESS_TOKEN_NAME]) {
         setAuthToken(localStorage[ACCESS_TOKEN_NAME]);
       }
@@ -88,8 +95,10 @@ const Header = () => {
       ResponseApiHandle(
         response,
         (resData) => {
+          dispatch(setAuthLogin(true));
+          dispatch(setAuthLoading(false));
           dispatch(setUserInfo(resData.userInfo));
-          setmodalShow(false);
+          dispatch(setShowModal(false));
           setLogin(true);
         },
         (errorData) => {

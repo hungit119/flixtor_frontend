@@ -4,6 +4,7 @@ import className from "classnames/bind";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import styles from "./SessionsHome.module.scss";
+import PropTypes from "prop-types";
 const cx = className.bind(styles);
 const SessionsHome = ({
   children,
@@ -42,6 +43,14 @@ const SessionsHome = ({
       {children}
     </div>
   );
+};
+
+SessionsHome.propTypes = {
+  children: PropTypes.node.isRequired,
+  title: PropTypes.string,
+  tabs: PropTypes.array,
+  viewall: PropTypes.bool,
+  href: PropTypes.string,
 };
 
 export default SessionsHome;

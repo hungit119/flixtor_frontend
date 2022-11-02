@@ -27,3 +27,11 @@ export const SET_FILMS_WATCH_LIST = "SET_FILMS_WATCH_LIST";
 export const SET_USER_INFOR = "SET_USER_INFOR";
 export const SET_USER_ALL_INFO = "SET_USER_ALL_INFO";
 export const SET_UPDATE_INFOR_USER = "SET_UPDATE_INFOR_USER";
+// Controll
+export const SET_MODAL_SHOW = "SET_MODAL_SHOW";
+// Admin
+export const SET_ALL_USERS = "SET_ALL_USERS";
+export const SET_USER_RULE = "SET_USER_RULE";
+// Auth
+export const SET_AUTH_LOGIN = "SET_AUTH_LOGIN";
+export const SET_AUTH_LOADING = "SET_AUTH_LOADING";

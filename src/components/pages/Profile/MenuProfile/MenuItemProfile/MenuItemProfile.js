@@ -1,8 +1,8 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames/bind";
 import React from "react";
 import { NavLink } from "react-router-dom";
 import styles from "./MenuItemProfile.module.scss";
+import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 
 const MenuItemProfile = ({ icon, title, type, to, onClick }) => {
@@ -23,5 +23,11 @@ const MenuItemProfile = ({ icon, title, type, to, onClick }) => {
     </>
   );
 };
-
+MenuItemProfile.propTypes = {
+  icon: PropTypes.node.isRequired,
+  title: PropTypes.string,
+  type: PropTypes.string,
+  to: PropTypes.string,
+  onClick: PropTypes.func.isRequired,
+};
 export default MenuItemProfile;

@@ -12,6 +12,7 @@ import { setFilmsListAdmin } from "../../../../../redux/actions/filmsAction";
 import { filmsSelector } from "../../../../../redux/selectors";
 import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import ModalCom from "../../../../ModalCom/ModalCom";
+import Empty from "../../Empty";
 import styles from "./List.module.scss";
 const cx = className.bind(styles);
 const List = () => {
@@ -58,50 +59,56 @@ const List = () => {
       <div className={cx("wrapper")}>
         <h2>List Film</h2>
         <div className={cx("content")}>
-          <Table bordered>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th colSpan={3} className={cx("text-center")}>
-                  Setting
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentPage.map((page, index) => (
-                <tr key={index} className={cx("film")}>
-                  <td>{page.id}</td>
-                  <td>{page.title}</td>
-                  <td className={cx("text-center")}>
-                    <Link to={`/admin/film/${page.id}`}>
-                      <Button size="lg" variant="primary">
-                        Detail
-                      </Button>
-                    </Link>
-                  </td>
-                  <td className={cx("text-center")}>
-                    <Link to={`/admin/film/update/${page.id}`}>
-                      <Button size="lg" variant="success">
-                        Update
-                      </Button>
-                    </Link>
-                  </td>
-                  <td className={cx("text-center")}>
-                    <Button
-                      size="lg"
-                      variant="danger"
-                      onClick={() => {
-                        handleClickDelete(page.id);
-                      }}
-                    >
-                      Delete
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <div className={cx("content-wrapper")}>
+            {filmsList.length === 0 ? (
+              <Empty text={"This list film is empty"} />
+            ) : (
+              <Table bordered>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th colSpan={3} className={cx("text-center")}>
+                      Setting
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentPage.map((page, index) => (
+                    <tr key={index} className={cx("film")}>
+                      <td>{page.id}</td>
+                      <td>{page.title}</td>
+                      <td className={cx("text-center")}>
+                        <Link to={`/admin/film/${page.id}`}>
+                          <Button size="lg" variant="primary">
+                            Detail
+                          </Button>
+                        </Link>
+                      </td>
+                      <td className={cx("text-center")}>
+                        <Link to={`/admin/film/update/${page.id}`}>
+                          <Button size="lg" variant="success">
+                            Update
+                          </Button>
+                        </Link>
+                      </td>
+                      <td className={cx("text-center")}>
+                        <Button
+                          size="lg"
+                          variant="danger"
+                          onClick={() => {
+                            handleClickDelete(page.id);
+                          }}
+                        >
+                          Delete
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
+          </div>
         </div>
       </div>
       <div>

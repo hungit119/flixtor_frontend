@@ -7,7 +7,10 @@ import UserProfile from "../components/pages/Profile/UserProfile";
 import SearchDetail from "../components/pages/SearchDetail";
 import SitePage from "../components/pages/Site";
 import SearchResult from "../components/SearchResult";
+import SearchResultAll from "../components/pages/SearchResult/SearchResultAll";
 import HomePage from "../components/pages/Home";
+import Activate from "../components/pages/Activate";
+import ChangePassword from "../components/pages/ChangePassword";
 // Public Routes
 const publicRoutes = [
   { path: "/", component: SitePage },
@@ -34,16 +37,20 @@ const publicRoutes = [
   { path: "/contact", component: Contact },
   { path: "/movie/:id", component: Detail, type: "Movies" },
   { path: "/tv/:id", component: Detail, type: "TV-Series" },
-  { path: "/admin/*", component: Admin, headerOnly: true },
   { path: "/films-filter/:redirect", component: FilmFilter },
-  { path: "/search", component: SearchResult },
+  { path: "/search", component: SearchResultAll },
   {
     path: "/films/search/:key/:type",
     component: SearchResult,
     feature: "searchByType",
   },
+  { path: "/api/auth/activate/:token", component: Activate },
+  { path: "/api/auth/forgotPassword/:token", component: ChangePassword },
+];
+const privateRoutes = [
+  { path: "/admin/*", component: Admin, headerOnly: true },
   { path: "/user/*", component: UserProfile },
 ];
-const privateRoutes = [];
 
 export { publicRoutes, privateRoutes };
+// Phân quyền router ...

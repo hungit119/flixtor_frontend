@@ -10,6 +10,7 @@ export const userReducer = (
     username: "",
     email: "",
     password: "",
+    verify: false,
   },
   action
 ) => {
@@ -20,6 +21,8 @@ export const userReducer = (
         username: action.payload.username,
         email: action.payload.email,
         id: action.payload.id,
+        verify: action.payload.verify,
+        rule: action.payload.rule,
       };
     case SET_USER_ALL_INFO:
       return {
@@ -28,6 +31,7 @@ export const userReducer = (
         username: action.payload.username,
         email: action.payload.email,
         password: action.payload.password,
+        verify: action.payload.verify,
       };
     case SET_UPDATE_INFOR_USER:
       return {

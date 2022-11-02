@@ -10,6 +10,7 @@ import {
 } from "../../redux/selectors";
 import styles from "./SearchResult.module.scss";
 import SearchResultItem from "./SearchResultItem";
+import PropTypes from "prop-types";
 
 const cx = classNames.bind(styles);
 
@@ -28,6 +29,10 @@ const SearchResult = ({ width = "891px" }) => {
       </div>
     </div>
   );
+};
+
+SearchResult.propTypes = {
+  with: PropTypes.string,
 };
 
 export default SearchResult;

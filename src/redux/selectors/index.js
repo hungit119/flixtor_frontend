@@ -23,3 +23,12 @@ export const filmsWatchListSelector = (state) => state.films.watchList;
 export const userInfoUsernameSelector = (state) => state.user.username;
 export const userIDSelector = (state) => state.user.id;
 export const userInfoSelector = (state) => state.user;
+export const userVerifySelector = (state) => state.user.verify;
+export const userRuleSelector = (state) => state.user.rule;
+//control
+export const showModalSelector = (state) => state.control.modalShow;
+// Admin
+export const userAdminSelector = (state) => state.admin.users;
+//Auth
+export const isLoginSelector = (state) => state.auth.isLogin;
+export const isLoadingSelector = (state) => state.auth.isLoading;

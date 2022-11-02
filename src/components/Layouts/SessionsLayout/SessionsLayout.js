@@ -17,6 +17,8 @@ import FilterBar from "../../FilterBar";
 import ListMovies from "../../ListMovies/ListMovies";
 import SessionsHome from "../../SessionsHome";
 import styles from "./SessionsLayout.module.scss";
+import PropTypes from "prop-types";
+
 const cx = classNames.bind(styles);
 const SessionsLayout = ({ title, root }) => {
   const dispatch = useDispatch();
@@ -54,6 +56,11 @@ const SessionsLayout = ({ title, root }) => {
       </SessionsHome>
     </div>
   );
+};
+
+SessionsLayout.propTypes = {
+  title: PropTypes.string,
+  root: PropTypes.string,
 };
 
 export default SessionsLayout;

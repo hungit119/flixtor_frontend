@@ -1,5 +1,6 @@
 import Tippy from "@tippyjs/react/headless";
 import { motion, useSpring } from "framer-motion";
+import PropTypes from "prop-types";
 import React from "react";
 
 const TippyWrapper = ({ children, content, position, animation = false }) => {
@@ -49,6 +50,13 @@ const TippyWrapper = ({ children, content, position, animation = false }) => {
       {children}
     </Tippy>
   );
+};
+
+TippyWrapper.propTypes = {
+  children: PropTypes.node.isRequired,
+  content: PropTypes.node.isRequired,
+  position: PropTypes.string,
+  animation: PropTypes.bool,
 };
 
 export default TippyWrapper;

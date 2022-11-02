@@ -10,6 +10,7 @@ import {
 } from "../../redux/actions/searchAction";
 import { searchResultSelector } from "../../redux/selectors";
 import styles from "./TippySearch.module.scss";
+import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 
 const TippySearch = ({ children, SearchResultElemnt }) => {
@@ -61,6 +62,11 @@ const TippySearch = ({ children, SearchResultElemnt }) => {
       <span>{children}</span>
     </Tippy>
   );
+};
+
+TippySearch.propTypes = {
+  children: PropTypes.node.isRequired,
+  SearchResultElemnt: PropTypes.node.isRequired,
 };
 
 export default TippySearch;

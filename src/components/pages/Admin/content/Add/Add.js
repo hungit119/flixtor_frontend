@@ -12,6 +12,7 @@ import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import TippyWrapper from "../../../../TippyWrapper";
 import ToolTipBox from "../../../../ToolTipBox";
 import styles from "./Add.module.scss";
+import PropTypes from "prop-types";
 const cx = className.bind(styles);
 
 const Add = ({ typeFunction }) => {
@@ -589,6 +590,10 @@ const Add = ({ typeFunction }) => {
       </div>
     </>
   );
+};
+
+Add.propTypes = {
+  typeFunction: PropTypes.string,
 };
 
 export default Add;

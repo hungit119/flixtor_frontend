@@ -25,14 +25,17 @@
   }
 }
 .side-item {
-  font-weight: 400;
+  font-weight: 500;
+  line-height: 20px;
+  font-size: 1.5rem;
   width: 100%;
   padding: 12px 0;
   display: flex;
   align-items: center;
   transition: all 0.2s ease-in-out;
   &:hover {
-    background-color: var(--color-primary);
+    background-color: var(--global-background-color);
+    color: var(--primary) !important;
   }
   padding-left: 40px;
 }
@@ -41,9 +44,22 @@
 }
 .content {
   margin-left: 230px;
-  padding: 20px;
+  padding: 10px 20px 20px 20px;
   position: fixed;
   width: 85%;
   height: 93%;
   overflow-y: auto;
+}
+.header-content {
+  font-size: 1.8rem;
+  line-height: 20px;
+  font-weight: 600;
+}
+.admin-icon {
+  color: var(--primary);
+  font-size: 3rem;
+}
+.active {
+  background-color: var(--global-background-color);
+  color: var(--primary) !important;
 }

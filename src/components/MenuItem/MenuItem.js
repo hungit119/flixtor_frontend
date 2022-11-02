@@ -2,7 +2,7 @@ import classNames from "classnames/bind";
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import styles from "./MenuItem.module.scss";
-
+import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 const MenuItem = ({ root, items }) => {
   return (
@@ -18,6 +18,11 @@ const MenuItem = ({ root, items }) => {
       </Container>
     </div>
   );
+};
+
+MenuItem.propTypes = {
+  root: PropTypes.string,
+  items: PropTypes.array.isRequired,
 };
 
 export default MenuItem;

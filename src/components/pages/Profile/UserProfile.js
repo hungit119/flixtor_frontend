@@ -7,7 +7,6 @@ import MenuProfile from "./MenuProfile";
 import UserInfo from "./UserInfo";
 import styles from "./UserProfile.module.scss";
 import UserWatchList from "./UserWatchList";
-
 const cx = classNames.bind(styles);
 const UserProfile = () => {
   const username = useSelector(userInfoUsernameSelector);

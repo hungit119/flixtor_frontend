@@ -12,6 +12,7 @@ import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 import TippyWrapper from "../../TippyWrapper";
 import ToolTipBox from "../../ToolTipBox";
 import styles from "./MovieItem.module.scss";
+import PropTypes from "prop-types";
 const cx = className.bind(styles);
 
 const MovieItem = ({ item, col = "col-cus", type }) => {
@@ -82,6 +83,12 @@ const MovieItem = ({ item, col = "col-cus", type }) => {
       </TippyWrapper>
     </div>
   );
+};
+
+MovieItem.propTypes = {
+  item: PropTypes.object,
+  col: PropTypes.string,
+  type: PropTypes.string,
 };
 
 export default MovieItem;

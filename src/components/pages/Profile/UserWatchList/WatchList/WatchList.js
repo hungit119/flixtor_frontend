@@ -3,6 +3,7 @@ import React from "react";
 import { Row } from "react-bootstrap";
 import WatchListItem from "../WatchListItem";
 import styles from "./WatchList.module.scss";
+import PropTypes from "prop-types";
 const cx = classNames.bind(styles);
 const WatchList = ({ data = [] }) => {
   return (
@@ -14,6 +15,10 @@ const WatchList = ({ data = [] }) => {
       </Row>
     </div>
   );
+};
+
+WatchList.propTypes = {
+  data: PropTypes.array,
 };
 
 export default WatchList;

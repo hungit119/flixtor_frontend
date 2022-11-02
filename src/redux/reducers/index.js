@@ -1,3 +1,6 @@
+import adminReducer from "./adminReducer";
+import authReducer from "./authReducer";
+import { controlReducer } from "./controlReducer";
 import { filmAdminReducer } from "./filmAdminReducer";
 import { filmReducer } from "./filmReducer";
 import filmsFilterReducer from "./filmsFilterReducer";
@@ -16,6 +19,9 @@ const rootReducer = combineReducers({
   film: filmReducer,
   search: searchReaducer,
   user: userReducer,
+  control: controlReducer,
+  admin: adminReducer,
+  auth: authReducer,
 });
 
 export default rootReducer;

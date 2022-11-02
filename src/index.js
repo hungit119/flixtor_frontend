@@ -10,13 +10,11 @@ import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyles>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </GlobalStyles>
-    </BrowserRouter>
-  </React.StrictMode>
+  <BrowserRouter>
+    <GlobalStyles>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </GlobalStyles>
+  </BrowserRouter>
 );

@@ -14,6 +14,7 @@ import { setFilmTrash } from "../../../../../redux/actions/filmsAction";
 import { filmsTrashSelector } from "../../../../../redux/selectors";
 import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import ModalCom from "../../../../ModalCom/ModalCom";
+import Empty from "../../Empty";
 import styles from "./Delete.module.scss";
 
 const cx = classNames.bind(styles);
@@ -72,47 +73,53 @@ const Delete = () => {
       <div className={cx("wrapper")}>
         <h2>Trash</h2>
         <div className={cx("content")}>
-          <Table bordered>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Title</th>
-                <th colSpan={2} className={cx("text-center")}>
-                  Setting
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {currentPage.map((page, index) => (
-                <tr key={index} className={cx("film")}>
-                  <td>{page.id}</td>
-                  <td>{page.title}</td>
-                  <td className={cx("text-center")}>
-                    <Button
-                      size="lg"
-                      variant="success"
-                      onClick={() => {
-                        handleRestoreClick(page.id);
-                      }}
-                    >
-                      Restore
-                    </Button>
-                  </td>
-                  <td className={cx("text-center")}>
-                    <Button
-                      size="lg"
-                      variant="danger"
-                      onClick={() => {
-                        handleDeleteClick(page.id);
-                      }}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
+          <div className={cx("content-wrapper")}>
+            {filmsList.length === 0 ? (
+              <Empty text={"This trash is empty"} />
+            ) : (
+              <Table bordered>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th colSpan={2} className={cx("text-center")}>
+                      Setting
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentPage.map((page, index) => (
+                    <tr key={index} className={cx("film")}>
+                      <td>{page.id}</td>
+                      <td>{page.title}</td>
+                      <td className={cx("text-center")}>
+                        <Button
+                          size="lg"
+                          variant="success"
+                          onClick={() => {
+                            handleRestoreClick(page.id);
+                          }}
+                        >
+                          Restore
+                        </Button>
+                      </td>
+                      <td className={cx("text-center")}>
+                        <Button
+                          size="lg"
+                          variant="danger"
+                          onClick={() => {
+                            handleDeleteClick(page.id);
+                          }}
+                        >
+                          Remove
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
+          </div>
         </div>
       </div>
       <div>

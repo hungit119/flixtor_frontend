@@ -16,6 +16,7 @@ export const apiUrl =
     : "somedeployedURL";
 export const ACCESS_TOKEN_NAME = "token";
 export const NOTIFY_ALL_TOAST = "notify_all";
+export const AUTH_TOAST = "AUTH_TOAST";
 export const menuItemsGenre = [
   "Action",
   "Adventure",

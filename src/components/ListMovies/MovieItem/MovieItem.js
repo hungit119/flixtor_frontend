@@ -27,9 +27,7 @@ const MovieItem = ({ item, col = "col-cus", type }) => {
       );
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmsWatchList(resData.data));
-        toast.success("Deleted film from watch list !", {
-          toastId: NOTIFY_ALL_TOAST,
-        });
+        toast.success("Deleted film from watch list !");
       });
     } catch (error) {
       console.log(error.message);

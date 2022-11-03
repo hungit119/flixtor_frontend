@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { toast, ToastContainer } from "react-toastify";
-import { ACCESS_TOKEN_NAME, apiUrl } from "../../constants";
+import { ACCESS_TOKEN_NAME, apiUrl, AUTH_TOAST } from "../../constants";
 import { setAuthentication } from "../../redux/actions/authAction";
 import { setShowModal } from "../../redux/actions/controlAction";
 import { setUserInfo } from "../../redux/actions/userAction";
@@ -80,6 +80,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
     if (validateFormInputByClassName("register") === false) {
       toast.warning("Please fill in the required fields !!", {
         theme: "colored",
+        toastId: AUTH_TOAST,
       });
       return;
     }
@@ -89,6 +90,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
         .classList.add(cx("error-input"));
       toast.error("Re-password must same password  !!", {
         theme: "colored",
+        toastId: AUTH_TOAST,
       });
       return;
     }
@@ -116,6 +118,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
         (errorData) => {
           toast.error(errorData.message, {
             theme: "colored",
+            toastId: AUTH_TOAST,
           });
           setIsLoading(false);
         }
@@ -124,6 +127,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
       console.log(error.message);
       toast.error("Incorrect username or password", {
         theme: "colored",
+        toastId: AUTH_TOAST,
       });
       setIsLoading(false);
     }
@@ -132,6 +136,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
     if (validateFormInputByClassName("login") === false) {
       toast.warning("Please fill in the required fields !!", {
         theme: "colored",
+        toastId: AUTH_TOAST,
       });
       return;
     }
@@ -157,6 +162,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
         (errorData) => {
           toast.error(errorData.message, {
             theme: "colored",
+            toastId: AUTH_TOAST,
           });
           setIsLoading(false);
         }
@@ -165,6 +171,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
       console.log(error.message);
       toast.error("Incorrect username or password", {
         theme: "colored",
+        toastId: AUTH_TOAST,
       });
       setIsLoading(false);
     }
@@ -173,6 +180,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
     if (validateFormInputByClassName("forgotPass") === false) {
       toast.warning("Please fill in the required fields !!", {
         theme: "colored",
+        toastId: AUTH_TOAST,
       });
       return;
     }
@@ -194,7 +202,7 @@ const Auth = ({ type = "register", handleSetAuthType }) => {
   };
   return (
     <>
-      <ToastContainer />
+      <ToastContainer containerId={AUTH_TOAST} />
       <div className={cx("wrapper")}>
         <div className={cx("header")}>
           {type === "login"

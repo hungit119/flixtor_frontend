@@ -1,9 +1,3 @@
-import {
-  faChartLine,
-  faList,
-  faPlayCircle,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import className from "classnames/bind";
 import React, { useEffect } from "react";
@@ -30,6 +24,7 @@ const HomePage = () => {
   const dispatch = useDispatch();
   const filmsType = useSelector(filmsTypeSelector);
 
+  window.scrollTo(0, 0);
   // get api
   const getMovies = async (urlApi, actionDispatch) => {
     try {

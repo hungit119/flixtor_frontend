@@ -33,13 +33,11 @@ const ToolTipBox = ({ href, item }) => {
           });
           ResponseApiHandle(response, (resData) => {
             toast.success("This film added to my watchlist!", {
-              toastId: NOTIFY_ALL_TOAST,
               position: "bottom-right",
             });
           });
         } else {
           toast.success("This film was added to watchlist", {
-            toastId: NOTIFY_ALL_TOAST,
             position: "bottom-right",
           });
         }

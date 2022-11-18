@@ -18,6 +18,7 @@ import ListMovies from "../../ListMovies/ListMovies";
 import SessionsHome from "../../SessionsHome";
 import styles from "./SessionsLayout.module.scss";
 import PropTypes from "prop-types";
+import { setIsLoadingFilms } from "../../../redux/actions/controlAction";
 
 const cx = classNames.bind(styles);
 const SessionsLayout = ({ title, root }) => {
@@ -32,9 +33,11 @@ const SessionsLayout = ({ title, root }) => {
   // Handle get film
   const getFilms = async (urlApi, actionDispatch) => {
     try {
+      dispatch(setIsLoadingFilms(true));
       const response = await axios.get(urlApi);
       ResponseApiHandle(response, (resData) => {
         dispatch(actionDispatch(resData.filmsType));
+        dispatch(setIsLoadingFilms(false));
       });
     } catch (errors) {
       console.log(errors.message);
@@ -42,10 +45,11 @@ const SessionsLayout = ({ title, root }) => {
   };
   useEffect(() => {
     getFilms("http://localhost:8000/api/films/type/movie", setFilmsTypeMovies);
-    getFilms("http://localhost:8000/api/films/type/tv-series", setFilmsTypeTv);
+    getFilms("http://localhost:8000/api/films/type/TV-Series", setFilmsTypeTv);
     getFilms("http://localhost:8000/api/films/>=/imdb/9", setFilmsTrending);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [root]);
+  console.log(filmsType);
   return (
     <div className={cx("wrapper")}>
       <SessionsHome title={title}>

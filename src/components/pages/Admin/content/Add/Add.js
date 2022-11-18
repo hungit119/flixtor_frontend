@@ -35,7 +35,7 @@ const Add = ({ typeFunction }) => {
     director: "",
     casts: "",
     year: "",
-    trailerURL: "",
+    trailerurl: "",
   });
   const [stt, setStt] = useState("");
   const navigate = useNavigate();
@@ -79,7 +79,7 @@ const Add = ({ typeFunction }) => {
       const filmData = {
         title: form.title,
         poster: form.poster,
-        trailerURL: form.trailerURL,
+        trailerurl: form.trailerurl,
         thumnail: form.thumnail,
         time: form.times,
         description: form.description,
@@ -129,7 +129,7 @@ const Add = ({ typeFunction }) => {
             director: "",
             casts: "",
             year: "",
-            trailerURL: "",
+            trailerurl: "",
           });
           inputRef.current.focus();
         },
@@ -150,7 +150,7 @@ const Add = ({ typeFunction }) => {
       const newFilmData = {
         title: form.title,
         poster: form.poster,
-        trailerURL: form.trailerURL,
+        trailerurl: form.trailerurl,
         thumnail: form.thumnail,
         time: form.times,
         description: form.description,
@@ -201,7 +201,7 @@ const Add = ({ typeFunction }) => {
       director: "",
       casts: "",
       year: "",
-      trailerURL: "",
+      trailerurl: "",
     });
   };
   const getFilm = async () => {
@@ -306,6 +306,7 @@ const Add = ({ typeFunction }) => {
                       Rating <span className={cx("required")}>*</span>
                     </Form.Label>
                     <Form.Select
+                      style={{ margin: "6px 0" }}
                       className={cx("form-control", "form-input-create")}
                       value={form.rating}
                       name="rating"
@@ -445,6 +446,7 @@ const Add = ({ typeFunction }) => {
                           Type <span className={cx("required")}>*</span>
                         </Form.Label>
                         <Form.Select
+                          style={{ margin: "6px 0" }}
                           className={cx("form-control", "form-input-create")}
                           value={form.type}
                           name="type"
@@ -486,8 +488,8 @@ const Add = ({ typeFunction }) => {
                           className={cx("form-control", "form-input-create")}
                           placeholder="Enter trailer URL"
                           as="input"
-                          value={form.trailerURL}
-                          name="trailerURL"
+                          value={form.trailerurl}
+                          name="trailerurl"
                           onChange={handleInputChange}
                         />
                       </Form.Group>

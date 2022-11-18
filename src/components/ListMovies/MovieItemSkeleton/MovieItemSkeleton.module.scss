@@ -1,26 +1,5 @@
 .wrapper {
-}
-.header {
-  margin: 12px 0;
-  display: flex;
-  align-items: baseline;
-  h2 {
-    margin-right: 10px;
-  }
-}
-.form-control {
-  font-size: 1.5rem;
-}
-.preview-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 3px solid var(--primary);
-  border-radius: 5px;
-}
-.preview {
-  width: 173px;
-  height: 337px;
+  position: relative;
 }
 .movie {
   position: relative;
@@ -35,6 +14,23 @@
       opacity: 1;
     }
   }
+}
+.delete-icon {
+  position: absolute;
+  top: 0;
+  left: 11;
+  z-index: 1;
+  border-radius: 4px 0px 0px;
+  background-color: var(--bg-red);
+  padding: 3px 10px;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: var(--bg-red-skye);
+    cursor: pointer;
+  }
+}
+.xmart-icon {
+  color: white;
 }
 .movie-quantity {
   position: absolute;
@@ -58,10 +54,13 @@
 .movie-info {
 }
 .movie-title {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   font-weight: 500;
   margin: 4px 0;
-  color: var(--input-color-auth);
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  display: -webkit-box;
 }
 .movie-body {
   display: flex;
@@ -74,13 +73,12 @@
 }
 .movies-type {
   color: var(--color-meta);
-  font-size: 1.08rem;
+  font-size: 1.3rem;
   border-color: var(--color-border-info);
-  border-radius: 3px;
+  border-radius: 5px;
   border-style: solid;
   border-width: 1px;
-  padding: 5px 3px 3px;
-  line-height: 8.64px;
+  padding: 3px;
 }
 .movie-overlay {
   display: none;
@@ -113,19 +111,25 @@
   height: 60px;
   color: var(--primary);
 }
-.btn-group-custom {
-  display: flex;
-  justify-content: center;
+.col-cus {
+  width: 12.5%;
+  a {
+    color: var(--text-color-title);
+  }
 }
-.btn-custom {
-  font-size: 1.6rem;
-  margin: 28px 5px 0 5px;
-  padding: 5px 20px;
+.col-cus-4 {
+  width: 33.33%;
+  a {
+    color: var(--text-color-title);
+  }
 }
-.required {
-  color: red;
+@media only screen and (max-width: 1090px) {
+  .col-cus {
+    width: 20%;
+  }
 }
-.error-input {
-  border: 1px solid red !important;
-  transition: all ease-in-out 0.2s !important;
+@media only screen and (max-width: 600px) {
+  .col-cus {
+    width: 100%;
+  }
 }

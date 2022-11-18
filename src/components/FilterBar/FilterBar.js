@@ -47,9 +47,7 @@ const FilterBar = ({ type, value }) => {
       const response = await axios.post(
         "http://localhost:8000/api/films/filter",
         {
-          filters: {
-            ...options,
-          },
+          filters: [...options],
         }
       );
       ResponseApiHandle(response, (resData) => {
@@ -61,14 +59,13 @@ const FilterBar = ({ type, value }) => {
   };
 
   const handleSubmitFilter = async (e) => {
-    const options = {
-      genre: optionsGenre,
-      type: optionsType,
-      country: optionsCountry,
-      year: optionsYear,
-      quantity: optionsQuantity,
-      sort: optionsSort,
-    };
+    const options = [
+      { type: "genres", options: optionsGenre },
+      { type: "types", options: optionsType },
+      { type: "countries", options: optionsCountry },
+      { type: "years", options: optionsYear },
+      { type: "quantities", options: optionsQuantity },
+    ];
 
     if (params.redirect === "re-route") {
       await getFilmsFilter(options);
@@ -79,7 +76,7 @@ const FilterBar = ({ type, value }) => {
     if (type === "genre") {
       setOptionsGenre([value]);
       setOptionsCountry([]);
-    } else {
+    } else if (type === "country") {
       setOptionsCountry([value]);
       setOptionsGenre([]);
     }

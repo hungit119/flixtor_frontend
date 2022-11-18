@@ -40,7 +40,7 @@ const Film = () => {
           </tr>
           <tr>
             <th>TrailerURL</th>
-            <td>{film.trailerURL}</td>
+            <td>{film.trailerurl}</td>
           </tr>
           <tr>
             <th>Thumnail</th>

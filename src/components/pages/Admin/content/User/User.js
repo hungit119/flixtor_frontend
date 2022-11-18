@@ -11,12 +11,17 @@ import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
+import BeatLoader from "react-spinners/BeatLoader";
 import { apiUrl } from "../../../../../constants";
 import {
   setAllUsers,
   setUserRule,
 } from "../../../../../redux/actions/adminAction";
-import { userAdminSelector } from "../../../../../redux/selectors";
+import { setIsLoadingFilms } from "../../../../../redux/actions/controlAction";
+import {
+  isLoadingFilmsSelector,
+  userAdminSelector,
+} from "../../../../../redux/selectors";
 import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import ModalAdmin from "../../components/ModalAdmin";
 import styles from "./User.module.scss";
@@ -31,6 +36,7 @@ const User = () => {
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 10;
   const userList = useSelector(userAdminSelector);
+  const isLoading = useSelector(isLoadingFilmsSelector);
 
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % userList.length;
@@ -85,9 +91,11 @@ const User = () => {
 
   const getFullUsers = async () => {
     try {
+      dispatch(setIsLoadingFilms(true));
       const response = await axios.get(`${apiUrl}/admin/users`);
       ResponseApiHandle(response, (resData) => {
         dispatch(setAllUsers(resData.data));
+        dispatch(setIsLoadingFilms(false));
       });
     } catch (error) {
       throw error;
@@ -117,80 +125,86 @@ const User = () => {
       <div className={cx("wrapper")}>
         <h2>Users</h2>
         <div className={cx("content")}>
-          <div className={cx("content-wrapper")}>
-            <Table bordered>
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Rule</th>
-                  <th className={cx("text-center")}>Verify</th>
-                  <th className={cx("text-center")}>Setting</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentPage.map((page, index) => (
-                  <tr key={index} className={cx("user")}>
-                    <td>{page.id}</td>
-                    <td>{page.username}</td>
-                    <td>{page.email}</td>
-                    <td>
-                      {page.rule === 1 ? (
-                        <span className={cx("member-title")}>Member</span>
-                      ) : (
-                        <span className={cx("manager-title")}>Manager</span>
-                      )}
-                    </td>
-                    <td className={cx("text-center")}>
-                      {page.verify === 1 ? (
-                        <FontAwesomeIcon
-                          className={cx("verified")}
-                          icon={faCircleCheck}
-                        />
-                      ) : (
-                        <FontAwesomeIcon
-                          className={cx("un-verified")}
-                          icon={faCircleXmark}
-                        />
-                      )}
-                    </td>
-                    <td className={cx("text-center")}>
-                      {page.rule === 2 ? (
-                        <Button
-                          size="lg"
-                          variant="primary"
-                          onClick={() => {
-                            handleClickSwitchBtn(
-                              page.rule,
-                              page.username,
-                              page.id
-                            );
-                          }}
-                        >
-                          Change to Member
-                        </Button>
-                      ) : (
-                        <Button
-                          size="lg"
-                          variant="danger"
-                          onClick={() => {
-                            handleClickSwitchBtn(
-                              page.rule,
-                              page.username,
-                              page.id
-                            );
-                          }}
-                        >
-                          Change to Manager
-                        </Button>
-                      )}
-                    </td>
+          {isLoading ? (
+            <div className={cx("loading-wrapper")}>
+              <BeatLoader color="#118395" />
+            </div>
+          ) : (
+            <div className={cx("content-wrapper")}>
+              <Table bordered>
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Rule</th>
+                    <th className={cx("text-center")}>Verify</th>
+                    <th className={cx("text-center")}>Setting</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
-          </div>
+                </thead>
+                <tbody>
+                  {currentPage.map((page, index) => (
+                    <tr key={index} className={cx("user")}>
+                      <td>{page.id}</td>
+                      <td>{page.username}</td>
+                      <td>{page.email}</td>
+                      <td>
+                        {page.rule === 1 ? (
+                          <span className={cx("member-title")}>Member</span>
+                        ) : (
+                          <span className={cx("manager-title")}>Manager</span>
+                        )}
+                      </td>
+                      <td className={cx("text-center")}>
+                        {page.verify === 1 ? (
+                          <FontAwesomeIcon
+                            className={cx("verified")}
+                            icon={faCircleCheck}
+                          />
+                        ) : (
+                          <FontAwesomeIcon
+                            className={cx("un-verified")}
+                            icon={faCircleXmark}
+                          />
+                        )}
+                      </td>
+                      <td className={cx("text-center")}>
+                        {page.rule === 2 ? (
+                          <Button
+                            size="lg"
+                            variant="primary"
+                            onClick={() => {
+                              handleClickSwitchBtn(
+                                page.rule,
+                                page.username,
+                                page.id
+                              );
+                            }}
+                          >
+                            Change to Member
+                          </Button>
+                        ) : (
+                          <Button
+                            size="lg"
+                            variant="danger"
+                            onClick={() => {
+                              handleClickSwitchBtn(
+                                page.rule,
+                                page.username,
+                                page.id
+                              );
+                            }}
+                          >
+                            Change to Manager
+                          </Button>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </div>
+          )}
         </div>
       </div>
       <div>

@@ -39,8 +39,8 @@ const MenuDropDownSearch = ({
                   type={type}
                   className={cx("inputValue")}
                   id={item}
-                  value={item.toLowerCase()}
-                  name={type === "radio" ? "sortType" : item.toLowerCase()}
+                  value={item}
+                  name={type === "radio" ? "sortType" : item}
                   onChange={handleChangeCheckBox}
                 />
                 <label className={cx("menu-label")} htmlFor={item}>

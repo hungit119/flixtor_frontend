@@ -11,7 +11,7 @@ const MenuItem = ({ root, items }) => {
         <Row>
           {items.map((item, index) => (
             <Col lg={4} md={4} className={cx("menu-item")} key={index}>
-              <a href={`/search/${root}/${item.toLowerCase()}`}>{item}</a>
+              <a href={`/search/${root}/${item}`}>{item}</a>
             </Col>
           ))}
         </Row>

@@ -13,7 +13,20 @@ const PermissionRouter = ({ children, permission }) => {
   const isAuthenticated = useSelector(isAuthenticatedSelector);
   const authLoading = useSelector(authLoadingSelector);
   const userRule = useSelector(userRuleSelector);
-  if (!isAuthenticated && authLoading) return <BounceLoader />;
+  if (!isAuthenticated && authLoading)
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "700px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <BounceLoader color="#118395" />
+      </div>
+    );
   return isAuthenticated && userRule >= permission ? (
     children
   ) : (

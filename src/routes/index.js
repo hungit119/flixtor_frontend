@@ -19,7 +19,7 @@ const publicRoutes = [
     path: "/movies",
     component: SessionsLayout,
     title: "Movies",
-    root: "moive",
+    root: "movie",
   },
   {
     path: "/tv-series",

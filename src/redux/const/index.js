@@ -29,6 +29,7 @@ export const SET_USER_ALL_INFO = "SET_USER_ALL_INFO";
 export const SET_UPDATE_INFOR_USER = "SET_UPDATE_INFOR_USER";
 // Controll
 export const SET_MODAL_SHOW = "SET_MODAL_SHOW";
+export const SET_IS_LOADING_FILMS = "SET_IS_LOADING_FILMS";
 // Admin
 export const SET_ALL_USERS = "SET_ALL_USERS";
 export const SET_USER_RULE = "SET_USER_RULE";

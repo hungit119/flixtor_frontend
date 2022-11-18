@@ -7,9 +7,14 @@ import { Button, Table } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { setIsLoadingFilms } from "../../../../../redux/actions/controlAction";
 import { setFilmIdDelete } from "../../../../../redux/actions/filmAction";
 import { setFilmsListAdmin } from "../../../../../redux/actions/filmsAction";
-import { filmsSelector } from "../../../../../redux/selectors";
+import BeatLoader from "react-spinners/BeatLoader";
+import {
+  filmsSelector,
+  isLoadingFilmsSelector,
+} from "../../../../../redux/selectors";
 import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import ModalCom from "../../../../ModalCom/ModalCom";
 import Empty from "../../Empty";
@@ -23,11 +28,14 @@ const List = () => {
   const itemsPerPage = 10;
   const dispatch = useDispatch();
   const filmsList = useSelector(filmsSelector);
+  const isLoading = useSelector(isLoadingFilmsSelector);
   const getFullFilms = async () => {
     try {
+      dispatch(setIsLoadingFilms(true));
       const response = await axios.get("http://localhost:8000/api/films");
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmsListAdmin(resData.films));
+        dispatch(setIsLoadingFilms(false));
       });
     } catch (errors) {
       console.log(errors.message);
@@ -59,56 +67,62 @@ const List = () => {
       <div className={cx("wrapper")}>
         <h2>List Film</h2>
         <div className={cx("content")}>
-          <div className={cx("content-wrapper")}>
-            {filmsList.length === 0 ? (
-              <Empty text={"This list film is empty"} />
-            ) : (
-              <Table bordered>
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th colSpan={3} className={cx("text-center")}>
-                      Setting
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentPage.map((page, index) => (
-                    <tr key={index} className={cx("film")}>
-                      <td>{page.id}</td>
-                      <td>{page.title}</td>
-                      <td className={cx("text-center")}>
-                        <Link to={`/admin/film/${page.id}`}>
-                          <Button size="lg" variant="primary">
-                            Detail
-                          </Button>
-                        </Link>
-                      </td>
-                      <td className={cx("text-center")}>
-                        <Link to={`/admin/film/update/${page.id}`}>
-                          <Button size="lg" variant="success">
-                            Update
-                          </Button>
-                        </Link>
-                      </td>
-                      <td className={cx("text-center")}>
-                        <Button
-                          size="lg"
-                          variant="danger"
-                          onClick={() => {
-                            handleClickDelete(page.id);
-                          }}
-                        >
-                          Delete
-                        </Button>
-                      </td>
+          {isLoading ? (
+            <div className={cx("loading-wrapper")}>
+              <BeatLoader color="#118395" />
+            </div>
+          ) : (
+            <div className={cx("content-wrapper")}>
+              {filmsList.length === 0 ? (
+                <Empty text={"This list film is empty"} />
+              ) : (
+                <Table bordered>
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Title</th>
+                      <th colSpan={3} className={cx("text-center")}>
+                        Setting
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </Table>
-            )}
-          </div>
+                  </thead>
+                  <tbody>
+                    {currentPage.map((page, index) => (
+                      <tr key={index} className={cx("film")}>
+                        <td>{page.id}</td>
+                        <td>{page.title}</td>
+                        <td className={cx("text-center")}>
+                          <Link to={`/admin/film/${page.id}`}>
+                            <Button size="lg" variant="primary">
+                              Detail
+                            </Button>
+                          </Link>
+                        </td>
+                        <td className={cx("text-center")}>
+                          <Link to={`/admin/film/update/${page.id}`}>
+                            <Button size="lg" variant="success">
+                              Update
+                            </Button>
+                          </Link>
+                        </td>
+                        <td className={cx("text-center")}>
+                          <Button
+                            size="lg"
+                            variant="danger"
+                            onClick={() => {
+                              handleClickDelete(page.id);
+                            }}
+                          >
+                            Delete
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              )}
+            </div>
+          )}
         </div>
       </div>
       <div>

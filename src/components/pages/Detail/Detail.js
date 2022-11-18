@@ -20,6 +20,7 @@ import { setFilm, setFilmSuggests } from "../../../redux/actions/filmAction";
 import {
   filmSelector,
   filmSuggestsSelector,
+  isLoadingFilmsSelector,
   userIDSelector,
 } from "../../../redux/selectors";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
@@ -29,6 +30,8 @@ import ServerButton from "../../ServerButton";
 import SessionsHome from "../../SessionsHome";
 import styles from "./Detail.module.scss";
 import PropTypes from "prop-types";
+import { setIsLoadingFilms } from "../../../redux/actions/controlAction";
+import Skeleton from "react-loading-skeleton";
 
 const cx = className.bind(styles);
 
@@ -39,10 +42,11 @@ const Detail = ({ type }) => {
   const film = useSelector(filmSelector);
   const filmSuggests = useSelector(filmSuggestsSelector);
   const params = useParams();
+  const isLoading = useSelector(isLoadingFilmsSelector);
 
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
-  });
+  }, []);
   const handleLessBtnClick = () => {
     setMore(!more);
   };
@@ -52,11 +56,13 @@ const Detail = ({ type }) => {
 
   const getFilm = async () => {
     try {
+      dispatch(setIsLoadingFilms(true));
       const response = await axios.get(
         `http://localhost:8000/api/film/${params.id}`
       );
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilm(resData.film));
+        setIsLoadingFilms(false);
       });
     } catch (errors) {
       console.log(errors.message);
@@ -64,11 +70,13 @@ const Detail = ({ type }) => {
   };
   const getFilmsSuggest = async () => {
     try {
+      dispatch(setIsLoadingFilms(true));
       const response = await axios.get(
         `http://localhost:8000/api/films/suggest/${params.id}?limit=9`
       );
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmSuggests(resData.filmSuggests));
+        dispatch(setIsLoadingFilms(false));
       });
     } catch (error) {
       console.log(error.message);
@@ -93,7 +101,9 @@ const Detail = ({ type }) => {
         </Link>{" "}
         /{" "}
         <Link to={`/${type.toLowerCase()}/${film.film_id}`}>
-          <span className={cx("header-title")}>{film.title}</span>
+          <span className={cx("header-title")}>
+            {isLoading ? <Skeleton width={"300px"} /> : film.title}
+          </span>
         </Link>
       </div>
       <div
@@ -107,7 +117,7 @@ const Detail = ({ type }) => {
           className={cx("iframe")}
           widtd="1470"
           height="720"
-          src={`https://www.youtube-nocookie.com/embed/${film.trailerURL}`}
+          src={`https://www.youtube-nocookie.com/embed/${film.trailerurl}`}
           title="YouTube video player"
           frameBorder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -175,185 +185,221 @@ const Detail = ({ type }) => {
           <Col lg={8}>
             <div className={cx("detail")}>
               <div className={cx("detail-posters")}>
-                <img
-                  className={cx("detail-posters-image")}
-                  src={`${film.poster}`}
-                  alt="poster"
-                ></img>
+                {isLoading ? (
+                  <Skeleton width={"194px"} height={"281px"} />
+                ) : (
+                  <img
+                    className={cx("detail-posters-image")}
+                    src={`${film.poster}`}
+                    alt="poster"
+                  ></img>
+                )}
               </div>
               <div className={cx("detail-body")}>
                 <div className={cx("content")}>
                   <div className={cx("header-detail")}>
-                    <h4 className={cx("title")}>{film.title}</h4>
-                    <span className={cx("rating")}>
-                      {[...Array(5)].map((star, index) => {
-                        index += 1;
-                        return (
-                          <span
-                            key={index}
-                            onMouseEnter={() => {
-                              setrating(index);
-                            }}
-                          >
-                            <FontAwesomeIcon
-                              className={cx(
-                                "star",
-                                index <= rating ? "star-active" : ""
-                              )}
-                              icon={faStar}
-                            />
-                          </span>
-                        );
-                      })}
-                    </span>
-                  </div>
-                  <div className={cx("meta")}>
-                    <span className={cx("quantity")}>{film.quantity}</span>
-                    <span className={cx("imdb")}>
-                      <FontAwesomeIcon
-                        className={cx("icon-star")}
-                        icon={faStar}
-                      />
-                      <span>{film.imdb}</span>
-                    </span>
-                    <span className={cx("time-text")}>
-                      {film.times === 1 ? "na" : film.times} min
-                    </span>
-                  </div>
-                  <div className={cx("description")}>
-                    <span
-                      className={cx("description-text", more ? "less" : "")}
-                    >
-                      {film.description}
-                    </span>
-                    {more ? (
-                      <span
-                        className={cx("btn-expand")}
-                        onClick={handleMoreBtnClick}
-                      >
-                        <FontAwesomeIcon
-                          className={cx("icon-des")}
-                          icon={faPlus}
-                        />
-                        <span>more</span>
-                      </span>
+                    <h4 className={cx("title")}>
+                      {isLoading ? <Skeleton width={"570px"} /> : film.title}
+                    </h4>
+                    {isLoading ? (
+                      <Skeleton width={"100px"} height={"40px"} />
                     ) : (
-                      <span
-                        className={cx("btn-less")}
-                        onClick={handleLessBtnClick}
-                      >
-                        <FontAwesomeIcon
-                          className={cx("icon-des")}
-                          icon={faMinus}
-                        />
-                        <span>less</span>
+                      <span className={cx("rating")}>
+                        {[...Array(5)].map((star, index) => {
+                          index += 1;
+                          return (
+                            <span
+                              key={index}
+                              onMouseEnter={() => {
+                                setrating(index);
+                              }}
+                            >
+                              <FontAwesomeIcon
+                                className={cx(
+                                  "star",
+                                  index <= rating ? "star-active" : ""
+                                )}
+                                icon={faStar}
+                              />
+                            </span>
+                          );
+                        })}
                       </span>
                     )}
                   </div>
-                  <div className={cx("info")}>
-                    <table>
-                      <tbody>
-                        <tr>
-                          <th>Country:</th>
-                          <td>
-                            {film.countries.includes(",") ? (
-                              film.countries.split(",").map((item, index) => (
-                                <Link
-                                  key={index}
-                                  to={`/search/country/${item.trim()}`}
-                                >
-                                  {item},
-                                </Link>
-                              ))
-                            ) : (
-                              <Link
-                                to={`/search/country/${film.countries.trim()}`}
-                              >
-                                {film.countries}
-                              </Link>
-                            )}
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Genre:</th>
-                          <td>
-                            {film.genres.includes(",") ? (
-                              film.genres.split(",").map((item, index) => (
-                                <Link
-                                  key={index}
-                                  to={`/search/genre/${item.trim()}`}
-                                >
-                                  {item},
-                                </Link>
-                              ))
-                            ) : (
-                              <Link to={`/search/genre/${film.genres.trim()}`}>
-                                {film.genres}
-                              </Link>
-                            )}
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Release:</th>
-                          <td>{film.releases}</td>
-                        </tr>
-                        <tr>
-                          <th>Director:</th>
-                          <td>
-                            {film.director === "" ? "N/A" : film.director}
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Production:</th>
-                          <td>
-                            {film.productions.includes(",") ? (
-                              film.productions.split(",").map((item, index) => (
-                                <Link
-                                  key={index}
-                                  to={`/films/search/production/${item.trim()}`}
-                                >
-                                  {item},
-                                </Link>
-                              ))
-                            ) : (
-                              <Link
-                                to={`/films/search/production/${film.productions.trim()}`}
-                              >
-                                {film.productions === ""
-                                  ? "N/A"
-                                  : film.productions}
-                              </Link>
-                            )}
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Cast:</th>
-                          <td>
-                            {film.casts.includes(",") ? (
-                              film.casts.split(",").map((item, index) => (
-                                <Link
-                                  key={index}
-                                  to={`/films/search/cast/${item.trim()}`}
-                                >
-                                  {item},
-                                </Link>
-                              ))
-                            ) : (
-                              <Link
-                                to={`/films/search/cast/${film.casts.trim()}`}
-                              >
-                                {film.casts}
-                              </Link>
-                            )}
-                          </td>
-                        </tr>
-                        <tr>
-                          <th>Tags:</th>
-                          <td>{film.tags}</td>
-                        </tr>
-                      </tbody>
-                    </table>
+                  <div className={cx("meta")}>
+                    {isLoading ? (
+                      <Skeleton width={"50px"} />
+                    ) : (
+                      <span className={cx("quantity")}>{film.quantity}</span>
+                    )}
+                    <span className={cx("imdb")}>
+                      {isLoading ? (
+                        <Skeleton width={"50px"} />
+                      ) : (
+                        <>
+                          <FontAwesomeIcon
+                            className={cx("icon-star")}
+                            icon={faStar}
+                          />
+                          <span>{film.imdb}</span>
+                        </>
+                      )}
+                    </span>
+                    {isLoading ? (
+                      <Skeleton />
+                    ) : (
+                      <span className={cx("time-text")}>
+                        {film.times === 1 ? "na" : film.times} min
+                      </span>
+                    )}
                   </div>
+                  {isLoading ? (
+                    <Skeleton width={"100%"} height={"300px"} />
+                  ) : (
+                    <>
+                      <div className={cx("description")}>
+                        <span
+                          className={cx("description-text", more ? "less" : "")}
+                        >
+                          {film.description}
+                        </span>
+                        {more ? (
+                          <span
+                            className={cx("btn-expand")}
+                            onClick={handleMoreBtnClick}
+                          >
+                            <FontAwesomeIcon
+                              className={cx("icon-des")}
+                              icon={faPlus}
+                            />
+                            <span>more</span>
+                          </span>
+                        ) : (
+                          <span
+                            className={cx("btn-less")}
+                            onClick={handleLessBtnClick}
+                          >
+                            <FontAwesomeIcon
+                              className={cx("icon-des")}
+                              icon={faMinus}
+                            />
+                            <span>less</span>
+                          </span>
+                        )}
+                      </div>
+                      <div className={cx("info")}>
+                        <table>
+                          <tbody>
+                            <tr>
+                              <th>Country:</th>
+                              <td>
+                                {film.countries.includes(",") ? (
+                                  film.countries
+                                    .split(",")
+                                    .map((item, index) => (
+                                      <Link
+                                        key={index}
+                                        to={`/search/country/${item.trim()}`}
+                                      >
+                                        {item},
+                                      </Link>
+                                    ))
+                                ) : (
+                                  <Link
+                                    to={`/search/country/${film.countries.trim()}`}
+                                  >
+                                    {film.countries}
+                                  </Link>
+                                )}
+                              </td>
+                            </tr>
+                            <tr>
+                              <th>Genre:</th>
+                              <td>
+                                {film.genres.includes(",") ? (
+                                  film.genres.split(",").map((item, index) => (
+                                    <Link
+                                      key={index}
+                                      to={`/search/genre/${item.trim()}`}
+                                    >
+                                      {item},
+                                    </Link>
+                                  ))
+                                ) : (
+                                  <Link
+                                    to={`/search/genre/${film.genres.trim()}`}
+                                  >
+                                    {film.genres}
+                                  </Link>
+                                )}
+                              </td>
+                            </tr>
+                            <tr>
+                              <th>Release:</th>
+                              <td>{film.releases}</td>
+                            </tr>
+                            <tr>
+                              <th>Director:</th>
+                              <td>
+                                {film.director === "" ? "N/A" : film.director}
+                              </td>
+                            </tr>
+                            <tr>
+                              <th>Production:</th>
+                              <td>
+                                {film.productions.includes(",") ? (
+                                  film.productions
+                                    .split(",")
+                                    .map((item, index) => (
+                                      <Link
+                                        key={index}
+                                        to={`/search/production/${item.trim()}`}
+                                      >
+                                        {item},
+                                      </Link>
+                                    ))
+                                ) : (
+                                  <Link
+                                    to={`/search/production/${film.productions.trim()}`}
+                                  >
+                                    {film.productions === ""
+                                      ? "N/A"
+                                      : film.productions}
+                                  </Link>
+                                )}
+                              </td>
+                            </tr>
+                            <tr>
+                              <th>Cast:</th>
+                              <td>
+                                {film.casts.includes(",") ? (
+                                  film.casts.split(",").map((item, index) => (
+                                    <Link
+                                      key={index}
+                                      to={`/search/cast/${item.trim()}`}
+                                    >
+                                      {item},
+                                    </Link>
+                                  ))
+                                ) : (
+                                  <Link
+                                    to={`/search/cast/${film.casts.trim()}`}
+                                  >
+                                    {film.casts}
+                                  </Link>
+                                )}
+                              </td>
+                            </tr>
+                            <tr>
+                              <th>Tags:</th>
+                              <td>{film.tags}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

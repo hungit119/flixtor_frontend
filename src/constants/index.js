@@ -104,7 +104,7 @@ export const genreMenu = [
   "Sci-Fi",
   "Sport",
   "Thriller",
-  "TV Show",
+  "TV-Show",
   "War",
   "Western",
   "Include all selected",
@@ -256,3 +256,4 @@ export const tabs = [
     href: "trending",
   },
 ];
+export const listMovieSkeleton = Array(10);

@@ -19,14 +19,14 @@ export const filmsAdminReducer = (state = { films: [] }, action) => {
       return {
         ...state,
         films: state.films.map((film) =>
-          film.id === action.payload ? { ...film, sortDel: 1 } : film
+          film.id === action.payload ? { ...film, sortdel: true } : film
         ),
       };
     case SET_FILM_RESTORE:
       return {
         ...state,
         films: state.films.map((film) =>
-          film.id === action.payload ? { ...film, sortDel: 0 } : film
+          film.id === action.payload ? { ...film, sortdel: false } : film
         ),
       };
 

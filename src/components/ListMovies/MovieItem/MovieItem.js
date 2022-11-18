@@ -50,7 +50,7 @@ const MovieItem = ({ item, col = "col-cus", type }) => {
         position="right"
         animation={true}
       >
-        <Link to={href}>
+        <a href={href}>
           <div className={cx("movie")}>
             <div className={cx("movie-image")}>
               <img
@@ -77,7 +77,7 @@ const MovieItem = ({ item, col = "col-cus", type }) => {
             </div>
             <div className={cx("movie-quantity")}>{item.quantity}</div>
           </div>
-        </Link>
+        </a>
       </TippyWrapper>
     </div>
   );

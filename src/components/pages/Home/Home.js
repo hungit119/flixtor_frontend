@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { tabs } from "../../../constants";
+import { setIsLoadingFilms } from "../../../redux/actions/controlAction";
 import {
   setFilmsLastestMovies,
   setFilmsLastestTv,
@@ -23,19 +24,23 @@ const HomePage = () => {
   let params = useParams();
   const dispatch = useDispatch();
   const filmsType = useSelector(filmsTypeSelector);
-
-  window.scrollTo(0, 0);
   // get api
   const getMovies = async (urlApi, actionDispatch) => {
     try {
+      dispatch(setIsLoadingFilms(true));
       const response = await axios.get(urlApi);
       ResponseApiHandle(response, (resData) => {
         dispatch(actionDispatch(resData.filmsType));
+        dispatch(setIsLoadingFilms(false));
       });
     } catch (errors) {
       console.log(errors.message);
     }
   };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   useEffect(() => {
     getMovies(
@@ -55,7 +60,7 @@ const HomePage = () => {
       setFilmsLastestMovies
     );
     getMovies(
-      "http://localhost:8000/api/films/lastest/tv-series?limit=16",
+      "http://localhost:8000/api/films/lastest/TV-Series?limit=16",
       setFilmsLastestTv
     );
   }, []);

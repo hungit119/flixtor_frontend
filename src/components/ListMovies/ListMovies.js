@@ -1,12 +1,15 @@
 import { faCaretLeft, faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import className from "classnames/bind";
+import PropTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
+import { useSelector } from "react-redux";
+import { isLoadingFilmsSelector } from "../../redux/selectors";
 import styles from "./ListMovies.module.scss";
 import MovieItem from "./MovieItem";
-import PropTypes from "prop-types";
+import MovieItemSkeleton from "./MovieItemSkeleton";
 const cx = className.bind(styles);
 
 const ListMovies = ({ items, col, pagnition = false }) => {
@@ -14,6 +17,10 @@ const ListMovies = ({ items, col, pagnition = false }) => {
   const [pageCount, setPageCount] = useState(1);
   const [itemOffset, setItemOffset] = useState(0);
   const itemsPerPage = 32;
+
+  // global state
+  const isLoadingFilms = useSelector(isLoadingFilmsSelector);
+  console.log(isLoadingFilms);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;
@@ -28,9 +35,17 @@ const ListMovies = ({ items, col, pagnition = false }) => {
   return (
     <Container fluid className={cx("wrapper")}>
       <Row>
-        {currentPage.map((item, index) => (
-          <MovieItem key={index} item={item} col={col} />
-        ))}
+        {isLoadingFilms ? (
+          <>
+            {[...Array(16).keys()].map((item, index) => (
+              <MovieItemSkeleton col={col} key={index} />
+            ))}
+          </>
+        ) : (
+          currentPage.map((item, index) => (
+            <MovieItem key={index} item={item} col={col} />
+          ))
+        )}
       </Row>
       {pagnition ? (
         <div>

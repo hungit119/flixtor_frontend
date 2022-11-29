@@ -36,3 +36,7 @@ export const SET_USER_RULE = "SET_USER_RULE";
 // Auth
 export const SET_AUTH_LOGIN = "SET_AUTH_LOGIN";
 export const SET_AUTH_LOADING = "SET_AUTH_LOADING";
+// Comment
+export const SET_COMMENTS_OF_FILM = "SET_COMMENTS_OF_FILM";
+export const SET_NEW_COMMENT = "SET_NEW_COMMENT";
+export const SET_NEW_RECENT_COMMENT = "SET_NEW_RECENT_COMMENT";

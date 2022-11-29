@@ -33,3 +33,5 @@ export const userAdminSelector = (state) => state.admin.users;
 // Auth
 export const isAuthenticatedSelector = (state) => state.auth.isAuthenticated;
 export const authLoadingSelector = (state) => state.auth.authLoading;
+// Comment
+export const commentsSelector = (state) => state.comment.comments;

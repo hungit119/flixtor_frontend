@@ -20,7 +20,6 @@ const ListMovies = ({ items, col, pagnition = false }) => {
 
   // global state
   const isLoadingFilms = useSelector(isLoadingFilmsSelector);
-  console.log(isLoadingFilms);
 
   useEffect(() => {
     const endOffset = itemOffset + itemsPerPage;

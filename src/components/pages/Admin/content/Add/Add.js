@@ -2,18 +2,18 @@ import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import className from "classnames/bind";
+import PropTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
+import { NOTIFY_ALL_TOAST } from "../../../../../constants";
 import { filmAdminSelector } from "../../../../../redux/selectors";
 import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import TippyWrapper from "../../../../TippyWrapper";
 import ToolTipBox from "../../../../ToolTipBox";
 import styles from "./Add.module.scss";
-import PropTypes from "prop-types";
-import { NOTIFY_ALL_TOAST } from "../../../../../constants";
 const cx = className.bind(styles);
 
 const Add = ({ typeFunction }) => {

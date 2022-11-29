@@ -12,14 +12,17 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import className from "classnames/bind";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Col, Row } from "react-bootstrap";
+import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
+import { v4 } from "uuid";
 
 import { useDispatch, useSelector } from "react-redux";
 import { setFilm, setFilmSuggests } from "../../../redux/actions/filmAction";
 import {
+  commentsSelector,
   filmSelector,
   filmSuggestsSelector,
+  isAuthenticatedSelector,
   isLoadingFilmsSelector,
   userIDSelector,
 } from "../../../redux/selectors";
@@ -32,20 +35,31 @@ import styles from "./Detail.module.scss";
 import PropTypes from "prop-types";
 import { setIsLoadingFilms } from "../../../redux/actions/controlAction";
 import Skeleton from "react-loading-skeleton";
+import ButtonCus from "../../ButtonCus/ButtonCus";
+import Comment from "../../Comment";
+import { apiUrl } from "../../../constants";
+import {
+  setCommentsOfFilm,
+  setNewRecentComment,
+} from "../../../redux/actions/commentAction";
 
 const cx = className.bind(styles);
 
 const Detail = ({ type }) => {
   const [rating, setrating] = useState(4);
   const [more, setMore] = useState(true);
+  const [msg, setMsg] = useState("");
   const dispatch = useDispatch();
   const film = useSelector(filmSelector);
   const filmSuggests = useSelector(filmSuggestsSelector);
+  const comments = useSelector(commentsSelector);
   const params = useParams();
   const isLoading = useSelector(isLoadingFilmsSelector);
+  const user_id = useSelector(userIDSelector);
+  const isAuthenticated = useSelector(isAuthenticatedSelector);
 
   useLayoutEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
   const handleLessBtnClick = () => {
     setMore(!more);
@@ -53,13 +67,37 @@ const Detail = ({ type }) => {
   const handleMoreBtnClick = () => {
     setMore(!more);
   };
+  const handleChangeInput = (e) => {
+    setMsg(e.target.value);
+  };
+  const handleClickComment = async () => {
+    try {
+      if (!isAuthenticated || msg === "") return;
+      const comment = {
+        id: v4(),
+        film_id: film.id,
+        user_id,
+        msg: {
+          id: v4(),
+          text: msg,
+        },
+      };
+      const response = await axios.post(`${apiUrl}/comment`, {
+        comment,
+      });
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setNewRecentComment(resData.comment));
+        setMsg("");
+      });
+    } catch (error) {
+      throw error;
+    }
+  };
 
   const getFilm = async () => {
     try {
       dispatch(setIsLoadingFilms(true));
-      const response = await axios.get(
-        `http://localhost:8000/api/film/${params.id}`
-      );
+      const response = await axios.get(`${apiUrl}/film/${params.id}`);
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilm(resData.film));
         setIsLoadingFilms(false);
@@ -72,7 +110,7 @@ const Detail = ({ type }) => {
     try {
       dispatch(setIsLoadingFilms(true));
       const response = await axios.get(
-        `http://localhost:8000/api/films/suggest/${params.id}?limit=9`
+        `${apiUrl}/films/suggest/${params.id}?limit=9`
       );
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmSuggests(resData.filmSuggests));
@@ -82,10 +120,21 @@ const Detail = ({ type }) => {
       console.log(error.message);
     }
   };
+  const getComment = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/comment?filmId=${params.id}`);
+      ResponseApiHandle(response, (resData) => {
+        dispatch(setCommentsOfFilm(resData.comments));
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     getFilm();
     getFilmsSuggest();
+    getComment();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.id]);
 
@@ -403,7 +452,52 @@ const Detail = ({ type }) => {
                 </div>
               </div>
             </div>
-            <div className={cx("comments")}>Comments</div>
+            <div className={cx("comments-wrapper")}>
+              <div className={cx("comment-header")}>Comment</div>
+              <div className={cx("create-comments")}>
+                <div className={cx("header-create-comments")}>
+                  <div className={cx("total-comments")}>571 Comments</div>
+                  <div className={cx("login-btn")}>Login</div>
+                </div>
+                <div className={cx("body-create-comments")}>
+                  <img
+                    src="https://e7.pngegg.com/pngimages/753/432/png-clipart-user-profile-2018-in-sight-user-conference-expo-business-default-business-angle-service-thumbnail.png"
+                    width={"50px"}
+                    alt={"userImage"}
+                    className={cx("avatar")}
+                  />
+                  <div className={cx("write-comment")}>
+                    <InputGroup>
+                      <Form.Control
+                        style={{ fontSize: "1.8rem" }}
+                        as={"textarea"}
+                        placeholder="Enter you comment"
+                        name={"message"}
+                        value={msg}
+                        onChange={handleChangeInput}
+                      />
+                    </InputGroup>
+                    <button
+                      className={cx(
+                        "btn-comment",
+                        !isAuthenticated || msg === "" ? "disable" : ""
+                      )}
+                      onClick={handleClickComment}
+                    >
+                      Comment
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className={cx("show-comment")}>
+                <div className={cx("show-comment-header")}>Sort by Newest</div>
+                <div className={cx("show-comment-body")}>
+                  {comments.map((comment, index) => (
+                    <Comment key={index} comment={comment} />
+                  ))}
+                </div>
+              </div>
+            </div>
           </Col>
           <Col lg={4} className={cx("suggess")}>
             <SessionsHome title={"You may also like"}>

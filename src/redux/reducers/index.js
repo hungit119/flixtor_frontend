@@ -1,5 +1,6 @@
 import adminReducer from "./adminReducer";
 import authReducer from "./authReducer";
+import commentReducer from "./commentReducer";
 import { controlReducer } from "./controlReducer";
 import { filmAdminReducer } from "./filmAdminReducer";
 import { filmReducer } from "./filmReducer";
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
   control: controlReducer,
   admin: adminReducer,
   auth: authReducer,
+  comment: commentReducer,
 });
 
 export default rootReducer;

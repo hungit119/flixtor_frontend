@@ -1,0 +1,41 @@
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  margin: 28px 0;
+}
+.user-avatar {
+  width: 50px;
+  object-fit: contain;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+.default-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 3px;
+  background: var(--color-primary);
+  font-size: 3rem;
+  line-height: 5rem;
+  color: #fff;
+  text-align: center;
+  margin-right: 8px;
+}
+.comment {
+}
+.header-comment {
+  color: var(--text-color-header);
+}
+.user-name {
+  font-size: 1.5rem;
+  color: var(--primary);
+  font-weight: 500;
+  margin-right: 2px;
+}
+.user-uptodate {
+  margin-left: 2px;
+  color: var(--footer-color-notice);
+  font-size: 1.3rem;
+}
+.body-comment {
+  font-size: 1.5rem;
+}

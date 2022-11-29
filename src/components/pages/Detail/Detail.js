@@ -12,11 +12,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import className from "classnames/bind";
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
+import { Col, Form, InputGroup, Row } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import { v4 } from "uuid";
 
+import PropTypes from "prop-types";
+import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
+import { apiUrl } from "../../../constants";
+import {
+  setCommentsOfFilm,
+  setNewRecentComment,
+} from "../../../redux/actions/commentAction";
+import { setIsLoadingFilms } from "../../../redux/actions/controlAction";
 import { setFilm, setFilmSuggests } from "../../../redux/actions/filmAction";
 import {
   commentsSelector,
@@ -28,20 +36,11 @@ import {
 } from "../../../redux/selectors";
 import ResponseApiHandle from "../../../utils/ResponseApiHandle";
 import ButtonGroupShare from "../../ButtonGroupShare";
+import Comment from "../../Comment";
 import ListMovies from "../../ListMovies/ListMovies";
 import ServerButton from "../../ServerButton";
 import SessionsHome from "../../SessionsHome";
 import styles from "./Detail.module.scss";
-import PropTypes from "prop-types";
-import { setIsLoadingFilms } from "../../../redux/actions/controlAction";
-import Skeleton from "react-loading-skeleton";
-import ButtonCus from "../../ButtonCus/ButtonCus";
-import Comment from "../../Comment";
-import { apiUrl } from "../../../constants";
-import {
-  setCommentsOfFilm,
-  setNewRecentComment,
-} from "../../../redux/actions/commentAction";
 
 const cx = className.bind(styles);
 

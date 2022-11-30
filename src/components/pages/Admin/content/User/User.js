@@ -156,7 +156,7 @@ const User = () => {
                         )}
                       </td>
                       <td className={cx("text-center")}>
-                        {page.verify === 1 ? (
+                        {page.verify === true ? (
                           <FontAwesomeIcon
                             className={cx("verified")}
                             icon={faCircleCheck}

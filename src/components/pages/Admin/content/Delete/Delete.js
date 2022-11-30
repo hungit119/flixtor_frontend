@@ -7,6 +7,7 @@ import { Button, Table } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
 import { useDispatch, useSelector } from "react-redux";
 import BeatLoader from "react-spinners/BeatLoader";
+import { apiUrl } from "../../../../../constants";
 import { setIsLoadingFilms } from "../../../../../redux/actions/controlAction";
 import {
   setFilmIdRemove,
@@ -38,9 +39,7 @@ const Delete = () => {
   const getFilmOnTrash = async () => {
     try {
       dispatch(setIsLoadingFilms(true));
-      const response = await axios.get(
-        "http://localhost:8000/api/films?sortDel=true"
-      );
+      const response = await axios.get(`${apiUrl}/films?sortDel=true`);
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmTrash(resData.films));
         dispatch(setIsLoadingFilms(false));

@@ -19,6 +19,7 @@ import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import ModalCom from "../../../../ModalCom/ModalCom";
 import Empty from "../../Empty";
 import styles from "./List.module.scss";
+import { apiUrl } from "../../../../../constants";
 const cx = className.bind(styles);
 const List = () => {
   const [showModal, setShowModal] = useState(false);
@@ -32,7 +33,7 @@ const List = () => {
   const getFullFilms = async () => {
     try {
       dispatch(setIsLoadingFilms(true));
-      const response = await axios.get("http://localhost:8000/api/films");
+      const response = await axios.get(`${apiUrl}/films`);
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmsListAdmin(resData.films));
         dispatch(setIsLoadingFilms(false));

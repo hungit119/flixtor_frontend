@@ -15,6 +15,7 @@ import {
 } from "../../redux/selectors";
 import ResponseApiHandle from "../../utils/ResponseApiHandle";
 import PropTypes from "prop-types";
+import { apiUrl } from "../../constants";
 const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
   const dispatch = useDispatch();
   const id = useSelector(
@@ -27,10 +28,7 @@ const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
   const handleClose = () => setShowModal(false);
   const handleClickDelete = async () => {
     try {
-      const response = await axios.post(
-        `http://localhost:8000/api/film/sortDelete`,
-        { id }
-      );
+      const response = await axios.post(`${apiUrl}/film/sortDelete`, { id });
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmSortDel(resData.id));
         setShowModal(false);
@@ -42,7 +40,7 @@ const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
   const handleClickRestore = async () => {
     try {
       const response = await axios.post(
-        `http://localhost:8000/api/film/sortDelete?restore=true`,
+        `${apiUrl}/film/sortDelete?restore=true`,
         { id }
       );
       ResponseApiHandle(response, (resData) => {
@@ -55,10 +53,7 @@ const ModalCom = ({ show, setShowModal, type = "sortDel" }) => {
   };
   const handleClickRemove = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/film/remove",
-        { id }
-      );
+      const response = await axios.post(`${apiUrl}/film/remove`, { id });
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmRemoved(resData.id));
         setShowModal(false);

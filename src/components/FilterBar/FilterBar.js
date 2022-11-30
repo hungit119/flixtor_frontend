@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import {
+  apiUrl,
   countryMenu,
   genreMenu,
   quantityMenu,
@@ -44,12 +45,9 @@ const FilterBar = ({ type, value }) => {
 
   const getFilmsFilter = async (options) => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/films/filter",
-        {
-          filters: [...options],
-        }
-      );
+      const response = await axios.post(`${apiUrl}/films/filter`, {
+        filters: [...options],
+      });
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmsFilter(resData.filmsFilter));
       });

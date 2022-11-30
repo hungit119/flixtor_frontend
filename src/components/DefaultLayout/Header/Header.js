@@ -12,7 +12,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Col, Image, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { menuItemCountry, menuItemsGenre } from "../../../constants";
+import { apiUrl, menuItemCountry, menuItemsGenre } from "../../../constants";
 import useDebounce from "../../../hooks/useDebounce";
 import { setShowModal } from "../../../redux/actions/controlAction";
 import {
@@ -90,7 +90,7 @@ const Header = () => {
 
   useEffect(() => {
     getFilmsSearch(
-      `http://localhost:8000/api/films/search?keyword=${debounced}&limit=${
+      `${apiUrl}/films/search?keyword=${debounced}&limit=${
         debounced === "" ? "0" : "5"
       }`
     );

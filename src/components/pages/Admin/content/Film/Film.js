@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { apiUrl } from "../../../../../constants";
 import { setFilmAdmin } from "../../../../../redux/actions/filmAction";
 import { filmAdminSelector } from "../../../../../redux/selectors";
 import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
@@ -11,9 +12,7 @@ const Film = () => {
   const params = useParams();
   const film = useSelector(filmAdminSelector);
   const getFilm = async () => {
-    const response = await axios.get(
-      `http://localhost:8000/api/film/${params.id}`
-    );
+    const response = await axios.get(`${apiUrl}/film/${params.id}`);
     ResponseApiHandle(response, (resData) => {
       dispatch(setFilmAdmin(resData.film));
     });

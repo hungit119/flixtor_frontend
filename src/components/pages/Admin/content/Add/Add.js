@@ -8,7 +8,7 @@ import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { NOTIFY_ALL_TOAST } from "../../../../../constants";
+import { apiUrl, NOTIFY_ALL_TOAST } from "../../../../../constants";
 import { filmAdminSelector } from "../../../../../redux/selectors";
 import ResponseApiHandle from "../../../../../utils/ResponseApiHandle";
 import TippyWrapper from "../../../../TippyWrapper";
@@ -99,10 +99,7 @@ const Add = ({ typeFunction }) => {
         casts_film: form.casts,
         productions_film: form.productions,
       };
-      const response = await axios.post(
-        "http://localhost:8000/api/film/create",
-        { payload }
-      );
+      const response = await axios.post(`${apiUrl}/film/create`, { payload });
       ResponseApiHandle(
         response,
         (resData) => {
@@ -171,7 +168,7 @@ const Add = ({ typeFunction }) => {
         productions_film: form.productions,
       };
       const response = await axios.post(
-        `http://localhost:8000/api/film/update?idFilm=${params.id}&stt=${stt}`,
+        `${apiUrl}/film/update?idFilm=${params.id}&stt=${stt}`,
         { newPayload }
       );
       ResponseApiHandle(response, (resData) => {
@@ -206,9 +203,7 @@ const Add = ({ typeFunction }) => {
   };
   const getFilm = async () => {
     try {
-      const response = await axios.get(
-        `http://localhost:8000/api/film/${params.id}`
-      );
+      const response = await axios.get(`${apiUrl}/film/${params.id}`);
       ResponseApiHandle(response, (resData) => {
         setForm(response.data.film);
         setStt(response.data.film.stt);

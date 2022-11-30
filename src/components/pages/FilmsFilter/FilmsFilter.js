@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
+import { apiUrl } from "../../../constants";
 import { setIsLoadingFilms } from "../../../redux/actions/controlAction";
 import { setFilmsFilter } from "../../../redux/actions/filmsAction";
 import { filmsFilterSelector } from "../../../redux/selectors";
@@ -25,18 +26,15 @@ const FilmFilter = () => {
   const getFilmsFilter = async () => {
     try {
       dispatch(setIsLoadingFilms(true));
-      const response = await axios.post(
-        "http://localhost:8000/api/films/filter",
-        {
-          filters: {
-            genre,
-            type,
-            country,
-            quantity,
-            year,
-          },
-        }
-      );
+      const response = await axios.post(`${apiUrl}/films/filter`, {
+        filters: {
+          genre,
+          type,
+          country,
+          quantity,
+          year,
+        },
+      });
       ResponseApiHandle(response, (resData) => {
         dispatch(setFilmsFilter(resData.filmsFilter));
         dispatch(setIsLoadingFilms(false));

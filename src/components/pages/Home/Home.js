@@ -3,7 +3,7 @@ import className from "classnames/bind";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { tabs } from "../../../constants";
+import { apiUrl, tabs } from "../../../constants";
 import { setIsLoadingFilms } from "../../../redux/actions/controlAction";
 import {
   setFilmsLastestMovies,
@@ -44,25 +44,13 @@ const HomePage = () => {
 
   useEffect(() => {
     getMovies(
-      "http://localhost:8000/api/films/type/movie?limit=24&year=2022",
+      `${apiUrl}/films/type/movie?limit=24&year=2022`,
       setFilmsTypeMovies
     );
-    getMovies(
-      "http://localhost:8000/api/films/type/TV-Series?limit=24",
-      setFilmsTypeTv
-    );
-    getMovies(
-      "http://localhost:8000/api/films/=/rating/5?limit=24",
-      setFilmsTrending
-    );
-    getMovies(
-      "http://localhost:8000/api/films/lastest/movie?limit=16",
-      setFilmsLastestMovies
-    );
-    getMovies(
-      "http://localhost:8000/api/films/lastest/TV-Series?limit=16",
-      setFilmsLastestTv
-    );
+    getMovies(`${apiUrl}/films/type/TV-Series?limit=24`, setFilmsTypeTv);
+    getMovies(`${apiUrl}/films/=/rating/5?limit=24`, setFilmsTrending);
+    getMovies(`${apiUrl}/films/lastest/movie?limit=16`, setFilmsLastestMovies);
+    getMovies(`${apiUrl}/films/lastest/TV-Series?limit=16`, setFilmsLastestTv);
   }, []);
 
   return (

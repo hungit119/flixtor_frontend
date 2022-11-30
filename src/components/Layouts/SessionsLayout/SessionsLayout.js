@@ -19,6 +19,7 @@ import SessionsHome from "../../SessionsHome";
 import styles from "./SessionsLayout.module.scss";
 import PropTypes from "prop-types";
 import { setIsLoadingFilms } from "../../../redux/actions/controlAction";
+import { apiUrl } from "../../../constants";
 
 const cx = classNames.bind(styles);
 const SessionsLayout = ({ title, root }) => {
@@ -44,9 +45,9 @@ const SessionsLayout = ({ title, root }) => {
     }
   };
   useEffect(() => {
-    getFilms("http://localhost:8000/api/films/type/movie", setFilmsTypeMovies);
-    getFilms("http://localhost:8000/api/films/type/TV-Series", setFilmsTypeTv);
-    getFilms("http://localhost:8000/api/films/>=/imdb/9", setFilmsTrending);
+    getFilms(`${apiUrl}/films/type/movie`, setFilmsTypeMovies);
+    getFilms(`${apiUrl}/films/type/TV-Series`, setFilmsTypeTv);
+    getFilms(`${apiUrl}/films/>=/imdb/9`, setFilmsTrending);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [root]);
   console.log(filmsType);

@@ -139,7 +139,7 @@
   background-color: white;
   border-radius: 10px;
   color: var(--footer-color);
-  box-shadow: 0 2px 10px rgb(0 0 0 / 50%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
   animation-name: scrollDown;
   animation-duration: 0.2s;
   animation-timing-function: linear;
@@ -211,7 +211,7 @@
 .header-search-input {
   background-color: var(--white);
   border-radius: 10px;
-  box-shadow: 0 10px 15px rgb(0 0 0 / 15%);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
   font-size: 2.4rem;
   font-weight: 300;
   padding: 17px 70px;
@@ -243,7 +243,7 @@
   justify-content: center;
   align-items: center;
   margin-left: 12px;
-  box-shadow: 0 10px 15px rgb(0 0 0 / 15%);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
   cursor: pointer;
   transition: all 0.4s ease;
   &:hover {

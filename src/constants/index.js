@@ -10,10 +10,10 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const apiUrl =
-  process.env.NODE_ENV !== "production"
-    ? "http://localhost:8000/api"
-    : "https://flixtorvideo.herokuapp.com/api";
+export const apiUrl = "http://localhost:8000/api";
+// process.env.NODE_ENV !== "production"
+//   ? "http://localhost:8000/api"
+//   : "https://flixtorvideo.herokuapp.com/api";
 export const ACCESS_TOKEN_NAME = "token";
 export const NOTIFY_ALL_TOAST = "notify_all";
 export const AUTH_TOAST = "AUTH_TOAST";

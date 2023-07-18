@@ -86,7 +86,7 @@
   display: flex;
   height: fit-content;
   background-color: white;
-  box-shadow: 0 10px 15px rgb(0 0 0 / 15%);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
   border-radius: 4.5px;
   color: var(--text-color-title);
   font-size: 1.5rem;
